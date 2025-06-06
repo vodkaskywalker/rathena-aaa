@@ -64,6 +64,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
+#include "stall.hpp"
 #include "storage.hpp"
 
 using namespace rathena;
@@ -27638,6 +27639,55 @@ BUILDIN_FUNC(opentips){
 #endif
 }
 
+BUILDIN_FUNC( open_stall ){
+	map_session_data* sd;
+	uint16 skill_id, skill_lv;
+
+	if( !script_rid2sd( sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_isstring(st, 2)) {
+		const char *name = script_getstr(st, 2);
+
+		if (!(skill_id = skill_name2id(name))) {
+			ShowError("buildin_unitskilluseid: Invalid skill name %s passed to item bonus. Skipping.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	skill_lv = script_getnum(st,3);
+
+	if( sd->itemid == 0 ){
+		ShowError( "open_stall: Called outside of an item script without item id.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->inventory.u.items_inventory[sd->itemindex].expire_time == 0 ){
+		ShowError( "open_stall: Called from item %u, which is not a consumed delayed.\n", sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->state.stall_ui_open != 0 ){
+		ShowError( "open_stall: Stall window was already open. Player %s (AID: %u, CID: %u) with item id %u.\n", sd->status.name, sd->status.account_id, sd->status.char_id, sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	sd->stall_expire_time = sd->inventory.u.items_inventory[sd->itemindex].expire_time;
+	sd->stallvending_level = skill_lv;
+
+	// todo check if already set
+
+	int16 type = (skill_id == ALL_ASSISTANT_BUYING) ? 1 : 0;
+	if (stall_isStallOpen(sd->status.char_id, type)) {
+		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SAME_VEND, 0, skill_id);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	unit_skilluse_id(sd, sd->id, skill_id, skill_lv);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Displays a special popup.
  * specialpopup(<popup id>);
@@ -28252,7 +28302,7 @@ BUILDIN_FUNC(autoattackintinfo)
 {
 	int32 index = 0, id;
 	TBL_PC* sd;
-	int32 num = 0, i;
+	size_t num = 0, i;
 	std::shared_ptr<s_skill_db> skill;
 	std::shared_ptr<item_data> item_data;
 
@@ -29734,6 +29784,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(autoloot,"??"),
 	BUILDIN_DEF(opentips, "i?"),
 	BUILDIN_DEF(specialpopup,"i"),
+	BUILDIN_DEF(open_stall,"si"),
 
 	BUILDIN_DEF(setdialogalign, "i"),
 	BUILDIN_DEF(setdialogsize, "ii"),

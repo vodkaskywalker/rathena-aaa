@@ -63280,7 +63280,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      open_stall "ALL_ASSISTANT_VENDING",1;
   - Id: 23349
     AegisName: Vend_Arbeit_2Lv
     Name: Consignment Merchant Voucher
@@ -63295,7 +63295,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      open_stall "ALL_ASSISTANT_VENDING",2;
   - Id: 23350
     AegisName: Vend_Arbeit_3Lv
     Name: Consignment Merchant Voucher Lv3
@@ -63310,7 +63310,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      open_stall "ALL_ASSISTANT_VENDING",3;
   - Id: 23351
     AegisName: Buy_Arbeit_1Lv
     Name: Personal Shopper Voucher Lv1
@@ -63325,7 +63325,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      open_stall "ALL_ASSISTANT_BUYING",1;
   - Id: 23352
     AegisName: Buy_Arbeit_2Lv
     Name: Personal Shopper Voucher
@@ -63340,7 +63340,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      open_stall "ALL_ASSISTANT_BUYING",2;
   - Id: 23353
     AegisName: Buy_Arbeit_3Lv
     Name: Personal Shopper Voucher Lv3
@@ -63355,7 +63355,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      open_stall "ALL_ASSISTANT_BUYING",3;
   - Id: 23354
     AegisName: Vend_Arbeit3_1Lv
     Name: "[3 Day] Consignment Merchant Envelope Lv1"
