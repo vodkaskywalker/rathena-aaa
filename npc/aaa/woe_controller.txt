@@ -1,6 +1,6 @@
 //===== rAthena Script ======================================= 
-//= Euphy's WOE Controller
-//===== Changelogs: ==========================================
+//= ระบบนี้ได้จัดทำใหม่โดยผู้ใช้งาน Discord j_a_i_k_a_e_r_a_e ใ จ เ ก เ ร #4644
+//===== รายละเอียดที่อัปเดท: =====================================
 //= 1.3a Initial SVN release [Euphy]
 //= 1.3b Fixed WoE SE end labels [Euphy]
 //= 1.4 Added auto kick config [Euphy]
@@ -12,14 +12,17 @@
 //= 1.7 Removed direct SQL access [Lemongrass]
 //= 1.8 Fixed invalid checkweight usage [Lemongrass]
 //= 1.9 Fixed reward handout for multiple characters on the same account [Lemongrass]
-//= 2.0 กิลด์วอร์บ้านแบบเปิดปิดสุ่ม สุ่มเปิดบ้านกี่หลังก็ได้ กำหนดเมืองกี่เมืองก็ได้ สุ่มเมือง [ใ จ เ ก เ ร #4644]
+//= 2.0 กิลด์วอร์บ้านแบบเปิดปิดสุ่ม สุ่มเปิดบ้านกี่หลังก็ได้ กำหนดเมืองกี่เมืองก็ได้ สุ่มเมือง [Discord j_a_i_k_a_e_r_a_e ใ จ เ ก เ ร #4644]
+//= 2.1 ระบบเพิ่มของรางวัลในแต่ละวันว่าจะกำหนดไอเทมชิ้นไหน และสามารถกำหนดจำนวนในแต่ละวันได้ [Discord j_a_i_k_a_e_r_a_e ใ จ เ ก เ ร #4644]
+//= 2.2 เพิ่มระบบสุ่มของรางวัลต่างๆ ในแต่ละวันว่า วันนี้จะได้รับของรางวัลอะไร วันอื่นได้ของรางวัลอะไร [Discord j_a_i_k_a_e_r_a_e ใ จ เ ก เ ร #4644]
 //===== Description: ========================================= 
-//= A controller for War of Emperium designed for
-//= simplicity and ease of use.
-//= Many concepts taken from ToastOfDoom's script,
-//= and "rewards" function originally by Goddameit.
+//= ตัวควบคุมกำหนดการเปิด War of Emperium นี้เพื่อ
+//= ใช้งานได้ง่ายและสะดวกสบายต่อการใช้งาน
+//= ความคิดได้อุดมการณ์หลายๆ อย่างจาก ToastOfDoom's
+//= และระบบฟังก์ชั่น "ของรางวัล" ดั้งเดิมทำมาจาก Goddameit
+//= คิดค้นระบบของรางวัลเพิ่มขึ้นมาใหม่ จัดทำโดย Discord j_a_i_k_a_e_r_a_e ใ จ เ ก เ ร #4644
 //=
-//= Be sure to disable the default agit controllers!
+//= ต้องแน่ใจด้วยนะว่าท่านได้ปิดระบบ WoE อื่นๆ ดังต่อไปนี้แล้ว ไม่อย่างนั้นจะทำให้เกิดปัญหาขึ้นมาได้!
 //= npc\guild\agit_controller.txt
 //= npc\guild2\agit_start_se.txt
 //= npc\re\guild3\agit_start_te.txt
@@ -28,7 +31,6 @@
 // Information NPC
 //============================================================
 prontera,149,193,4	script	ข้อมูล WoE	835,{
-	if(getgmlevel() < 99) end;
 	doevent "WOE_CONTROL::OnMenu";
 	end;
 OnAgitStart:
@@ -98,17 +100,17 @@ S_Shuffle_Castles:
 
 OnInit:
 // -----------------------------------------------------------
-//  Configuration settings.
+//  การตั้งค่าพื้นฐานทั่วไป
 // -----------------------------------------------------------
 
-	set .CastleWarp,0;		// 1: Always enable all castle warps. | 0: Warp only to active castles.
-	set .AutoKick,1;		// Automatically kick players from inactive castles during WOE? (1:yes / 0:no)
-	set .NoOwner,1; 		// Automatically kick players from unconquered castles outside of WOE? (1:yes / 0:no)
-	set .ExitWarp,0;		// Warp all players from castles when WOE ends? (1:yes / 0:no)
-	set .GMAccess,99;		// GM level required to access Session Manager.
+	set .CastleWarp,0;		// 1: เปิดการใช้งานเคลื่อนที่ไปยังปราสาททั้งหมด | 0: เคลื่อนที่ไปยังปราสาทที่ใช้งานได้เท่านั้น
+	set .AutoKick,1;		// ทำการเตะผู้เล่นออกจากปราสาทที่ไม่ได้เปิดใช้งานอัตโนมัติหรือไม่? (1:ใช่ / 0:ไม่)
+	set .NoOwner,0; 		// ทำการเตะผู้เล่นออกจากปราสาทที่ยังไม่ได้ยึดครองอัตโนมัติหรือไม่? (1:ใช่ / 0:ไม่)
+	set .ExitWarp,0;		// เคลื่อนย้ายผู้เล่นทั้งหมดออกจากปราสาทเมื่อ WoE จบลงหรือไม่? (1:ใช่ / 0:ไม่)
+	set .GMAccess,99;		// ต้องมีระดับขั้น GM เพื่อเข้าถึงระบบควบคุมการทำงาน WoE
 	set .RandomCastle,1;		// 1: เปิดใช้งานการสุ่ม Castle | 0: ปิดการใช้งาน
 	set .CastleOrder,0;		// ลำดับปัจจุบันของ Castle ที่ใช้
-	set .CastlesPerWoe,1;		// จำนวน Castle ที่จะสุ่มในแต่ละ WoE
+	set .CastlesPerWoe,3;		// จำนวน Castle ที่จะสุ่มในแต่ละ WoE
 	set .MaxCastlesPerRegion,5;	// จำนวนสูงสุดของ Castle ที่จะสุ่มในแต่ละ Region
 	set .MinCastlesPerRegion,1;	// จำนวนขั้นต่ำของ Castle ต่อ Region
 	setarray .ShuffledRegions[0], 0; // อาร์เรย์เก็บลำดับ Region ที่สุ่มแล้ว
@@ -116,34 +118,41 @@ OnInit:
 	
 
 // -----------------------------------------------------------
-//  Reward options.
+//  การตั้งค่าให้ของรางวัล
 // -----------------------------------------------------------
-//  [1] Enable rewards.
-//  [2] Mail all rewards.
-//      - If not set, players receive items in their inventory.
-//      - Only ONE item can be sent via mail for PACKETVER < 20150513 while later clients are limited to MAIL_MAX_ITEM (5).
-//      - If this setting is not set, offline players do NOT receive rewards in any case.
-//  [4] Only reward Guild Masters.
-//      - If not set, all guild members are rewarded.
-//      - If mailing is enabled (option 2), offline Guild Masters WILL receive rewards.
-//  [8] Duplicate IP check.
-//      - Members in a guild with the same IP address are not rewarded.
-//      - If Guild Masters is enabled (option 4), this feature is not used.
-//  [16] Mail online player only.
-//      - Only available when mailing is enabled (option 2).
-//      - When enabled, offline players do NOT receive rewards.
+//  [1] เปิดใช้งานให้ของรางวัล
+//  [2] ส่งรางวัลทั้งหมดผ่านทาง Rodex
+//      - หากไม่ได้ตั้งค่าไว้ ผู้เล่นจะได้รับใน Inventory
+//      - สามารถส่งได้เพียง 1 ขิ้นผ่านทาง Rodex สำหรับ PACKETVER < 20150513 ในขณะที่ไคลเอนต์จำกัดให้ส่ง MAIL_MAX_ITEM (5).
+//      - หากไม่ได้ตั้งค่าสิ่งนี้ ผู้เล่นที่ไม่ได้ออนไลน์จะไม่ได้รับรางวัลทุกกรณี
+//  [4] ให้รางวัลเฉพาะหัวหน้ากิลด์เท่านั้น
+//      - หากไม่ได้ตั้งค่า สมาชิกกิลด์ทั้งหมดจะได้รับของรางวัล
+//      - หากเปิดใช้งานให้ของรางวัล (ในตัวเลือกข้อที่ 2) หัวหน้ากิลด์ที่ไม่ได้ออนไลน์จะได้รับของรางวัล
+//  [8] ทำการตรวจสอบ IP ทุกครั้ง
+//      - สมาชิกกิลด์ที่มีอยู่ใน IP เดียวกันจะไม่ได้รับของรางวัล
+//      - หากเปิดใช้งานหัวหน้ากิลด์ (ในตัวเลือกข้อที่ 4) ฟีเจอร์การใช้งานนี้จะไม่ถูกใช้งาน
+//  [16] ส่งผ่าน Rodex เฉพาะผู้ที่ออนไลน์เท่านั้น
+//      - ใช้ได้เฉพาะเปิดใช้งานส่งของรางวัลผ่านทาง Rodex เท่านั้น (ในตัวเลือกข้อที่ 2)
+//      - เมื่อเปิดการใช้งานแล้ว ผู้เล่นที่ไม่ได้ออนไลน์จะไม่ได้รับของรางวัล
 // -----------------------------------------------------------
 
 	// Combine values as needed (e.g. 1|8 = 1+8 = 9).
-	set .Options, 1|8;
+	set .Options, 1|4|8;
 
-	// Rewards per castle.
-	//   setarray .reward_id[0],     <itemID>{,<itemID>,...}
-	//   setarray .reward_amount[0], <amount>{,<amount>,...}
-	setarray .reward_id[0],501;
-	setarray .reward_amount[0],1000;
+    // กำหนดไอเทมรางวัลตามวัน (ใช้ตัวแปรแยกสำหรับแต่ละวัน)
+    // 0=อาทิตย์, 1=จันทร์, ..., 6=เสาร์
+    setarray .reward_sun[0], 600,601,602,603,604;  // วันอาทิตย์
+    setarray .reward_mon[0], 501,502,503,504,505;  // วันจันทร์
+    setarray .reward_tue[0], 506,507,508,509,510;  // วันอังคาร
+    setarray .reward_wed[0], 511,512,513,514,515;  // วันพุธ
+    setarray .reward_thu[0], 516,517,518,519,520;  // วันพฤหัสบดี
+    setarray .reward_fri[0], 521,522,523,524,525;  // วันศุกร์
+    setarray .reward_sat[0], 526,527,528,529,530;  // วันเสาร์
 
-	// Zeny reward:
+	// จำนวนรางวัลพื้นฐาน (Base reward amounts)
+	setarray .reward_day_multiplier[0], 5,5,5,5,5,10,10; // จำนวนรางวัลสำหรับแต่ละวัน (อาทิตย์-เสาร์)
+
+	// รางวัล Zeny :
 	.reward_zeny = 0;
 
 // -----------------------------------------------------------
@@ -345,10 +354,26 @@ function Region {
 }
 
 OnReward:
-	if (!.reward_id_size && !.reward_zeny)
-		return;
+    .@day = gettime(DT_DAYOFWEEK); // 0=อาทิตย์, 1=จันทร์, ..., 6=เสาร์
+    
+    // เลือกตัวแปรตามวัน
+    if (.@day == 0)      copyarray .@items, .reward_sun, getarraysize(.reward_sun);
+    else if (.@day == 1) copyarray .@items, .reward_mon, getarraysize(.reward_mon);
+    else if (.@day == 2) copyarray .@items, .reward_tue, getarraysize(.reward_tue);
+    else if (.@day == 3) copyarray .@items, .reward_wed, getarraysize(.reward_wed);
+    else if (.@day == 4) copyarray .@items, .reward_thu, getarraysize(.reward_thu);
+    else if (.@day == 5) copyarray .@items, .reward_fri, getarraysize(.reward_fri);
+    else if (.@day == 6) copyarray .@items, .reward_sat, getarraysize(.reward_sat);
+    
+    // สุ่มไอเทมจากรายการ
+    if (getarraysize(.@items)) {
+        .@random_index = rand(getarraysize(.@items));
+        set .@reward_id[0], .@items[.@random_index];
+        set .@reward_amount[0], .reward_day_multiplier[.@day];
+        set .@reward_size, 1;
+    }
 
-	if (.Options&2) set .@str$,gettimestr("%B %d, %Y",21);
+	if (.Options&2) set .@str$, gettimestr("%d %B %Y",21);
 	freeloop(1);
 	for(set .@i,0; .@i<.total_castle; set .@i,.@i+1) {
 		if (getarg(0)&(1<<.@i)) {
@@ -372,6 +397,9 @@ OnReward:
 				.@aid[0] = .@master_aid;
 			}
 			else if (.Options&8) {
+				set .@k, 0;
+				deletearray .@tmp_account_id, getarraysize(.@tmp_account_id);
+				deletearray .@tmp_char_id, getarraysize(.@tmp_char_id);
 				for ( .@j = 0; .@j < .@size_guild; ++.@j ) {
 					.@is_online[.@j] = isloggedin( .@aid[.@j], .@cid[.@j] );
 					if (.@is_online[.@j])
@@ -406,11 +434,11 @@ OnReward:
 					if (.@online || !(.Options&16)) {
 						.@charid = .@cid[.@j];
 						.@sender$ = "ทีมงาน Server PepoRO";
-						.@title$ = "** รางวัลสำหรับการยึดครอง : "+getcastlename(.Castles$[.@i])+" **";
-						.@body$ = "สวัสดีท่านผู้กล้า \r\n \r\n ขอแสดงความยินดีด้วย !\r\n กิลด์ของคุณได้ยึดครอง : "+getcastlename(.Castles$[.@i])+" \r\n ในช่วงสงคราม Emperium ได้สำเร็จ ณ วันที่\r\n "+.@str$+".\r\n \r\n \r\n \r\n \r\n [ และนี่คือรางวัลสำหรับ Guild ของท่าน ]";
+						.@title$ = "** รางวัลที่ยึดครอง : "+getcastlename(.Castles$[.@i])+" **";
+						.@body$ = "สวัสดีท่านผู้กล้า \r\n \r\n ขอแสดงความยินดีด้วย!\r\n กิลด์ของคุณได้ยึดครอง : "+getcastlename(.Castles$[.@i])+" \r\n ในช่วงสงคราม Emperium ได้สำเร็จในวันที่ \r\n "+.@str$+" \r\n \r\n \r\n \r\n \r\n [ และนี่คือรางวัลสำหรับ Guild ของท่าน ]";
 
-						if (.reward_id_size)
-							mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny, .reward_id, .reward_amount;
+						if (.@reward_size)
+							mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny, .@reward_id[0], .@reward_amount[0];
 						else
 							mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny;
 
@@ -424,11 +452,11 @@ OnReward:
 					attachrid( .@aid[.@j], true );
 					.@name$ = strcharinfo( 0 );
 					.@castle_name$ = getcastlename(.Castles$[.@i]);
-					for ( .@k = 0; .@k < .reward_id_size; .@k++ ) {
-						if (checkweight(.reward_id[.@k], .reward_amount[.@k]))
-							getitem .reward_id[.@k], .reward_amount[.@k];
+					for ( .@k = 0; .@k < .@reward_size; .@k++ ) {
+						if (checkweight(.@reward_id[.@k], .@reward_amount[.@k]))
+							getitem .@reward_id[.@k], .@reward_amount[.@k];
 						else
-							dispbottom "ท่านไม่สามารถรับของรางวัล " + getitemname(.reward_id[.@k]) + " จำนวน " + .reward_amount[.@k] + " ชิ้นได้ สำหรับการยึดบ้าน " + .@castle_name$ + " เนื่องจากมีน้ำหนักเกินตามกำหนด";
+							dispbottom "ท่านไม่สามารถรับของรางวัล " + getitemname(.@reward_id[.@k]) + " จำนวน " + .@reward_amount[.@k] + " ชิ้นได้ สำหรับการยึดบ้าน " + .@castle_name$ + " เนื่องจากมีน้ำหนักเกินตามกำหนด";
 					}
 					Zeny += .reward_zeny;
 					dispbottom "ท่านได้รับรางวัลสำหรับการยึดบ้าน " + .@castle_name$ + "";
