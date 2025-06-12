@@ -1,0 +1,294 @@
+morocc,158,88,4	script	Magic Shop	909,{
+	mes "[Magic Shop Owner]";
+	mes "Welcome to my enchanted emporium!";
+	mes "I deal in mystical arts and magical artifacts.";
+	next;
+	
+	// Check if player is a magic class for special dialogue
+	if(BaseJob == Job_Mage || BaseJob == Job_Wizard || BaseJob == Job_Sage) {
+		mes "[Magic Shop Owner]";
+		mes "Ah, a fellow practitioner of the arcane arts!";
+		mes "I have special items just for magic users like yourself.";
+		next;
+	}
+	
+	switch(select("Browse Basic Items:Premium Collection:Custom Enchantments:Services:Leave")) {
+		case 1:
+			callsub S_BasicItems;
+			break;
+		case 2:
+			callsub S_PremiumItems;
+			break;
+		case 3:
+			callsub S_CustomOrder;
+			break;
+		case 4:
+			callsub S_Services;
+			break;
+		case 5:
+			mes "[Magic Shop Owner]";
+			mes "May the arcane energies guide your path!";
+			close;
+	}
+	
+S_BasicItems:
+	mes "[Magic Shop Owner]";
+	mes "Here are my everyday magical supplies:";
+	next;
+	
+	vending_reset;
+	
+	// Basic consumables
+	vending_add 717, 1000;     // Blue Gemstone
+	vending_add 716, 1500;     // Red Gemstone  
+	vending_add 715, 2000;     // Yellow Gemstone
+	vending_add 12016, 5000;   // Speed Potion
+	vending_add 12017, 8000;   // Berserk Potion
+	vending_add 12018, 3000;   // Concentration Potion
+	
+	// Basic equipment
+	vending_add 1201, 5000;    // Knife
+	vending_add 1550, 15000;   // Book
+	vending_add 2330, 8000;    // Coat
+	vending_add 2416, 20000;   // Mage Hat
+	
+	mes "[Magic Shop Owner]";
+	mes "Perfect for beginning mages and everyday needs!";
+	close2;
+	vending_open;
+	end;
+
+S_PremiumItems:
+	mes "[Magic Shop Owner]";
+	mes "Behold my collection of enhanced magical artifacts!";
+	mes "These items have been blessed with powerful enchantments.";
+	next;
+	
+	// Check player level for premium access
+	if(BaseLevel < 50) {
+		mes "[Magic Shop Owner]";
+		mes "I'm sorry, but these items require more experience to handle safely.";
+		mes "Please return when you've reached level 50.";
+		close;
+	}
+	
+	vending_reset;
+	
+	// Enhanced weapons
+	vending_add 1616, 100000, 8, 0, 4168, 4094;  // Wand +8 with MATK cards
+	vending_add 1550, 75000, 7, 0, 4092, 4093;   // Int Book +7
+	vending_add 1201, 50000, 6, 0, 4092;         // INT Knife +6
+	
+	// Enhanced armor
+	vending_add 2416, 80000, 7, 0, 4092, 4093;   // Mage Hat +7 with cards
+	vending_add 2330, 60000, 6, 0, 4133;         // Coat +6 with DEF
+	vending_add 2405, 90000, 8, 0, 4133, 4133;   // Shoes +8 with dual DEF
+	
+	// Premium accessories
+	vending_add 2601, 25000, 0, 0, 4092;         // INT Ring
+	vending_add 2602, 35000, 0, 0, 4094;         // MATK Earring
+	vending_add 2603, 65000, 0, 0, 4092, 4094;   // Combo Necklace
+	
+	mes "[Magic Shop Owner]";
+	mes "These artifacts will amplify your magical prowess significantly!";
+	close2;
+	vending_open;
+	end;
+
+S_CustomOrder:
+	mes "[Magic Shop Owner]";
+	mes "I can craft personalized enchantments for discerning customers.";
+	mes "What type of magical enhancement interests you?";
+	next;
+	
+	switch(select("Weapon Enchantment:Armor Enhancement:Accessory Crafting:Rare Artifacts:Back")) {
+		case 1:
+			callsub S_WeaponEnchant;
+			break;
+		case 2:
+			callsub S_ArmorEnhance;
+			break;
+		case 3:
+			callsub S_AccessoryCraft;
+			break;
+		case 4:
+			callsub S_RareArtifacts;
+			break;
+		case 5:
+			goto S_MainMenu;
+	}
+	end;
+
+S_WeaponEnchant:
+	mes "[Magic Shop Owner]";
+	mes "My finest enchanted weapons for magical combat:";
+	next;
+	
+	vending_reset;
+	vending_add 1616, 150000, 10, 0, 4168, 4094, 4094, 4094; // Ultimate Wand
+	vending_add 1550, 120000, 9, 0, 4092, 4093, 4168;        // Master's Book
+	vending_add 1201, 80000, 8, 0, 4092, 4092;               // Twin INT Knife
+	
+	mes "[Magic Shop Owner]";
+	mes "These weapons have been forged with the essence of pure magic!";
+	close2;
+	vending_open;
+	end;
+
+S_ArmorEnhance:
+	mes "[Magic Shop Owner]";
+	mes "Protective gear imbued with mystical defenses:";
+	next;
+	
+	vending_reset;
+	vending_add 2416, 100000, 9, 0, 4092, 4093, 4133;  // Triple-carded Mage Hat
+	vending_add 2330, 80000, 8, 0, 4133, 4133;         // Fortified Coat
+	vending_add 2405, 70000, 7, 0, 4133, 4094;         // Balanced Shoes
+	
+	mes "[Magic Shop Owner]";
+	mes "This armor will shield you from both physical and magical harm!";
+	close2;
+	vending_open;
+	end;
+
+S_AccessoryCraft:
+	mes "[Magic Shop Owner]";
+	mes "Delicate accessories to amplify your magical resonance:";
+	next;
+	
+	vending_reset;
+	vending_add 2601, 30000, 0, 0, 4092, 4094;    // Power Ring
+	vending_add 2602, 40000, 0, 0, 4094, 4094;    // Mystic Earring
+	vending_add 2603, 80000, 0, 0, 4092, 4093, 4094; // Arcane Necklace
+	
+	mes "[Magic Shop Owner]";
+	mes "These accessories will harmonize with your magical aura!";
+	close2;
+	vending_open;
+	end;
+
+S_RareArtifacts:
+	// Check for VIP status or high level
+	if(BaseLevel < 80) {
+		mes "[Magic Shop Owner]";
+		mes "These artifacts are too powerful for someone of your current level.";
+		mes "Return when you've reached level 80, young mage.";
+		close;
+	}
+	
+	mes "[Magic Shop Owner]";
+	mes "Legendary artifacts of immense power...";
+	mes "Are you certain you can handle such responsibility?";
+	next;
+	
+	if(select("Yes, I'm ready:Perhaps not yet") == 2) {
+		mes "[Magic Shop Owner]";
+		mes "Wisdom in knowing one's limits. Return when you feel prepared.";
+		close;
+	}
+	
+	vending_reset;
+	// Ultra rare items with multiple cards and high upgrades
+	vending_add 1616, 500000, 10, 0, 4168, 4094, 4092, 4093; // Legendary Wand
+	vending_add 2416, 300000, 10, 0, 4092, 4093, 4133, 4094; // Archmage Crown
+	
+	mes "[Magic Shop Owner]";
+	mes "Handle these with utmost care. Their power is beyond mortal comprehension.";
+	close2;
+	vending_open;
+	end;
+
+S_Services:
+	mes "[Magic Shop Owner]";
+	mes "I also offer various magical services:";
+	next;
+	
+	switch(select("Item Identification:Blessing Service:Storage Access:Information:Back")) {
+		case 1:
+			mes "[Magic Shop Owner]";
+			mes "I can identify unknown magical items for 500 zeny each.";
+			mes "Would you like me to identify your items?";
+			next;
+			if(select("Yes:No") == 1) {
+				if(Zeny >= 500) {
+					set Zeny, Zeny - 500;
+					mes "[Magic Shop Owner]";
+					mes "Focus your mind... let the item's secrets reveal themselves...";
+					next;
+					// Add identify effect here
+					mes "[Magic Shop Owner]";
+					mes "The enchantment is now clear to you!";
+				} else {
+					mes "[Magic Shop Owner]";
+					mes "You need 500 zeny for this service.";
+				}
+			}
+			close;
+		
+		case 2:
+			mes "[Magic Shop Owner]";
+			mes "I can bless your equipment with protective magic for 1000 zeny.";
+			// Add blessing service logic
+			close;
+		
+		case 3:
+			mes "[Magic Shop Owner]";
+			mes "You may use my magical storage vault.";
+			next;
+			openstorage;
+			close;
+		
+		case 4:
+			mes "[Magic Shop Owner]";
+			mes "What would you like to know about?";
+			next;
+			switch(select("Magic Items:Enchanting:Card System:Pricing:Back")) {
+				case 1:
+					mes "[Magic Shop Owner]";
+					mes "Magic items are tools imbued with mystical energy.";
+					mes "They can enhance your abilities or provide special effects.";
+					break;
+				case 2:
+					mes "[Magic Shop Owner]";
+					mes "Enchanting is the art of improving equipment beyond its natural limits.";
+					mes "Higher enchantment levels provide greater benefits but are harder to achieve.";
+					break;
+				case 3:
+					mes "[Magic Shop Owner]";
+					mes "Cards contain the essence of defeated monsters.";
+					mes "When properly inserted, they grant the equipment special properties.";
+					break;
+				case 4:
+					mes "[Magic Shop Owner]";
+					mes "My prices reflect the rarity and power of each item.";
+					mes "Remember, true magical power requires significant investment.";
+					break;
+				case 5:
+					goto S_Services;
+			}
+			next;
+			goto S_Services;
+		
+		case 5:
+			goto S_MainMenu;
+	}
+	end;
+
+S_MainMenu:
+	mes "[Magic Shop Owner]";
+	mes "What else can I help you with today?";
+	goto L_Start;
+
+L_Start:
+	next;
+	switch(select("Browse Basic Items:Premium Collection:Custom Enchantments:Services:Leave")) {
+		case 1: goto S_BasicItems;
+		case 2: goto S_PremiumItems; 
+		case 3: goto S_CustomOrder;
+		case 4: goto S_Services;
+		case 5:
+			mes "[Magic Shop Owner]";
+			mes "Farewell, and may your spells never falter!";
+			close;
+	}
+}

@@ -26577,6 +26577,69 @@ void clif_parse_MoveFromKafraFav( int32 fd, map_session_data* sd ){
 }
 
 /*==========================================
+ * Custom vending list (script based)
+ *------------------------------------------*/
+void clif_vending_script(map_session_data* sd, npc_data* nd)
+{
+	nullpo_retr(0, sd);
+	nullpo_retr(0, nd);
+
+	PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC* p = reinterpret_cast<PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC*>(packet_buffer);
+
+	p->packetType = HEADER_ZC_PC_PURCHASE_ITEMLIST_FROMMC;
+	p->packetLength = sizeof( *p );
+	p->AID = sd->id;
+#if PACKETVER >= 20100105
+	p->venderId = nd->id;
+#endif
+
+	int32 index = 0;
+
+	for(const auto& custom_vending : nd->custom_vending) {
+		PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub& entry = p->items[index];
+		struct item_data* data = itemdb_search( custom_vending.nameid );
+
+		if( data == nullptr )
+			continue;
+
+ 		struct item temp_item = {};
+ 		temp_item.nameid = custom_vending.nameid;
+ 		temp_item.identify = 1;
+ 		temp_item.attribute = custom_vending.attribute;
+ 		temp_item.refine = custom_vending.refine;
+ 		for (int32 j = 0; j < MAX_SLOTS; j++) {
+ 			temp_item.card[j] = custom_vending.card[j];
+ 		}
+
+		entry.price = custom_vending.price;
+		entry.amount = custom_vending.amount;
+		entry.index = client_index( index );
+		entry.itemType = itemtype( custom_vending.nameid );
+		entry.itemId = client_nameid( custom_vending.nameid );
+		entry.identified = 1;
+		entry.damaged = custom_vending.attribute;
+		entry.refine = custom_vending.refine;
+		clif_addcards( &entry.slot, &temp_item );
+#if PACKETVER >= 20150226
+		clif_add_random_options( entry.option_data, temp_item );
+#if PACKETVER >= 20160921
+		entry.location = pc_equippoint_sub(sd, data);
+		entry.viewSprite = data->look;
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+		entry.grade = custom_vending.enchantgrade;
+#endif
+#endif
+#endif
+
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
+		index++;
+	}
+
+	sd->npc_vending = nd->id;
+	clif_send( p, p->packetLength, sd, SELF );
+}
+
+/*==========================================
  * Main client packet processing function
  *------------------------------------------*/
 static int32 clif_parse(int32 fd)

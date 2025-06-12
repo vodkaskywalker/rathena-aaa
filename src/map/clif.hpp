@@ -1573,5 +1573,6 @@ int32 clif_getareachar(struct block_list* bl,va_list ap);
 void clif_autoattack_effect(struct block_list* bl);
 void clif_autoattack_effect_off(struct block_list* bl);
 void clif_getareachar_unit( map_session_data* sd,struct block_list *bl );
+void clif_vending_script(map_session_data* sd, npc_data* nd);
 
 #endif /* CLIF_HPP */

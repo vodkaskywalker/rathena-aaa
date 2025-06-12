@@ -97,6 +97,116 @@ void vending_vendinglistreq(map_session_data* sd, int32 id)
 	clif_vendinglist( *sd, *vsd );
 }
 
+ /*==========================================
+ * Purchase item(s) from a script vending
+ *------------------------------------------*/
+void vending_purchasereq_script(map_session_data* sd, npc_data* nd, int32 uid, const uint8* data, int32 count)
+{
+	int32 i;
+	int32 add;
+	int32 blank;
+	int32 weight;
+	double zeny;
+
+	nullpo_retv(sd);
+	nullpo_retv(nd);
+	
+	if( sd->npc_vending != nd->id || uid != nd->id )
+	{
+		clif_buyvending(*sd, 0, 0, PURCHASEMC_STORE_INCORRECT);
+		return;
+	}
+
+	if( count < 1 || count > MAX_VENDING )
+		return;
+
+	blank = pc_inventoryblank(sd);
+
+	add = 0;
+	zeny = 0;
+	weight = 0;
+
+	for( i = 0; count > i; i++ )
+	{
+		uint16 amount = *(uint16*)(data + 4*i + 0);
+		uint16 index  = *(uint16*)(data + 4*i + 2);
+		struct item_data* data;
+
+		if( amount <= 0 )
+			continue;
+
+		index -= 2;
+
+		if( index < 0 || index >= MAX_VENDING)
+			continue;
+		
+        // Update the line causing the error to correctly handle the shared_ptr  
+        // Replace deprecated itemdb_exists with item_db.find() and handle the shared_ptr correctly
+        auto item_data_ptr = item_db.find(nd->custom_vending[index].nameid);
+        if (!item_data_ptr) {
+            data = nullptr; // Handle the case where the item is not found
+        } else {
+            data = item_data_ptr.get(); // Access the raw pointer from the shared_ptr
+        }
+        if( data == NULL )
+            continue;
+
+		zeny += (double)( nd->custom_vending[index].price * amount );
+
+		if( zeny > (double)sd->status.zeny || zeny < 0.0 || zeny > (double)MAX_ZENY )
+		{
+			clif_buyvending(*sd, index, amount, PURCHASEMC_NO_ZENY);
+			return;
+		}
+
+		weight += data->weight * amount;
+
+		if( weight + sd->weight > sd->max_weight )
+		{
+			clif_buyvending(*sd, index, amount, PURCHASEMC_OVERWEIGHT);
+			return;
+		}
+
+		switch( pc_checkadditem(sd, nd->custom_vending[index].nameid, amount) )
+		{
+			case ADDITEM_OVERAMOUNT:
+				return;
+			case ADDITEM_ITEM:
+				add++;
+		}
+	}
+
+	if( add > blank )
+		return;
+
+	pc_payzeny(sd, (int32)zeny, LOG_TYPE_VENDING, 0);
+
+	for( i = 0; count > i; i++ )
+	{
+		uint16 amount = *(uint16*)(data + 4*i + 0);
+		uint16 index  = *(uint16*)(data + 4*i + 2);
+		struct item add_item;
+		
+		index -= 2;
+
+		memset( &add_item, 0, sizeof(struct item) );
+
+		add_item.nameid = nd->custom_vending[index].nameid;
+		add_item.refine = nd->custom_vending[index].refine;
+		add_item.identify = 1;
+		add_item.attribute = nd->custom_vending[index].attribute;
+		
+		memcpy( add_item.card, nd->custom_vending[index].card, sizeof(nd->custom_vending[index].card) );
+
+		pc_additem(sd, &add_item, amount, LOG_TYPE_VENDING);
+	}
+
+	if( save_settings&2 )
+		chrif_save(sd, 0);
+
+	sd->npc_vending = 0;
+}
+
 /**
  * Calculates taxes for vending
  * @param sd: Vender
@@ -128,6 +238,18 @@ void vending_purchasereq(map_session_data* sd, int32 aid, int32 uid, const uint8
 	map_session_data* vsd = map_id2sd(aid);
 
 	nullpo_retv(sd);
+	// Check if this is a script vending request
+    if (sd->npc_vending == uid) {
+        npc_data* nd = map_id2nd(uid);
+        if (nd) {
+            vending_purchasereq_script(sd, nd, uid, data, count);
+            return;
+        }
+
+		ShowDebug("vending_purchasereq: npc_vending %s not found\n", nd->name);
+		return; // invalid shop
+    }
+
 	if( vsd == nullptr || !vsd->state.vending || vsd->id == sd->id )
 		return; // invalid shop
 

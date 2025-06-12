@@ -27995,6 +27995,158 @@ BUILDIN_FUNC(mesitemicon){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*==================================================*
+ * vending_add <item id>, <price>{, <refine>{, <attribute>{, <card1>, <card2>, <card3>, <card4>{, "<name>"}}}};
+ *--------------------------------------------------*/
+BUILDIN_FUNC(vending_add)
+{
+	struct npc_data *nd;
+    int32 nameid, price;
+
+	if(script_hasdata(st, 10)){
+		nd = npc_name2id(script_getstr(st, 10));
+	}else{
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	}
+
+	if (!nd) {
+		ShowWarning("script:vending_add: no script attached\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+    nameid = script_getnum(st, 2);
+    price = script_getnum(st, 3);
+    if (!item_db.exists(nameid)) {
+        ShowWarning("script:vending_add: unknown item id %d\n", nameid);
+        return SCRIPT_CMD_FAILURE;
+    }
+
+	if(nd->custom_vending.size() >= MAX_VENDING) {
+		ShowWarning("script:vending_add: reached maximum custom vending capacity (%d)\n", MAX_VENDING);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct npc_item_vend vend = {};
+    vend.nameid = nameid;
+    vend.price = price;
+    vend.amount = 1;
+    
+	if (script_hasdata(st, 4))
+		vend.refine = script_getnum(st, 4);
+    if (script_hasdata(st, 5))
+		vend.attribute = script_getnum(st, 5);
+    
+	for (int32 j = 0; j < MAX_SLOTS; j++) {
+        if (script_hasdata(st, 6 + j))
+            vend.card[j] = script_getnum(st, 6 + j);
+    }
+
+	nd->custom_vending.push_back(vend);
+    return SCRIPT_CMD_SUCCESS;
+}
+
+/*==================================================*
+ * vending_remove <item id or index>{, "<name>"};
+ *--------------------------------------------------*/
+BUILDIN_FUNC(vending_remove)
+{
+	struct npc_data *nd;
+	int32 target;
+
+	if(script_hasdata(st, 3)){
+		nd = npc_name2id(script_getstr(st, 3));
+	}else{
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	}
+
+	if (!nd) {
+		ShowWarning("script:vending_remove: no script attached\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	target = script_getnum(st, 2);
+
+	if( target < 0 || target > MAX_VENDING) {
+		ShowWarning("script:vending_remove: index out of range (%d)\n", target);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( target > nd->custom_vending.size() ) {
+		ShowWarning("script:vending_remove: index out of range (%d)\n", target);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	nd->custom_vending.erase(nd->custom_vending.begin() + target);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==================================================*
+ * vending_open {"<name>"};
+ *--------------------------------------------------*/
+BUILDIN_FUNC(vending_open)
+{
+	map_session_data* sd;
+
+	if ( !script_rid2sd(sd) ) {
+		ShowWarning("script:vending_open: no player attached\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct npc_data *nd;
+
+	if(script_hasdata(st, 2)){
+		nd = npc_name2id(script_getstr(st, 2));
+	}else{
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	}
+
+	if (!nd) {
+		ShowWarning("script:vending_open: no script attached\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_vending_script(sd, nd);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==================================================*
+ * vending_reset {"<name>"};
+ *--------------------------------------------------*/
+BUILDIN_FUNC(vending_reset)
+{
+	struct npc_data *nd;
+
+	if(script_hasdata(st, 2)){
+		nd = npc_name2id(script_getstr(st, 2));
+	}else{
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	}
+
+	if (!nd) {
+		ShowWarning("script:vending_reset: no script attached\n");
+		return SCRIPT_CMD_SUCCESS;
+	}
+	
+	nd->custom_vending.clear();
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==================================================*
+ * vending_close;
+ *--------------------------------------------------*/
+BUILDIN_FUNC(vending_close)
+{
+	map_session_data* sd = nullptr;
+
+	if ( !script_rid2sd(sd) ) {
+		ShowWarning("script:vending_close: no player attached\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	vending_closevending(sd);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(skillstrinfo)
 {
 	int32 skill_id;
@@ -30138,6 +30290,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(sc_check,"i"),
 	BUILDIN_DEF(autostart,"i?"),
 	BUILDIN_DEF(skillinfocheck,"ii"),
+
+	// Vending script functions
+	BUILDIN_DEF(vending_add,"ii*"),
+	BUILDIN_DEF(vending_remove,"i*"),
+	BUILDIN_DEF(vending_open,"*"),
+	BUILDIN_DEF(vending_reset,"*"),
+	BUILDIN_DEF(vending_close,""),	
 
 #include <custom/script_def.inc>
 

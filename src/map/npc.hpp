@@ -156,6 +156,18 @@ enum e_npcv_status : uint8 {
 	NPCVIEW_CLOAK     = NPCVIEW_CLOAKOFF | NPCVIEW_CLOAKON,
 };
 
+struct npc_item_vend {
+	t_itemid nameid;
+	uint16 amount;
+	uint8 identify;
+	uint8 refine;
+	uint8 attribute;
+	uint8 enchantgrade;
+	t_itemid card[MAX_SLOTS];
+	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];
+	uint32 price;
+};
+
 struct npc_data : public block_list {
 	struct unit_data ud; //Because they need to be able to move....
 	struct view_data vd;
@@ -168,6 +180,8 @@ struct npc_data : public block_list {
 	uint32 next_walktime;
 	int32 instance_id;
 	e_npcv_status state{NPCVIEW_ENABLE};
+
+	std::vector<npc_item_vend> custom_vending; // custom vending items, used by npcshopitem/npcshopadditem
 
 	unsigned size : 2;
 

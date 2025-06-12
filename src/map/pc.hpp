@@ -601,6 +601,8 @@ public:
 	std::shared_ptr<s_player_group> group;
 	std::bitset<PC_PERM_MAX> permissions; // group permissions have to be copied, because they might be adjusted by atcommand addperm
 	int32 count_rewarp; //count how many time we being rewarped
+	
+	uint32 npc_vending;
 
 	int32 langtype;
 	struct mmo_charstatus status;
