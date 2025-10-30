@@ -1,0 +1,518 @@
+job_knt	mapflag	nosave
+job_knt	mapflag	nomemo
+job_knt	mapflag	noautoattack
+job_knt	mapflag	noteleport
+job_knt	mapflag	monster_noteleport
+
+job_knt,1,1,0	script	Controller#Knight_Trial	-1,{
+	
+OnInstanceinit:
+	'map_name$ = instance_mapname("job_knt");
+	'stone_id = 2233102;
+	initnpctimer;
+	donpcevent instance_npcname("First Trial#knt_Trial")+"::OnStart";
+	disablenpc instance_npcname("First Warp#knt_Trial");
+	disablenpc instance_npcname("Second Warp#knt_Trial");
+	disablenpc instance_npcname("Third Warp#knt_Trial");
+	disablenpc instance_npcname("Reward#knt_Trial");
+	end;
+OnEnd:
+	stopnpctimer;
+	end;
+OnTimer1800000:
+	donpcevent instance_npcname(strnpcinfo(0))+"::OnLoseFight";
+	stopnpctimer;
+	end;
+OnLoseFight:
+	mapannounce 'map_name$,"ท่านได้ใช้เวลาเกินกำหนด มิติกำลังพังทลาย",bc_map;
+	sleep 2000;
+	instance_destroy;
+	end;
+}
+
+job_knt,43,58,5	script	First Trial#knt_Trial	MM_EVIL_FANATICS,{
+	getpartymember( getcharid(1) );
+	'party_count = $@partymembercount;	// party count can't be changed starting now
+	'party_id = getcharid(1);
+	donpcevent instance_npcname(strnpcinfo(0))+"::OnEnable";
+	end;
+	
+OnStart:
+	enablenpc;
+	waitingroom "เริ่มบททดสอบที่ 1",0;
+	end;
+OnEnable:
+	donpcevent instance_npcname("First Trial#talk")+"::OnStart";
+	donpcevent instance_npcname("#trial_ex_dont_die")+"::OnStart";
+	disablenpc;
+	end;
+Oninit:
+	disablenpc;
+	end;
+}
+
+job_knt,43,58,5	script	First Trial#talk	MM_EVIL_FANATICS,{
+	end;
+OnStart:
+	enablenpc;
+	sleep 2000;
+	npctalk "นี่คือการทดสอบด่านแรก";
+	sleep 3000;
+	npctalk "เพื่อทดสอบดูว่าตัวเจ้ามีความอดทนมากพอหรือไม่หรือ";
+	sleep 3000;
+	npctalk "ถ้าอย่างงั้นเจ้าก็เตรียมตัวให้ดี";
+	sleep 1000;
+	specialeffect EF_LORD;
+	sleep 500;
+	specialeffect EF_LORD;
+	sleep 500;
+	specialeffect EF_LORD;
+	sleep 3000;
+	//*monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+	monster 'map_name$,43,58,"Endurance Trial",2942,1,-1,instance_npcname(strnpcinfo(0))+"::OnMobSpawn";
+	hideonnpc;
+	end;
+
+OnMobSpawn:
+	hideoffnpc;
+	sleep 5000;
+	npctalk "ผ่านมาได้อย่างยอดเยี่ยมเลย";
+	sleep 3000;
+	npctalk "มาเถอะ ไปสู่บดทดสอบถัดไป";
+	sleep 2000;
+	disablenpc;
+	donpcevent instance_npcname("First Warp#knt_Trial")+"::OnStart";
+	end;
+	
+Oninit:
+	disablenpc;
+	end;
+}
+
+job_knt,43,58,5	script	First Warp#knt_Trial	WARPNPC,2,2,{
+	OnStart:
+		enablenpc;
+		end;
+	OnTouch:
+		warp 'map_name$,143,152;
+		end;
+	Oninit:
+		disablenpc;
+		end;
+}
+
+
+job_knt,143,159,5	script	Second Trial#knt_Trial	22298,{
+	donpcevent instance_npcname(strnpcinfo(0))+"::OnStart";
+	end;
+	
+OnStart:
+	donpcevent instance_npcname("Second Trial#talk")+"::OnStart";
+	disablenpc;
+	end;
+Oninit:
+	waitingroom "เริ่มบททดสอบที่ 2",0;
+	end;
+}
+
+job_knt,143,159,5	script	Second Trial#talk	22298,{
+	end;
+OnStart:
+	enablenpc;
+	sleep 2000;
+	npctalk "นี่คือการทดสอบด่านที่สอง";
+	sleep 3000;
+	npctalk "ด่านทดสอบนี้ จะเป็นจุดทดสอบจุดถัดไปของท่าน";
+	sleep 3000;
+	npctalk "นี่จะเป็นการทดสอบว่า ตัวท่านมีความแข็งแกร่งมากพอหรือไม่";
+	sleep 3000;
+	npctalk "ถ้าท่านแข็งแกร่งได้มากพอ ท่านจะผ่านบททดสอบนี้อย่างง่ายดาย";
+	sleep 1000;
+	specialeffect EF_LORD;
+	sleep 500;
+	specialeffect EF_LORD;
+	sleep 500;
+	specialeffect EF_LORD;
+	sleep 3000;
+	//*monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+	monster 'map_name$,143,158,"Endurance Trial",/*2942*/22298,1,-1,instance_npcname(strnpcinfo(0))+"::OnMobSpawn";
+	hideonnpc;
+	end;
+
+OnMobSpawn:
+	hideoffnpc;
+	sleep 5000;
+	npctalk "ผ่านมาได้อย่างยอดเยี่ยมเลย";
+	sleep 3000;
+	npctalk "มาเถอะ ไปสู่บดทดสอบถัดไป";
+	sleep 2000;
+	disablenpc;
+	donpcevent instance_npcname("Second Warp#knt_Trial")+"::OnStart";
+	end;
+	
+Oninit:
+	disablenpc;
+	end;
+}
+
+job_knt,143,159,5	script	Second Warp#knt_Trial	WARPNPC,2,2,{
+	OnStart:
+		enablenpc;
+		end;
+	OnTouch:
+		warp 'map_name$,144,57;
+		end;
+	Oninit:
+		disablenpc;
+		end;
+}
+job_knt,143,59,5	script	Third Trial#knt_Trial	22297,{
+	donpcevent instance_npcname(strnpcinfo(0))+"::OnStart";
+	end;
+	
+OnStart:
+	donpcevent instance_npcname("Third Trial#talk")+"::OnStart";
+	disablenpc;
+	end;
+Oninit:
+	waitingroom "เริ่มบททดสอบที่ 3",0;
+	end;
+}
+
+job_knt,143,59,5	script	Third Trial#talk	22297,{
+	end;
+OnStart:
+	enablenpc;
+	sleep 2000;
+	npctalk "นี่คือการทดสอบด่านที่สาม";
+	sleep 3000;
+	npctalk "ด่านทดสอบนี้ จะเป็นจุดทดสอบจุดถัดไปของท่าน";
+	sleep 3000;
+	npctalk "นี่จะเป็นการทดสอบว่า ตัวท่านมีสติมากพอหรือไม่";
+	sleep 3000;
+	npctalk "ถ้าท่านมีไหวพริบได้มากพอ ท่านจะผ่านบททดสอบนี้อย่างง่ายดาย";
+	sleep 1000;
+	specialeffect EF_LORD;
+	sleep 500;
+	specialeffect EF_LORD;
+	sleep 500;
+	specialeffect EF_LORD;
+	sleep 3000;
+	//*monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+	areamonster 'map_name$,129,41,159,70,"Frenzy Trial",22297,50,-1,instance_npcname(strnpcinfo(0))+"::OnMobSpawn";
+	hideonnpc;
+	end;
+
+OnMobSpawn:
+	if(mobcount('map_name$,instance_npcname(strnpcinfo(0))+"::OnMobSpawn") >= 1 ) {
+		mapannounce 'map_name$,"เหลือมอนสเตอร์ทดสอบอยู่ "+mobcount('map_name$,instance_npcname(strnpcinfo(0))+"::OnMobSpawn")+" ตัว.",bc_map;
+		end;
+	}
+	hideoffnpc;
+	sleep 5000;
+	npctalk "ผ่านมาได้อย่างยอดเยี่ยมเลย";
+	sleep 3000;
+	npctalk "มาเถอะ ไปสู่บดทดสอบถัดไป";
+	sleep 2000;
+	disablenpc;
+	donpcevent instance_npcname("Third Warp#knt_Trial")+"::OnStart";
+	end;
+	
+Oninit:
+	disablenpc;
+	end;
+}
+
+job_knt,143,59,5	script	Third Warp#knt_Trial	WARPNPC,2,2,{
+	OnStart:
+		enablenpc;
+		end;
+	OnTouch:
+		warp 'map_name$,44,155;
+		end;
+	Oninit:
+		disablenpc;
+		end;
+}
+
+job_knt,43,159,5	script	Final Trial	3063,{
+	donpcevent instance_npcname(strnpcinfo(0))+"::OnStart";
+	end;
+	
+OnStart:
+	donpcevent instance_npcname("Final Trial#talk")+"::OnStart";
+	disablenpc;
+	end;
+Oninit:
+	waitingroom "เริ่มบททดสอบที่ 4",0;
+	end;
+}
+
+job_knt,43,159,5	script	Final Trial#talk	3063,{
+	end;
+OnStart:
+	enablenpc;
+	sleep 2000;
+	npctalk "นี่คือการทดสอบด่านสุดท้าย";
+	sleep 3000;
+	npctalk "ด่านทดสอบนี้ ไม่มีอะไรมากแค่ฆ่าเจ้าตัวที่ฆ่าคุณได้ก็เพียงพอแล้ว";
+	sleep 1000;
+	specialeffect EF_LORD;
+	sleep 500;
+	specialeffect EF_LORD;
+	sleep 500;
+	specialeffect EF_LORD;
+	sleep 3000;
+	//*monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+	monster 'map_name$,43,158,"Final Trial",3063,1,-1,instance_npcname(strnpcinfo(0))+"::OnMobSpawn";
+	hideonnpc;
+	end;
+
+OnMobSpawn:
+	hideoffnpc;
+	sleep 5000;
+	npctalk "หนอยแน่ บังอาจมากกก";
+	sleep 5000;
+	npctalk "เดี๋ยวจะโชว์พลังที่แท้จริง ของผู้คุมที่นี้ให้ดู ว๊ากกกกกกก";
+	sleep 1000;
+	specialeffect EF_DEMONICFIRE2;
+	specialeffect EF_NPC_EARTHQUAKE;
+	sleep 5000;
+	specialeffect EF_LORD;
+	donpcevent instance_npcname("True Final#Talk")+"::OnStart";
+	disablenpc;
+	end;
+	
+Oninit:
+	disablenpc;
+	end;
+}
+
+job_knt,43,159,5	script	True Final#talk	3063,{
+	end;
+OnStart:
+	enablenpc;
+	donpcevent instance_npcname(strnpcinfo(0)) + "::OnTalk";
+	end;
+OnTalk:
+	npctalk "จงลิ้มรสชาติ";
+	sleep 5000;
+	npctalk "พลังของงงงงงงงง";
+	sleep 5000;
+	npctalk "ตัวหย่ายยยยยยยยยยยย!!!";
+	sleep 5000;
+	donpcevent instance_npcname("True Final#summon")+"::OnStart";
+	hideonnpc;
+	end;
+Oninit:
+	disablenpc;
+	end;
+}
+
+job_knt,1,1,5	script	True Final#summon	-1,{
+	OnStart:
+		monster 'map_name$,43,158,"True Trial",3064,1,instance_npcname(strnpcinfo(0))+"::OnMobSpawn";
+		donpcevent instance_npcname("trap1#knt_Trial")+"::OnStart";
+		//enablenpc "trap2#knt_Trial::OnStart";
+		initnpctimer;
+		end;
+	OnMobSpawn:
+		stopnpctimer;
+		mapannounce 'map_name$,"ท่านได้ผ่านการทดสอบทั้งหมดแล้ว",bc_map,"0xFFFF00";
+		donpcevent instance_npcname("trap1#knt_Trial")+"::OnEnd";
+		//enablenpc "trap2#knt_Trial::OnEnd";
+		donpcevent instance_npcname("Reward#knt_Trial")+"::OnStart";
+		end;
+	OnTimer10000:
+		donpcevent instance_npcname("trap1#knt_Trial")+"::OnStart";
+		initnpctimer;
+		end;
+}
+
+job_knt,43,159,5	script	Reward#knt_Trial	4_TREASURE_BOX,{
+	if(select("ขอเดินดูรอบๆก่อน:ออกเลย") == 1 ) end;
+	
+	if(!@reward_ex_trial) {
+		rentitem $@stone_id,callfunc("F_Nexttime", 2, 1);
+	}
+	completequest 55;
+	@reward_ex_trial++;
+	warp "icecastle",185,211;
+	end;
+	OnStart:
+		enablenpc;
+		waitingroom "รับรางวัลพร้อมทางออก",0;
+		end;
+	Oninit:
+		disablenpc;
+		end;
+}
+
+job_knt,1,1,5	script	trap1#knt_Trial	-1,{
+	
+OnStart:
+    for(.@i = 1; .@i <= 50; .@i ++){
+		sleep 150;
+        donpcevent "floor_eff#4-"+.@i+"::OnEnable";
+    }
+    end;
+OnEnd:
+	stopnpctimer;
+	end;	
+}
+
+
+function	script	FiL_Check_Trial	{
+    .@qtd = getareaunits(BL_PC,getarg(0),getarg(1)-2,getarg(2)-2,getarg(1)+2,getarg(2)+2,.@array[0]);
+    freeloop(1);
+    for(.@i=0;.@i<getarraysize(.@array);.@i++){
+        attachrid(.@array[.@i]);
+        if(Hp){
+            specialeffect2 721;
+			.@value = 55 * MaxHp / 100;
+			heal -.@value,0;	// (placeholder)
+			specialeffect2 EF_CLAYMORE;
+			specialeffect2 EF_ACIDDEMON;
+        }
+    }
+    freeloop(0);
+    return;
+}
+
+job_knt,0,0,0	script	floor_eff#4-1	139,{
+    end;
+
+OnEnable:
+    //sleep rand(200,1000);
+    movenpc instance_npcname(strnpcinfo(0)),rand(27,60),rand(129,162);
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1;
+    sleep 2500;
+    callfunc("FiL_Check_Trial", .@mapname$, .@mapx, .@mapy);
+    end;
+
+OnInit:
+    end;
+}
+
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-2	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-3	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-4	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-5	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-6	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-7	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-8	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-9	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-10	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-11	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-12	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-13	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-14	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-15	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-16	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-17	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-18	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-19	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-20	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-21	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-22	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-23	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-24	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-25	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-26	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-27	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-28	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-29	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-30	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-31	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-32	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-33	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-34	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-35	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-36	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-37	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-38	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-39	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-40	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-41	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-42	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-43	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-44	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-45	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-46	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-47	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-48	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-49	139
+job_knt,0,0,0	duplicate(floor_eff#4-1)	floor_eff#4-50	139
+
+job_knt,1,1,0	script	#trial_ex_dont_die	-1,{
+
+OnStart:
+	initnpctimer;
+	end;
+OnStop:
+OnEnd:
+	stopnpctimer;
+	end;
+	
+OnTimer1000:
+	getpartymember( 'party_id, 1, .@char_id );
+	getpartymember( 'party_id, 2, .@acc_id );
+	// เก็บชื่อทีมจากสมาชิกคนแรกที่ออนไลน์
+	if ('team_name$ == "") {
+		for (.@j = 0; .@j < 'party_count; .@j++) {
+			if (isloggedin(.@acc_id[.@j],.@char_id[.@j])) {
+				if (attachrid(.@char_id[.@j])) {
+					'team_name$ = strcharinfo(0);
+					detachrid();
+					break;
+				}
+			}
+		}
+	}
+	// ตรวจสอบจำนวนสมาชิกปาร์ตี้ที่ออนไลน์และอยู่ในแผนที่
+	.@online_in_map = 0;
+	for (.@i = 0; .@i < 'party_count; .@i++) {
+		if (isloggedin(.@acc_id[.@i],.@char_id[.@i])) {
+			if (strcharinfo(3, .@char_id[.@i]) == 'map_name$) {
+				.@online_in_map++;
+			}
+		}
+	}
+	.@party_name$ = getpartyname('party_id);
+	if (.@party_name$ == "") {
+		.@party_name$ = "Unknown Team";
+	}
+	// ตรวจสอบเงื่อนไข Immune
+	.@should_immune = false;
+	
+	// เงื่อนไขที่ 1: ทีมที่มีมากกว่า 1 คนและเข้ามาไม่ครบ
+	if ('party_count > 1 && .@online_in_map != 'party_count) {
+		.@should_immune = true;
+	}
+	// เงื่อนไขที่ 2: มีสมาชิกตาย
+    else {
+        .@dead_count = 0;
+        for (.@i = 0; .@i < 'party_count; .@i++) {
+            if (isloggedin(.@acc_id[.@i],.@char_id[.@i])) {
+                .@current_hp = readparam(Hp, .@char_id[.@i]);
+                if (.@current_hp < 1) {
+                    .@dead_count++;
+                }
+            }
+        }
+        if (.@dead_count > 0) {
+            .@should_immune = true;
+            // แสดงข้อความเมื่อมีคนตาย (ไม่ตรวจสอบจำนวนคนในทีม)
+            mapannounce  'map_name$, "SYSTEM : ทีม " + .@party_name$ + "~ท่านได้พ่ายแพ้ให้กับบททดสอบ~", bc_map, 0xFF9900;
+			stopnpctimer;
+			sleep 4000;
+			instance_destroy;
+			end;
+        }
+    }
+	// เรียกใช้ Immune ตามเงื่อนไข
+	//callsub(S_Immune, .@should_immune);
+	initnpctimer;
+	end;
+}

@@ -77,12 +77,25 @@ Body:
       X: 200
       Y: 172
 
+  - Id: 403
+    Name: Extream Trial
+    Enter:
+      Map: job_knt
+      X: 43
+      Y: 52
+
   - Id: 451
     Name: Kraken Raid
     Enter:
       Map: 1@cash1
       X: 198
       Y: 92
+  - Id: 452
+    Name: Another Tower
+    Enter:
+      Map: f_islava
+      X: 82
+      Y: 82
 
   - Id: 601
     Name: Guardian Raid

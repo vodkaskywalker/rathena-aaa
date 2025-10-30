@@ -1,4 +1,180 @@
-icecastle,14,116,5	script	Server Dungeon#main	4_EP19_LUNCH,{
-	mes "ยังไม่พร้อม";
+icecastle,21,128,2	script	Dimension Prison#icecastle	GATE_SKYBLUE,{
+
+	menu
+		"• Extream Kraken",EX_KRAKEN,
+		"• Extream Trial",EX_KNIGHT,
+		"• Close",-;
+	end;
+	
+EX_KNIGHT:
+	.@questid = 55;
+	.@md_name$ = "Extream Trial";
+	.@current_instance_name$ = instance_live_info(ILI_NAME, instance_id(IM_PARTY));
+	set .@party_id,getcharid(1);
+	if (checkweight(1201,5) == 0) {	// unknown ID
+		mes "^ff0000It ของในตัวมากเกินไป ทำน้ำหนัก กับช่องเก็บของวางอีกหน่อย.^000000";
+		close;
+	}
+	if (getcharid(1) < 1) {
+		mes "^0000ffอย่างน้อยๆก็ต้องมีปาตี้ถึงจะเข้าได้นะ.^000000";
+		close;
+	}
+	if( BaseLevel < 145 ) {
+		mes "Need Level^990000 145^000000 Or More";
+		end;
+	}
+	if (!instance_check_party(.@party_id,1) ) {
+		mes "แย่แน่ๆ คงจะเข้าได้แค่คนเดียว";
+		end;
+		
+	}
+	switch(checkquest(.@questid,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+			switch( checkquest(.@questid,HUNTING) ) {
+			case -1:
+				break;
+			case 0:
+				if(.@current_instance_name$ != "") {
+					mes "ดันเจี้ยนเปิดอยู่ แต่เจ้าแพ้และออกมาแล้ว";
+					mes "ต้องทำลายมันก่อนถึงจะเข้าไปใหม่ได้นะ";
+					end;
+				}
+				mes "ลบเควสทิ้งสำหรับการท้าทายครั้งใหม่";
+				erasequest .@questid;
+				end;
+			case 1:
+				mes "ถึงกำหนดวันรีสัปดาห์แล้ว";
+				mes "ลบเควสทิ้งสำหรับการท้าทายครั้งใหม่";
+				erasequest .@questid;
+				end;
+			case 2:
+				mes "คุณท้าทาย Raid ของสัปดาห์นี้ไปแล้ว";
+				end;
+			}
+		case 1:
+			mes "คุณท้าทาย Raid ของสัปดาห์นี้ไปแล้ว";
+			mes "และได้รางวัลแล้วเช่นกัน";
+			end;
+		case 2:
+			mes "ถึงกำหนดวันรีสัปดาห์แล้ว";
+			mes "ลบเควสทิ้งสำหรับการท้าทายครั้งใหม่";
+			erasequest .@questid;
+			end;
+	}
+			
+	if (.@current_instance_name$ == .@md_name$)
+		.@md_name_ready$ = .@md_name$;
+	else if (is_party_leader() == true) {
+		if (select( "ยกเลิก", "สร้างทางเข้าสำหรับ " + .@md_name$ + "" ) == 1)
+			end;
+		instance_create(.@md_name$);
+		end;
+	}
+
+	if (.@md_name_ready$ != "")
+		.@menu$ = "เข้าสู่ " + .@md_name_ready$ + "";
+
+	if (select( "ยกเลิก", .@menu$ ) == 1)
+		end;
+
+	switch( instance_enter(.@md_name_ready$) ) {
+	case IE_OTHER:
+		mes "^ff0000Error โปรดแจ้งจีฉลามด้วย.^000000";
+		close;
+	case IE_NOINSTANCE:
+	case IE_NOMEMBER:
+		end;
+	case IE_OK:
+		setquest .@questid;
+		mapannounce "icecastle", "นักพจญภัย " + strcharinfo(0) + " มุ่งเข้าสู่ " + .@md_name_ready$ + ".", bc_map, 0xFFAA;
+		// warp "1@f_lake",23,192;
+		end;
+	}
+	end;
+	
+EX_KRAKEN:
+	.@md_name$ = "Extream Kraken";
+	.@current_instance_name$ = instance_live_info(ILI_NAME, instance_id(IM_PARTY));
+	if (checkweight(1201,5) == 0) {	// unknown ID
+		mes "^ff0000It ของในตัวมากเกินไป ทำน้ำหนัก กับช่องเก็บของวางอีกหน่อย.^000000";
+		close;
+	}
+	if (getcharid(1) < 1) {
+		mes "^0000ffอย่างน้อยๆก็ต้องมีปาตี้ถึงจะเข้าได้นะ.^000000";
+		close;
+	}
+	if( BaseLevel < 99 ) {
+		mes "Need Level ^99000099^000000 Or More";
+		end;
+	}
+	switch(checkquest(52,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+			switch( checkquest(52,HUNTING) ) {
+			case -1:
+				break;
+			case 0:
+				if(.@current_instance_name$ != "") {
+					mes "ดันเจี้ยนเปิดอยู่ แต่เจ้าแพ้และออกมาแล้ว";
+					mes "ต้องทำลายมันก่อนถึงจะเข้าไปใหม่ได้นะ";
+					end;
+				}
+				mes "ลบเควสทิ้งสำหรับการท้าทายครั้งใหม่";
+				erasequest 52;
+				end;
+			case 1:
+				mes "ถึงกำหนดวันรีสัปดาห์แล้ว";
+				mes "ลบเควสทิ้งสำหรับการท้าทายครั้งใหม่";
+				erasequest 52;
+				end;
+			case 2:
+				mes "คุณท้าทาย Raid ของสัปดาห์นี้ไปแล้ว";
+				end;
+			}
+		case 1:
+			mes "คุณท้าทาย Raid ของสัปดาห์นี้ไปแล้ว";
+			mes "และได้รางวัลแล้วเช่นกัน";
+			end;
+		case 2:
+			mes "ถึงกำหนดวันรีสัปดาห์แล้ว";
+			mes "ลบเควสทิ้งสำหรับการท้าทายครั้งใหม่";
+			erasequest 52;
+			end;
+	}
+			
+	if (.@current_instance_name$ == .@md_name$)
+		.@md_name_ready$ = .@md_name$;
+	else if (is_party_leader() == true) {
+		if (select( "ยกเลิก", "สร้างทางเข้าสำหรับ " + .@md_name$ + "" ) == 1)
+			end;
+		instance_create(.@md_name$);
+		end;
+	}
+
+	if (.@md_name_ready$ != "")
+		.@menu$ = "เข้าสู่ " + .@md_name_ready$ + "";
+
+	if (select( "ยกเลิก", .@menu$ ) == 1)
+		end;
+
+	switch( instance_enter(.@md_name_ready$) ) {
+	case IE_OTHER:
+		mes "^ff0000Error โปรดแจ้งจีฉลามด้วย.^000000";
+		close;
+	case IE_NOINSTANCE:
+	case IE_NOMEMBER:
+		end;
+	case IE_OK:
+		setquest 52;
+		mapannounce "icecastle", "นักพจญภัย " + strcharinfo(0) + " มุ่งเข้าสู่ " + .@md_name_ready$ + ".", bc_map, 0xFFAA;
+		// warp "1@f_lake",23,192;
+		end;
+	}
+	end;
+Oninit:
+	waitingroom "Extream Raid",0;
 	end;
 }

@@ -99,7 +99,8 @@ OnMenu:
 			mes "[The Collector]";
 			mes "====================";
 			for(.@i=0;.@i < getarraysize(.collect_price); .@i+=2)
-				mes "[^i["+.collect_price[.@i]+"]]  "+getitemname(.collect_price[.@i])+":","^ff0000"+F_InsertComma(.collect_price[.@i+1])+"^000000 zeny";
+				if(.collect_price[.@i] > 1)
+					mes "[^i["+.collect_price[.@i]+"]]  "+getitemname(.collect_price[.@i])+":","^ff0000"+F_InsertComma(.collect_price[.@i+1])+"^000000 zeny";
 			goto OnMenu;
 			end;
 		default:
@@ -108,7 +109,9 @@ OnMenu:
 	end;
 Oninit:
 	setarray .collect_price,
-	2233101, 31000000;
+	2233101, 31000000,					// Ex-Kraken
+	2233102, 42000000,					// Ex-Kraken
+	1,0;	// Dummy
 	end;
 }
 

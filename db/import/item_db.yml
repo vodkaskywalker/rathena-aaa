@@ -1303,7 +1303,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bStr,200; bonus2 bHPLossRate,3000,1000; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
+      autobonus "{ bonus bStr,200; bonus2 bHPLossRate,500,1000; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
       bonus bStr,10;
     UnEquipScript: |
       heal 0,-300;
@@ -1481,35 +1481,35 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bCriticalhitDamage,1;
+      bonus bCriticalHitRate,1;
   - Id: 2099027
     AegisName: CMS_Chaos_SUN_2
     Name: Crimson Chaos of the Sun
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bCriticalhitDamage,2;
+      bonus bCriticalHitRate,2;
   - Id: 2099028
     AegisName: CMS_Chaos_SUN_3
     Name: Crimson Chaos of the Sun
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bCriticalhitDamage,3;
+      bonus bCriticalHitRate,3;
   - Id: 2099029
     AegisName: CMS_Chaos_SUN_4
     Name: Crimson Chaos of the Sun
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bCriticalhitDamage,4;
+      bonus bCriticalHitRate,4;
   - Id: 2099030
     AegisName: CMS_Chaos_SUN_5
     Name: Crimson Chaos of the Sun
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bCriticalhitDamage,5;
+      bonus bCriticalHitRate,5;
   - Id: 2099031
     AegisName: CMS_Chaos_MOON_1
     Name: Crimson Chaos of the Moon
@@ -1600,6 +1600,16 @@ Body:
   - Id: 2233101
     AegisName: Kraken_Extreme_Stone
     Name: Kraken Extreme Stone
+    Type: etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 2233102
+    AegisName: Trial_Extreme_Stone
+    Name: Trial Extreme Stone
     Type: etc
     Trade:
       NoDrop: true
@@ -4186,6 +4196,12 @@ Body:
   - Id: 2239006
     AegisName: Vicious_Core
     Name: Vicious Core
+    Type: etc
+    Buy: 2000
+    Weight: 10
+  - Id: 2239007
+    AegisName: Trial_Fregment
+    Name: Trial Fregment
     Type: etc
     Buy: 2000
     Weight: 10

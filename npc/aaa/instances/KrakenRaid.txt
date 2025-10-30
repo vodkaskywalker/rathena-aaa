@@ -33,7 +33,7 @@ mal_dun01,205,233,5	script	Weird Entrance#octo	21887,{
 		end;
 		
 	}
-	if (!instance_check_party(.@party_id,1) ) {
+	if (instance_check_party(.@party_id,1) ) {
 		mes "แย่แน่ๆ คงจะเข้าได้แค่คนเดียว";
 		end;
 		

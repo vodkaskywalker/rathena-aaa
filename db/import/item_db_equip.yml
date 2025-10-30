@@ -404,6 +404,15 @@ Body:
       bonus bAtkRate,5;
       bonus bMatkRate,5;
       bonus bVariableCastrate,-10;
+  - Id: 2120002
+    AegisName: Just_a_Tie
+    Name: Just a Tie
+    Type: Armor
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Slots: 1
 #  [Weapon]
   - Id: 1941
     Trade:

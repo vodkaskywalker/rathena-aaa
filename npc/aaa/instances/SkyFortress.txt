@@ -1993,6 +1993,13 @@ OnTimer2000:
 		mes "- The warp is emanating bright lights. -";
 		close;
 	}
+	completequest 9418;// Attack Sky Fortress Invading Prontera
+	setquest 9419;// Attack Sky Fortress Invading Prontera
+	if (isbegin_quest(9427) == 0) {
+		setquest 9427;// Clearing the Sky Fortress for the Same Time
+		completequest 9427;
+		//rentitem 14505,3600;// Sky Fortress Ticket
+	}
 	mes "- You start to transport. -";
 	close2;
 	if (fortress_entrance_loc == 0)
@@ -2006,6 +2013,7 @@ OnTimer2000:
 OnEnable:
 	initnpctimer;
 	enablenpc instance_npcname("Sky Fortress Escape Warp#end_warp");
+	waitingroom "Exit Here",0;
 	end;
 OnTimer2000:
 	specialeffect EF_ENHANCE;

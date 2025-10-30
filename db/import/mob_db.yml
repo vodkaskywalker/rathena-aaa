@@ -86,7 +86,6 @@ Body:
     DamageTaken: 10
   - Id: 2476
     DamageTaken: 10
-
   - Id: 2495
     AegisName: HIDDEN_MOB2
     Name: Hidden Mob
@@ -2194,6 +2193,157 @@ Body:
     DamageMotion: 360
     Ai: 10
     Class: Boss
+# Ex2
+
+  - Id: 2942
+    Hp: 10000
+    DamageTaken: 1
+  - Id: 22298
+    AegisName: MINI_GOD_SNAKE
+    Name: Fake Jormungandr
+    Level: 151
+    Hp: 8256000
+    Attack: 3350
+    Attack2: 167
+    Defense: 166
+    MagicDefense: 103
+    Str: 118
+    Agi: 72
+    Vit: 40
+    Int: 55
+    Dex: 213
+    Luk: 30
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    ClientAttackMotion: 240
+    DamageMotion: 350
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    
+  - Id: 22297
+    AegisName: dragon_poring
+    Name: Fake Dragonring
+    Level: 150
+    Hp: 3333240
+    Sp: 0
+    BaseExp: 0
+    JobExp: 0
+    MvpExp: 0
+    Attack: 712
+    Attack2: 935
+    Defense: 217
+    MagicDefense: 412
+    Str: 50
+    Agi: 99
+    Vit: 61
+    Int: 44
+    Dex: 362
+    Luk: 99
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 130
+    AttackDelay: 432
+    AttackMotion: 864
+    ClientAttackMotion: 480
+    DamageMotion: 360
+    DamageTaken: 1
+    Ai: 07
+    Class: Boss
+    
+  - Id: 3063
+    AegisName: Deviruchi_faker_Mini
+    Name: Fake Deviluchi
+    Level: 160
+    Hp: 15300000
+    Sp: 0
+    BaseExp: 0
+    JobExp: 0
+    MvpExp: 0
+    Attack: 11112
+    Attack2: 9935
+    Defense: 217
+    MagicDefense: 412
+    Str: 496
+    Agi: 199
+    Vit: 61
+    Int: 44
+    Dex: 762
+    Luk: 99
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 232
+    AttackMotion: 464
+    ClientAttackMotion: 380
+    DamageMotion: 360
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    
+  - Id: 3064
+    AegisName: Deviruchi_faker_W
+    Name: Fake Deviluchi
+    Level: 175
+    Hp: 20300000
+    Sp: 0
+    BaseExp: 0
+    JobExp: 0
+    MvpExp: 0
+    Attack: 14112
+    Attack2: 11935
+    Defense: 417
+    MagicDefense: 0
+    Str: 496
+    Agi: 199
+    Vit: 61
+    Int: 44
+    Dex: 762
+    Luk: 99
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 232
+    AttackMotion: 464
+    ClientAttackMotion: 380
+    DamageMotion: 360
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    MvpDrops:
+      - Item: MVP_Option_Box_T3
+        Rate: 5000
+    Drops:
+      - Item: Just_a_Tie
+        Rate: 1
+        StealProtected: true
+      - Item: Trial_Fregment
+        Rate: 100
+        StealProtected: true
+    
 # New
   - Id: 23000
     AegisName: DARK_ILLUSION2
