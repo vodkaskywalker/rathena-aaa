@@ -27,9 +27,25 @@ icecastle,189,206,5	script	ไก่วิเศษ	800,{
 */
 
 icecastle,189,206,5	script	ไก่วิเศษ	800,{
-	if ((eaclass()&EAJ_UPPERMASK) == EAJ_KNIGHT)
-		mes "true";
-	else
-		mes "false";
-	close;
+
+OnMinute00:
+	for(.@i=0;.@i<getarraysize(.pvpmapname$);.@i++) {
+		pvpon .pvpmapname$[.@i];
+		mapannounce .pvpmapname$[.@i],"PVP ภายในแผนที่ได้เกิดขึ้นแล้ว",bc_map;
+	}
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	for(.@i=0;.@i<getarraysize(.pvpmapname$);.@i++) {
+		pvpoff .pvpmapname$[.@i];
+		mapannounce .pvpmapname$[.@i],"PVP ภายในแผนที่ได้จบลงแล้ว",bc_map;
+	}
+	stopnpctimer
+	end;
+	
+	end;
+Oninit:
+	setarray .pvpmapname$,"icecastle","prontera";
+	end;
 }

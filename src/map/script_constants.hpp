@@ -850,6 +850,9 @@
 	// [Custom Bonus]
 	
 	export_constant2("bNoFatalDamage", SP_NO_FATAL);
+	export_constant2("bBrainMuscle", SP_BRAINMUSCLE);
+	export_constant2("bfrenzyrevert", SP_FRENZYREVERT);
+	export_constant2("bBluntthorn", SP_BLUNT_THORN);
 	export_constant2("bSkillUpgrade1", SP_UPSKILL1);
 	export_constant2("bSkillUpgrade2", SP_UPSKILL2);
 	export_constant2("bSkillUpgrade3", SP_UPSKILL3);

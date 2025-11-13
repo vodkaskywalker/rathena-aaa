@@ -3328,6 +3328,10 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			return true;
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
+		if (sd && sd->special_state.bluntthorn) {
+			int32 ori_cri = cri;
+			cap_value(cri, 0, 100);
+		}
 		return (rnd()%1000 < cri);
 	}
 	return false;
@@ -8360,9 +8364,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 #ifdef RENEWAL
 	bool iscritical = false;
-	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
+	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false) && !sd->special_state.brainmuscle) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			int32 sum_crit_atk = sd->bonus.crit_atk_rate + sd->bonus.crit_atk_dmg;
+			if (sd->special_state.bluntthorn) {
+				int32 over_cri = max(0, sstatus->cri - 200);
+				sum_crit_atk += over_cri;
+			}
 			if(skill_id)
 				wd.damage = (int64)floor((float)((wd.damage * (1.5f + (0.01f * sum_crit_atk) + (0.002f * sstatus->luk) + (0.05f * sstatus->crate)))));
 			else
@@ -8381,13 +8389,14 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		if (tsd && tsd->bonus.crit_def_rate != 0)
 			ATK_ADDRATE(wd.damage, wd.damage2, -tsd->bonus.crit_def_rate);
 		iscritical = true;
-		
 	}
 	else {
 		if(sd) {
-				wd.damage = (int64)floor((float)((wd.damage * (1.0f + (0.002f * sstatus->dex) + (0.01f * sd->bonus.hit_physical_damage_rate)))));
+			wd.damage = (int64)floor((float)((wd.damage * (1.0f + (0.002f * sstatus->dex) + (0.01f * sd->bonus.hit_physical_damage_rate)))));
 			if (is_attack_left_handed(src, skill_id))
 				wd.damage2 = (int64)floor((float)((wd.damage2 * (1.0f + (0.002f * sstatus->dex) + (0.01f * sd->bonus.hit_physical_damage_rate)))));
+			if (sd->special_state.brainmuscle)
+				ATK_ADDRATE(wd.damage, wd.damage2, 20);
 		}
 	}
 #endif
@@ -10115,6 +10124,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	if (is_attack_critical(&ad, src, target, skill_id, skill_lv, false)) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			int32 sum_crit_atk = sd->bonus.crit_atk_rate + sd->bonus.crit_matk_dmg;
+			if (sd->special_state.bluntthorn) {
+				int32 over_cri = max(0, sstatus->cri - 200);
+				sum_crit_atk += over_cri;
+			}
 			if(skill_id)
 				ad.damage = (int64)floor((float)((ad.damage * (1.5f + (0.01f * sum_crit_atk) + (0.002f * sstatus->luk) + (0.05f * sstatus->crate)))));
 			else
@@ -10125,7 +10138,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			ad.damage = (int64)floor((float)(ad.damage * 1.2f));
 
 		if (tsd && tsd->bonus.crit_def_rate != 0)
-			ATK_ADDRATE(ad.damage, ad.damage2, -tsd->bonus.crit_def_rate);
+			MATK_RATE(-tsd->bonus.crit_def_rate);
 		iscritical = true;
 	}
 	else {
@@ -10133,6 +10146,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			ad.damage = (int64)floor((float)((ad.damage * (1.0f + (0.01f * sd->bonus.hit_magical_damage_rate)))));
 			if (is_attack_left_handed(src, skill_id))
 				ad.damage2 = (int64)floor((float)((ad.damage2 * (1.0f + (0.01f * sd->bonus.hit_magical_damage_rate)))));
+			if (sd->special_state.brainmuscle)
+				MATK_ADDRATE(20);
 		}
 	}
 #endif

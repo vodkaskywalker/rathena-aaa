@@ -161,7 +161,9 @@ THREETOP:
 			4757, 4757, // Luk +8
 			4758, 4758, // Luk +9
 			4759, 4759, // Luk +10
-			2099001, 2099001;	// All Stat +1
+			2099001, 2099001,	// All Stat +1
+			2099002, 2099002,	// All Stat +1
+			2099003, 2099003;	// All Stat +1
 
 	.@size = getarraysize(.@stone_id);
 	.@max_menu_size = 2047;	// temporary fix the menu length until new data
@@ -228,6 +230,8 @@ GarmentOP:
 	mes "[ดีไซน์เนอร์ ไร้นาม]";
 	mes "จะออฟเจ้านี่จริงนะ ^i["+.@equip_id+"](^0000FF" + getitemname(.@equip_id) + "^000000)";
 	mes "อยากจะออฟอะไร ?";
+	switch(select("หินออฟชั่น:Trait") ) { 
+	case 1:
 		// All Part Allow
 		setarray .@stone_id[getarraysize(.@stone_id)],
 			4700, 4700,	// Str +1
@@ -291,6 +295,8 @@ GarmentOP:
 			4758, 4758, // Luk +9
 			4759, 4759, // Luk +10
 			2099001, 2099001,	// All Stat +1
+			2099002, 2099002,	// All Stat +2
+			2099003, 2099003,	// All Stat +3
 			2235001, 2236001,	//	Swordman skill 1
 			2235002, 2236002,	//	Swordman skill 2
 			2235003, 2236003,	//	Archer skill 1
@@ -339,7 +345,20 @@ GarmentOP:
 			2235046, 2236046,	//	star 1
 			2235047, 2236047,	//	soul 1
 			2099003, 2099003;	// All Stat +1
-
+		break;
+	case 2:
+		// All Part Allow
+		.@slot = 3;
+		setarray .@stone_id[getarraysize(.@stone_id)],
+			2099301, 2099401,	// Brain Muscle Power
+			2099302, 2099402,	// Zelouse Smith Power
+			2099303, 2099403,	// Normal Hand Power
+			2099304, 2099404,	// Big Brain Power
+			2099305, 2099405,	// Luminary Power
+			2099306, 2099406,	// Tank Walkable
+			2099308, 2099408;	// Blunt shit
+		break;
+	}
 	.@size = getarraysize(.@stone_id);
 	.@max_menu_size = 2047;	// temporary fix the menu length until new data
 	.@i = 0;

@@ -4766,6 +4766,18 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.cooldown_rate += val;
 			break;
+		case SP_BRAINMUSCLE:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->special_state.brainmuscle = 1;
+			break;
+		case SP_FRENZYREVERT:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->special_state.frenzyrevert = 1;
+			break;
+		case SP_BLUNT_THORN:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->special_state.bluntthorn = 1;
+			break;
 		case SP_UPSKILL1:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->special_state.skillup1 = 1;

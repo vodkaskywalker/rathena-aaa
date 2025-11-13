@@ -29991,7 +29991,7 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    Duration1: 60000
+    Duration1: 120000
     CastDelayFlags:
       IgnoreDex: true
       IgnoreStatus: true

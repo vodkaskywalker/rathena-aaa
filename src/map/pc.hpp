@@ -619,6 +619,9 @@ public:
 		uint32 no_mado_fuel : 1; // Disable Magic_Gear_Fuel consumption [Secret]
 		uint32 no_walk_delay : 1;
 		uint32 no_fatal_dmg : 1;
+		uint32 brainmuscle : 1;
+		uint32 frenzyrevert : 1;
+		uint32 bluntthorn : 1;
 		uint32 skillup1 : 1;
 		uint32 skillup2 : 1;
 		uint32 skillup3 : 1;

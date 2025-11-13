@@ -387,7 +387,7 @@ Body:
       Soul_Linker: true
       Gunslinger: true
       Ninja: true
-    MaxBaseLevel: 150
+    MaxBaseLevel: 175
     BaseExp:
       - Level: 1
         Exp: 658
@@ -689,6 +689,56 @@ Body:
         Exp: 183193054696
       - Level: 150
         Exp: 208840082354
+      - Level: 151
+        Exp: 229724090589
+      - Level: 152
+        Exp: 252696499648
+      - Level: 153
+        Exp: 277966149613
+      - Level: 154
+        Exp: 305762764574
+      - Level: 155
+        Exp: 336339041031
+      - Level: 156
+        Exp: 369972945134
+      - Level: 157
+        Exp: 406970239648
+      - Level: 158
+        Exp: 447667263613
+      - Level: 159
+        Exp: 483480644702
+      - Level: 160
+        Exp: 522159096278
+      - Level: 161
+        Exp: 563931823980
+      - Level: 162
+        Exp: 609046369898
+      - Level: 163
+        Exp: 657770079490
+      - Level: 164
+        Exp: 710391685850
+      - Level: 165
+        Exp: 767223020718
+      - Level: 166
+        Exp: 928339855068
+      - Level: 167
+        Exp: 965473449271
+      - Level: 168
+        Exp: 1004092387242
+      - Level: 169
+        Exp: 1044256082731
+      - Level: 170
+        Exp: 1086026326041
+      - Level: 171
+        Exp: 1129467379082
+      - Level: 172
+        Exp: 1174646074246
+      - Level: 173
+        Exp: 1315603603155
+      - Level: 174
+        Exp: 1473476035534
+      - Level: 175
+        Exp: 1665027920153
   - Jobs:
       Novice: true
       Baby: true

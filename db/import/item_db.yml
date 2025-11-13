@@ -1585,6 +1585,95 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSubSize,Size_All,10;
+#   [Trait Stone Special]
+  - Id: 2099301
+    AegisName: TRAIT_MUSCLE
+    Name: Trait Brain Muscle
+    Type: etc
+  - Id: 2099302
+    AegisName: TRAIT_Zelouse
+    Name: Trait Zelouse Smith
+    Type: etc
+  - Id: 2099303
+    AegisName: TRAIT_Pure_Hand
+    Name: Trait Normal Hand
+    Type: etc
+  - Id: 2099304
+    AegisName: TRAIT_BIG_BRAIN
+    Name: Trait Big Brain
+    Type: etc
+  - Id: 2099305
+    AegisName: TRAIT_LUMINARY
+    Name: Trait Luminary
+    Type: etc
+  - Id: 2099306
+    AegisName: TRAIT_TANK_WALKABLE
+    Name: Trait Tank Walkable
+    Type: etc
+  - Id: 2099307
+    AegisName: TRAIT_FRENZY_INVERT
+    Name: Trait Frenzy Invery
+    Type: etc
+  - Id: 2099308
+    AegisName: TRAIT_BLUNT_THORN
+    Name: Trait BLUNT THORN
+    Type: etc
+  - Id: 2099401
+    AegisName: TRAIT_MUSCLE_S
+    Name: Trait Brain Muscle
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBrainMuscle;
+  - Id: 2099402
+    AegisName: TRAIT_Zelouse_S
+    Name: Trait Zelouse Smith
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,25;
+  - Id: 2099403
+    AegisName: TRAIT_Pure_Hand_S
+    Name: Trait Normal Hand
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNormalRatio,500;
+  - Id: 2099404
+    AegisName: TRAIT_BIG_BRAIN_S
+    Name: Trait Big Brain
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bUseSPrate,-30;
+  - Id: 2099405
+    AegisName: TRAIT_LUMINARY_S
+    Name: Trait Luminary
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "ALL_ODINS_POWER",2;
+  - Id: 2099406
+    AegisName: TRAIT_TANK_WALKABLE_S
+    Name: Trait Tank Walkable
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAbsorbDmgMaxHP,10;
+  - Id: 2099407
+    AegisName: TRAIT_FRENZY_INVERT_S
+    Name: Trait Frenzy Invery
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bfrenzyrevert;
+  - Id: 2099408
+    AegisName: TRAIT_BLUNT_THORN_S
+    Name: Trait BLUNT THORN
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBluntthorn;
 #   [Guardian Stone Special]
   - Id: 2233001
     AegisName: Guardian_Coin

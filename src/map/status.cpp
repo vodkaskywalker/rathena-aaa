@@ -7631,7 +7631,7 @@ static uint16 status_calc_watk(struct block_list *bl, status_change *sc, int32 w
 	if(sc->getSCE(SC_ANGRIFFS_MODUS))
 		watk += watk * sc->getSCE(SC_ANGRIFFS_MODUS)->val2/100;
 	if(sc->getSCE(SC_ODINS_POWER))
-		watk += 40 + 30 * sc->getSCE(SC_ODINS_POWER)->val1;
+		watk += 40 + 1000 * sc->getSCE(SC_ODINS_POWER)->val1;
 	if (sc->getSCE(SC_FLASHCOMBO))
 		watk += sc->getSCE(SC_FLASHCOMBO)->val2;
 	if (sc->getSCE(SC_CATNIPPOWDER))
@@ -7699,7 +7699,7 @@ uint16 status_calc_pseudobuff_matk( map_session_data* sd, status_change *sc, int
 	if (sce = sc->getSCE(SC__AUTOSHADOWSPELL))
 		matk += sce->val4;
 	if (sce = sc->getSCE(SC_ODINS_POWER))
-		matk += 40 + 30 * sce->val1;
+		matk += 40 + 1000 * sce->val1;
 	if (sce = sc->getSCE(SC_IZAYOI))
 		matk += 25 * sce->val1;
 	if ((sce = sc->getSCE(SC_FIRE_INSIGNIA)) && sce->val1 == 3)
@@ -8023,7 +8023,7 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int32 d
 	if(sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 2)
 		def += 50;
 	if(sc->getSCE(SC_ODINS_POWER))
-		def -= 20 * sc->getSCE(SC_ODINS_POWER)->val1;
+		def -= 400 * sc->getSCE(SC_ODINS_POWER)->val1;
 	if( sc->getSCE(SC_ANGRIFFS_MODUS) )
 		def -= 20 + 10 * sc->getSCE(SC_ANGRIFFS_MODUS)->val1;
 	if(sc->getSCE(SC_STONEHARDSKIN))
@@ -8199,7 +8199,7 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int32 
 	if(sc->getSCE(SC_SYMPHONYOFLOVER))
 		mdef += mdef * sc->getSCE(SC_SYMPHONYOFLOVER)->val3 / 100;
 	if (sc->getSCE(SC_ODINS_POWER))
-		mdef -= 20 * sc->getSCE(SC_ODINS_POWER)->val1;
+		mdef -= 400 * sc->getSCE(SC_ODINS_POWER)->val1;
 	if (sc->getSCE(SC_SOULGOLEM))
 		mdef += sc->getSCE(SC_SOULGOLEM)->val3;
 	if (sc->getSCE(SC_STONE_WALL))
