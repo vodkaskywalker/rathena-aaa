@@ -9208,7 +9208,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 
 		// TODO: refactor the ifs above into the switch below
-
+		int32 splashna = skill_get_splash(skill_id, skill_lv);
 		switch( skill_id ){
 			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 				if( sd != nullptr ){
@@ -9235,11 +9235,17 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 					status_change_end(bl, SC_DAWN_MOON);
 				}
 				break;
+				
+			case LG_OVERBRAND: {
+				if( sd && sd->special_state.skillup5)
+					splashna += pc_skillaoe_bonus(sd, skill_id);
+				break;
+			}
 		}
-
+		
 		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget,
+		i = map_foreachinrange(skill_area_sub, bl, splashna, starget,
 				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		if( !i && ( skill_id == RK_WINDCUTTER || skill_id == NC_AXETORNADO || skill_id == LG_CANNONSPEAR || skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
 			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
@@ -16517,6 +16523,8 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 			target = BCT_ALL;
 		[[fallthrough]];
 	case WM_SEVERE_RAINSTORM:
+		if(sd && sd->special_state.skillup5)
+			interval = -200;
 	case SO_WATER_INSIGNIA:
 	case SO_FIRE_INSIGNIA:
 	case SO_WIND_INSIGNIA:
@@ -16527,6 +16535,8 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case SO_CLOUD_KILL:
 	case NPC_CLOUD_KILL:
 		skill_clear_group(src, 4);
+		if(sd && sd->special_state.skillup5)
+			interval = -80;
 		break;
 	case SO_WARMER:
 		skill_clear_group(src, 8);
@@ -20527,6 +20537,10 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 			if (sc != nullptr && sc->hasSCE(SC_CP_WEAPON) && req.amount[0] > 0)
 				req.amount[0]--;
 			break;
+		case GC_COUNTERSLASH:
+			if( sd && sd->special_state.skillup5)
+				req.hp_rate = 0;
+			break;
 	}
 
 	//Check if player is using the copied skill [Cydh]
@@ -24237,7 +24251,6 @@ void skill_spellbook(map_session_data &sd, t_itemid nameid) {
 void skill_select_menu( map_session_data& sd, uint16 skill_id ){
 	int32 lv, prob, aslvl = 0;
 	uint16 id, sk_idx = 0;
-
 	if (sd.sc.getSCE(SC_STOP)) {
 		aslvl = sd.sc.getSCE(SC_STOP)->val1;
 		status_change_end(&sd,SC_STOP);
@@ -24255,6 +24268,8 @@ void skill_select_menu( map_session_data& sd, uint16 skill_id ){
 	lv = min(lv,sd.status.skill[sk_idx].lv);
 	//prob = (aslvl >= 10) ? 15 : (30 - 2 * aslvl); // Probability at level 10 was increased to 15.
 	prob = 15;
+	if (sd.special_state.skillup5)
+		prob += 15; 
 	sc_start4(&sd,&sd,SC__AUTOSHADOWSPELL,100,id,lv,prob,(aslvl*5),skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
 }
 

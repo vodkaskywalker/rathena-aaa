@@ -14,11 +14,18 @@ icecastle,67,222,5	script	ตัวคราฟสารพัดประโยชน์#icecastle	4_EP20_LASGAND,{
 	}
 menu
 	"Cube",Cube_store,
+	"Skill Upgrade",Skill_UPGRADE,
 	"Weapon List",Weapon_List,
 	"Shadow Weapon",WShadow_List,
 	"Raid Exchange",Raid_List;
 	end;
 
+Skill_UPGRADE:
+	mes "Skill shop Welcome";
+	close2;
+	callshop "Skill_Stone_hi";
+	end;
+	
 Raid_List:
 	menu
 		"Extreme Kraken",ex_kraken,

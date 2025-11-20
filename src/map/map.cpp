@@ -3391,12 +3391,23 @@ int32 map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk)
 {
 	struct mapcell cell;
 
-	nullpo_ret(m);
+	// ตรวจ null pointer ของ m
+	if (!m) {
+		ShowError("map_getcellp: map_data is null!\n");
+		return 0;
+	}
 
-	//NOTE: this intentionally overrides the last row and column
-	if(x<0 || x>=m->xs-1 || y<0 || y>=m->ys-1)
-		return( cellchk == CELL_CHKNOPASS );
+	// ตรวจ null pointer ของ m->cell
+	if (!m->cell) {
+		ShowError("map_getcellp: map_data->cell is null!\n");
+		return 0;
+	}
 
+	// ปรับเงื่อนไขเช็กขอบเขตให้ครอบคลุมทุกกรณี
+	if (x < 0 || y < 0 || x >= m->xs || y >= m->ys) {
+		//ShowWarning("map_getcellp: coordinates out of range (x=%d, y=%d, map=%p, size=%dx%d)\n",x, y, m, m->xs, m->ys);
+		return (cellchk == CELL_CHKNOPASS);
+	}
 	cell = m->cell[x + y*m->xs];
 
 

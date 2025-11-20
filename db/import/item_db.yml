@@ -3463,6 +3463,66 @@ Body:
     Name: Soul Reaper True Awakened
     Type: etc
     Weight: 100
+  - Id: 2235048
+    AegisName: LK_UP_SKILL_5
+    Name: Lord Knight Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235049
+    AegisName: HP_UP_SKILL_5
+    Name: High Priest Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235050
+    AegisName: HW_UP_SKILL_5
+    Name: High Wizard Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235051
+    AegisName: WS_UP_SKILL_5
+    Name: Whitesmith Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235052
+    AegisName: SNI_UP_SKILL_5
+    Name: Sniper Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235053
+    AegisName: ASC_UP_SKILL_5
+    Name: Ass Cross Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235054
+    AegisName: PL_UP_SKILL_5
+    Name: Paladin Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235055
+    AegisName: CHM_UP_SKILL_5
+    Name: Champion Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235056
+    AegisName: PF_UP_SKILL_5
+    Name: Professor Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235057
+    AegisName: STK_UP_SKILL_5
+    Name: Stalker Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235058
+    AegisName: CRA_UP_SKILL_5
+    Name: Creator Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235059
+    AegisName: MUSIC_UP_SKILL_5
+    Name: Musician Skill Upgrade
+    Type: etc
+    Weight: 100
 #   [Enchant Result]
   - Id: 2236001
     AegisName: SM_Up_Skill_Ston_1
@@ -3983,6 +4043,119 @@ Body:
       if( BaseClass == JOB_TAEKWON) {
         bonus bSkillUpgrade4;
         bonus bUseSPrate,-25;
+      }
+  - Id: 2236048
+    AegisName: LK_UP_SKILL_5_
+    Name: Lord Knight Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Knight) {
+         bonus bSkillUpgrade5;
+      }
+  - Id: 2236049
+    AegisName: HP_UP_SKILL_5_
+    Name: High Priest Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Priest) {
+         bonus4 bAutoSpellOnSkill,"PR_MAGNUS","AB_ADORAMUS",max(getskilllv("AB_ADORAMUS"),1),1000;
+      }
+  - Id: 2236050
+    AegisName: HW_UP_SKILL_5_
+    Name: High Wizard Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Wizard) {
+          bonus bSkillUpgrade5;
+          bonus2 bSkillCooldown,"WL_COMET",-600000;
+          bonus2 bSkillDelay,"WL_COMET",-60000;
+      }
+  - Id: 2236051
+    AegisName: WS_UP_SKILL_5_
+    Name: Whitesmith Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Blacksmith) {
+        bonus bPerfectHitRate,200;
+        bonus bIgnoreDefClassRate,Class_All,40;
+      }
+  - Id: 2236052
+    AegisName: SNI_UP_SKILL_5_
+    Name: Sniper Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Hunter) {
+          bonus bSkillUpgrade5;
+      }
+  - Id: 2236053
+    AegisName: ASC_UP_SKILL_5_
+    Name: Ass Cross Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Assassin) {
+          bonus bSkillUpgrade5;
+      }
+  - Id: 2236054
+    AegisName: PL_UP_SKILL_5_
+    Name: Paladin Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Crusader) {
+          bonus bSkillUpgrade5;
+          bonus2 bSkillAoe,"LG_OVERBRAND",3;
+      }
+  - Id: 2236055
+    AegisName: CHM_UP_SKILL_5_
+    Name: Champion Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Monk) {
+          bonus2 bSkillCooldown,"SR_TIGERCANNON",-2500;
+      }
+  - Id: 2236056
+    AegisName: PF_UP_SKILL_5_
+    Name: Professor Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Sage) {
+        bonus bSkillUpgrade5;
+      }
+  - Id: 2236057
+    AegisName: STK_UP_SKILL_5_
+    Name: Stalker Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Rogue) {
+        skill "HW_MAGICPOWER",10;
+        bonus bSkillUpgrade5;
+      }
+  - Id: 2236058
+    AegisName: CRA_UP_SKILL_5_
+    Name: Creator Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Alchemist) {
+         bonus bSkillUpgrade5;
+      }
+  - Id: 2236059
+    AegisName: MUSIC_UP_SKILL_5_
+    Name: Musician Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Bard || BaseJob == Job_Dancer) {
+          bonus bSkillUpgrade5;
       }
 #   [Card Item]
   - Id: 2230001

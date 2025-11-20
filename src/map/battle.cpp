@@ -3946,6 +3946,25 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 			if (mflag & SKILL_ALTDMG_FLAG)
 				element = ELE_FIRE;
 			break;
+		case WL_COMET:
+			if (sd && sd->special_state.skillup5) {
+				int32 element_choice = rnd()% 4;
+				switch(element_choice) {
+					case 0:
+						element = ELE_FIRE;
+						break;
+					case 1:
+						element = ELE_WATER;
+						break;
+					case 2:
+						element = ELE_EARTH;
+						break;
+					default:
+						element = ELE_WIND;
+						break;
+				}
+			}
+			break;
 	}
 
 	return element;
@@ -4762,6 +4781,8 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		case RK_WINDCUTTER:
 			if (sd && sd->weapontype1 == W_2HSWORD)
 				wd->div_ = 2;
+			if (sd && sd->special_state.skillup5)
+				wd->div_ += 2;
 			break;
 		case SC_FATALMENACE:
 			if (sd && sd->weapontype1 == W_DAGGER)
@@ -8025,6 +8046,14 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				if(sd && sd->special_state.skillup3)
 					wd.div_ += 1;
 				break;
+			case SN_FALCONASSAULT:
+				if(sd && sd->special_state.skillup5)
+					wd.div_ = 4;
+				break;
+			case GN_CRAZYWEED_ATK:
+				if(sd && sd->special_state.skillup5)
+					wd.div_ = 7;
+				break;
 		}
 	} else {
 		bool is_long = false;
@@ -8364,8 +8393,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 #ifdef RENEWAL
 	bool iscritical = false;
-	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false) && !sd->special_state.brainmuscle) {
-		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
+	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
+		if (sd && !sd->special_state.brainmuscle) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			int32 sum_crit_atk = sd->bonus.crit_atk_rate + sd->bonus.crit_atk_dmg;
 			if (sd->special_state.bluntthorn) {
 				int32 over_cri = max(0, sstatus->cri - 200);
@@ -8667,6 +8696,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		case PR_MAGNUS:
 			if(sd && sd->special_state.skillup3)
 				ad.div_ = 1;
+			break;
+		case WL_COMET:
+			if(sd && sd->special_state.skillup5)
+				ad.div_ = 5;
 			break;
 	}
 
@@ -10122,7 +10155,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #ifdef RENEWAL
 	bool iscritical = false;
 	if (is_attack_critical(&ad, src, target, skill_id, skill_lv, false)) {
-		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
+		if (sd && !sd->special_state.brainmuscle) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			int32 sum_crit_atk = sd->bonus.crit_atk_rate + sd->bonus.crit_matk_dmg;
 			if (sd->special_state.bluntthorn) {
 				int32 over_cri = max(0, sstatus->cri - 200);
