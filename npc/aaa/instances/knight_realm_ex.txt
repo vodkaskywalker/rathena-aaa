@@ -279,7 +279,7 @@ OnMobSpawn:
 	specialeffect EF_NPC_EARTHQUAKE;
 	sleep 5000;
 	specialeffect EF_LORD;
-	donpcevent instance_npcname("True Final#Talk")+"::OnStart";
+	donpcevent instance_npcname("True Final#talk")+"::OnStart";
 	disablenpc;
 	end;
 	
@@ -353,7 +353,7 @@ job_knt,1,1,5	script	trap1#knt_Trial	-1,{
 OnStart:
     for(.@i = 1; .@i <= 50; .@i ++){
 		sleep 150;
-        donpcevent "floor_eff#4-"+.@i+"::OnEnable";
+        donpcevent instance_npcname("floor_eff#4-"+.@i)+"::OnEnable";
     }
     end;
 OnEnd:

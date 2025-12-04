@@ -1,0 +1,3 @@
+nyd_dun01,0,0	monster	--ja--	2019,40,5000
+gld2_gef,0,0	monster	--ja--	2023,40,5000
+gld_dun04_2,0,0	monster	--ja--	2023,40,5000
