@@ -3523,6 +3523,31 @@ Body:
     Name: Musician Skill Upgrade
     Type: etc
     Weight: 100
+  - Id: 2235060
+    AegisName: Ninja_UP_SKILL_5
+    Name: Ninja Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235061
+    AegisName: Gunner_UP_SKILL_5
+    Name: Gunner Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235062
+    AegisName: STAREM_UP_SKILL_5
+    Name: Star Emp Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235063
+    AegisName: LINKER_UP_SKILL_5
+    Name: Linker Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235064
+    AegisName: Novice_UP_SKILL_5
+    Name: Novice Skill Upgrade
+    Type: etc
+    Weight: 100
 #   [Enchant Result]
   - Id: 2236001
     AegisName: SM_Up_Skill_Ston_1
@@ -4081,7 +4106,7 @@ Body:
     Script: |
       if( BaseJob == Job_Blacksmith) {
         bonus bPerfectHitRate,200;
-        bonus bIgnoreDefClassRate,Class_All,40;
+        bonus2 bIgnoreDefClassRate,Class_All,40;
       }
   - Id: 2236052
     AegisName: SNI_UP_SKILL_5_
@@ -4156,6 +4181,59 @@ Body:
     Script: |
       if( BaseJob == Job_Bard || BaseJob == Job_Dancer) {
           bonus bSkillUpgrade5;
+      }
+  - Id: 2236060
+    AegisName: Ninja_UP_SKILL_5_
+    Name: Ninja Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == JOB_NINJA ) {
+          bonus bSkillUpgrade5;
+      }
+  - Id: 2236061
+    AegisName: Gunner_UP_SKILL_5_
+    Name: Gunner Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == JOB_GUNSLINGER ) {
+          bonus2 bSkillCooldown,"RL_HEAT_BARREL",-600000;
+      }
+  - Id: 2236062
+    AegisName: STAREM_UP_SKILL_5_
+    Name: Star Emp Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseClass == JOB_TAEKWON ) {
+          bonus bSkillUpgrade5;
+      }
+  - Id: 2236063
+    AegisName: LINKER_UP_SKILL_5_
+    Name: Linker Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseClass == JOB_TAEKWON ) {
+          bonus bSkillUpgrade5;
+          bonus2 bSkillCooldown,"SP_CURSEEXPLOSION",-60000;
+      }
+  - Id: 2236064
+    AegisName: Novice_UP_SKILL_5_
+    Name: Novice Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseClass == JOB_NOVICE ) {
+          bonus bSkillUpgrade5;
+          bonus bAtkRange,9;
+          bonus4 bAutoSpellOnSkill,"WZ_VERMILION","WZ_WATERBALL",max(1,getskilllv("WZ_WATERBALL")),1000;
+          bonus4 bAutoSpellOnSkill,"WZ_STORMGUST","WZ_JUPITEL",max(1,getskilllv("WZ_JUPITEL")),1000;
+          bonus4 bAutoSpellOnSkill,"WZ_METEOR","WZ_EARTHSPIKE",max(1,getskilllv("WZ_EARTHSPIKE")),1000;
+          bonus2 bSkillAtk,"WZ_WATERBALL",200;
+          bonus2 bSkillAtk,"WZ_JUPITEL",200;
+          bonus2 bSkillAtk,"WZ_EARTHSPIKE",1000;
       }
 #   [Card Item]
   - Id: 2230001
@@ -4255,6 +4333,21 @@ Body:
       bonus2 bAddRace,RC_DemiHuman,50;
       bonus2 bMagicAddRace,RC_DemiHuman,50;
       bonus bPerfectHitAddRate,30;
+  - Id: 2230007
+    AegisName: Santa_Socket_card
+    Name: Santa Socket Card
+    Type: Card
+    Buy: 20
+    Weight: 10 
+    Locations:
+      Head_Low: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCooldownRate,-35;
+      bonus bDelayrate,-35;
+      bonus2 bSkillrate,SKILLRATE_TYPE_ALL,-55;
   - Id: 2231001
     AegisName: IMT_Swordman_Card
     Name: Imitate Swordman Card

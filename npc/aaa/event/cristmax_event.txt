@@ -1,0 +1,96 @@
+icecastle,185,211,4	script	Fake Santa#icecastle	4_M_SANTA,{
+	mes "คริสมาสมักจะมาพร้อมกับหน้าหนาว";
+	mes "แต่ปีนี้ ไม่เห็นมันจะหนาว เลยหนุ่มเอ๋ย";
+	next;
+	
+MAIN_MENU:
+	menu
+		"ขอข้อมูลที",INFO,
+		"แลกของหน่อย",EXCHANGE,
+		"ไม่มีไร",-;
+	end;
+
+INFO:
+	mes "อย่างที่รู้ๆกันว่า ตัวเราในตอนนี้นั้นมันถึงหน้าหนาวแล้ว";
+	mes "ถ้าเจ้าเอาถุงเท้า [^i[7034]] มาซัก 100 ข้าง";
+	mes "เจ้าก็จะได้สุ่มลุ้นโชคแห่ง Cristmax Event นั่นเองง!!";
+	mes "ส่วนใหญ่ก็มีของใช้ทั่วไปอะนะ แต่ของไม่ใช้ก็มีเหมือนกัน";
+	mes "แต่ของรางวัลใหญ่ก็คือ!!!!!";
+	mes "-^i[2230007] และ -^i[2120003]";
+	next;
+	goto MAIN_MENU;
+	end;
+EXCHANGE:
+	mes "มีของมาครบใช่ไหม";
+	if(select("ครบแล้ว:ไม่ครบ") == 2 ) end;
+	if(countitem(7034) < 100) {
+		mes "ของไม่ครบนี่ไอ้หนู แข็งไปซัก 10 วิข้อหาหลอกลวงคนแก่";
+		sc_start SC_FREEZE,10000,0,10000;
+		end;
+	}
+	mes "ยอดเยี่ยมของพร้อม อยากจะหยอดตู้สุ่มเลยไหมหละ";
+	if(select("เอาเลย:ยังก่อน") == 2 ) end;
+	if(countitem(7034) < 100) {
+		mes "ไอ้นี่มันเหลี่ยม โดนแช่ไป 5 นาที";
+		sc_start SC_FREEZE,300000,0,10000;
+		end;
+	}
+	goto RANDOMITEM;
+	end;
+	
+RANDOMITEM:
+	clear2;
+	.@sockleft = countitem(7034);
+	if(.@sockleft < 100) {
+		mes "ถุงเท้าหมดแล้ว ไปหามาใหม่นะ";
+		end;
+	}
+	.@luck = rand(10000);
+	if(#cristmax_2025_garuntee >= 150){
+		.@luck = 1;
+		#cristmax_2025_garuntee = 0;
+	}
+	if(.@luck < 10) {
+		.@itemid = callfunc("F_Rand",2230007,2120003);
+		.@announce = 1;
+	}
+	else if (.@luck < 777) {
+		.@itemid = callfunc("F_Rand",6635,6240,6241,25729,25731,2000008,2000014,22817,22816,22818,100005,100006,22819,100007,100008,22821,22820,100316,100317);
+		.@announce = 2;
+	}
+	else {
+		.@itemid = callfunc("F_Rand",14522,23221,23222,23223,23224,23225,23226,2000007,14534,14535,12832,23203,23204,14766,23475,12796,12684,14601,14600,13697,13698);
+		.@announce = 0;
+	}
+	if(!checkweight(512,300) ) {
+		mes "เจ้าดูจะตัวหนักเกินไปนะ ไปลดน้ำหนักตัวเองหน่อย";
+		end;
+	}
+	delitem 7034,100;
+	switch(.@announce) {
+		case 1:
+			.@message$ = "เป็นของแรร์สุดหายาก";
+			break;
+		case 2:
+			.@message$ = "เป็นของเกือบจะแรร์";
+			break;
+		default:
+			.@message$ = "";
+			break;
+	}
+	if(.@announce)
+		announce ""+strcharinfo(0)+" ได้รับ "+getitemname(.@itemid)+" "+(.@announce ? .@message$:""),bc_blue;
+	#cristmax_2025_garuntee++;
+	getitem .@itemid,1;
+	mes "เหลืออีก ^ff0000"+(150 - #cristmax_2025_garuntee)+"^000000 รอบสุ่ม การันตีของแรร์!!!";
+	mes "คุณได้รับ [^i["+.@itemid+"]] จำนวน 1 ea";
+	mes "อยากจะหมุนตู่เสี่ยงโชคนี้ต่อมั้ย??";
+	if(select("จัดมา:ยังก่อน") == 2 ) end;
+	goto RANDOMITEM;
+	end;
+		
+Oninit:
+	Waitingroom "Cristmax Event",0;
+	end;
+}
+
