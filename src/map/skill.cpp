@@ -1369,6 +1369,16 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 							skill_castend_damage_id(src, bl, HT_BLITZBEAT, skill, tick, SD_LEVEL);
 					}
 					// Automatic trigger of Taekwondo Stance
+					if (sd->special_state.skillup5 && sc->getSCE(SC_UNIVERSESTANCE) && rnd()%1000 <= 150) {
+						skill = max(1,pc_checkskill(sd, SJ_SOLARBURST)/2);
+						//skill_castend_damage_id(src, bl, SJ_SOLARBURST , skill, tick, SD_LEVEL); 
+						skill_attack(BF_WEAPON,src,src,bl,SJ_SOLARBURST,skill,tick,SD_LEVEL);
+					}
+					if (sd->special_state.skillup5 && sc->getSCE(SC_UNIVERSESTANCE) && rnd()%1000 <= 150) {
+						skill = max(1,pc_checkskill(sd, SJ_FULLMOONKICK)/2);
+						//skill_castend_damage_id(src, bl, SJ_FULLMOONKICK, skill, tick, SD_LEVEL);
+						skill_attack(BF_WEAPON,src,src,bl,SJ_SOLARBURST,skill,tick,SD_LEVEL);
+					}
 					if ((skill = pc_checkskill(sd, TK_STORMKICK)) > 0 && sc->getSCE(SC_READYSTORM) && rnd() % 1000 <= (100 + (skill * 10) + (sd->special_state.skillup4 ? 150 : 0) ) ) {
 
 						skill_castend_damage_id(src, bl, TK_STORMKICK, skill, tick, SD_LEVEL);
@@ -16620,6 +16630,11 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 		break;
 	case PR_MAGNUS:
 		if(sd && sd->special_state.skillup3)
+			interval = 200;
+		break;
+	case WZ_STORMGUST:
+	case WZ_VERMILION:
+		if(sd && sd->special_state.skillup5)
 			interval = 200;
 		break;
 	}

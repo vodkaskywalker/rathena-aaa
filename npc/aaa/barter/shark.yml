@@ -156,6 +156,60 @@ Body:
           - Index: 1
             Item: BD_UP_Skill_2
             Amount: 1
+      - Index: 12
+        Item: MUSIC_UP_SKILL_5
+        RequiredItems:
+          - Index: 0
+            Item: BD_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: BD_UP_Skill_2
+            Amount: 1
+      - Index: 13
+        Item: Novice_UP_SKILL_5
+        RequiredItems:
+          - Index: 0
+            Item: NV_UP_Skill_3
+            Amount: 1
+          - Index: 1
+            Item: NV_UP_Skill_4
+            Amount: 1
+      - Index: 14
+        Item: Ninja_UP_SKILL_5
+        RequiredItems:
+          - Index: 0
+            Item: NJ_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: NJ_UP_Skill_2
+            Amount: 1
+      - Index: 15
+        Item: Gunner_UP_SKILL_5
+        RequiredItems:
+          - Index: 0
+            Item: GL_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: GL_UP_Skill_2
+            Amount: 1
+      - Index: 16
+        Item: STAREM_UP_SKILL_5
+        RequiredItems:
+          - Index: 0
+            Item: TK_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: SJ_UP_Skill_4
+            Amount: 1
+      - Index: 17
+        Item: LINKER_UP_SKILL_5
+        RequiredItems:
+          - Index: 0
+            Item: TK_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: SP_UP_Skill_4
+            Amount: 1
   - Name: Crimson_Waep
     Items:
       - Index: 0

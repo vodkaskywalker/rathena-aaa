@@ -413,6 +413,20 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     Slots: 1
+  - Id: 2120003
+    AegisName: Snap_Cold_Breath
+    Name: Snap Cold Breath
+    Type: Armor
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Slots: 1
+    Script: |
+      bonus bAtkRate,1;
+      bonus bMatkRate,1;
+      bonus bStr,1;
+      bonus bInt,1;
 #  [Weapon]
   - Id: 1941
     Trade:

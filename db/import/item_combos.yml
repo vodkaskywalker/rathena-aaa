@@ -36,6 +36,13 @@ Header:
 Body:
   - Combos:
       - Combo:
+          - Snap_Cold_Breath
+          - Santa_Socket_card
+    Script: |
+      bonus bCooldownRate,-15;
+      bonus bDelayrate,-15;
+  - Combos:
+      - Combo:
           - PowerfulBear's_Power
           - S_Str
     Script: |

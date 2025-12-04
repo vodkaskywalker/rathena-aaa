@@ -4964,6 +4964,11 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 	}
 
 	switch(skill_id) {
+		case KO_HAPPOKUNAI: {
+			if(sd && sd->special_state.skillup5)
+				skillratio += 100;
+		}
+			break;
 		case BS_HAMMERFALL:
 			skillratio += 450 + 50 * skill_lv;
 			break;
@@ -8054,6 +8059,10 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				if(sd && sd->special_state.skillup5)
 					wd.div_ = 7;
 				break;
+			case KO_HAPPOKUNAI:
+				if(sd && sd->special_state.skillup5)
+					wd.div_ = 7;
+				break;
 		}
 	} else {
 		bool is_long = false;
@@ -9307,8 +9316,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 100;
 						break;
 					case SP_CURSEEXPLOSION:
-						if (tsc && tsc->getSCE(SC_SOULCURSE))
-							skillratio += -100 + 1200 + 300 * skill_lv;
+						if (tsc && tsc->getSCE(SC_SOULCURSE) || (sd && sd->special_state.skillup5))
+							skillratio += -100 + 1200 + 500 * skill_lv;
 						else
 							skillratio += -100 + 400 + 100 * skill_lv;
 						RE_LVL_DMOD(100);
