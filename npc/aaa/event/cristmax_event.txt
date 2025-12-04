@@ -94,3 +94,7 @@ Oninit:
 	end;
 }
 
+xmas,0,0	monster	--ja--	1247,20,5000
+xmas_fild01,0,0	monster	--ja--	1247,70,5000
+xmas_dun01,0,0	monster	--ja--	1247,40,5000
+xmas_dun02,0,0	monster	--ja--	1247,55,5000
