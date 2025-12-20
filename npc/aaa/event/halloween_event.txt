@@ -1,0 +1,490 @@
+// =====================================================
+//  Halloween Exchange NPC (rAthena / No functions) + FX + Re-roll
+//  - Token: Pumpkin Mojo (7609)
+//  - Normal (1 pc), Special (10 pcs + Tier1 Boost)
+//  - Pity 200 counts => Guaranteed Tier 1 แล้วรีเซ็ต
+//  - ได้ Tier 1 จากการสุ่ม => รีเซ็ตพิตี้
+//  - Special: บูสต์ Tier 1 (+100/50/20/10/5/3/1 %) และหักส่วนเพิ่มจาก Tier ต่ำสุดขึ้นมา (T5->T4->T3->T2)
+//  - ประกาศ bc_all เมื่อได้ Tier 1
+//  - เมนูดูพิตี้/การันตี
+//  - ใหม่: หลังสุ่มเสร็จ เลือก "สุ่มต่อแบบเดิม / กลับเมนู / ยกเลิก" ได้ทันที
+// =====================================================
+
+icecastle,184,213,5	script	Mysterious Flame#2025	802,{
+
+	// ค่าคงที่
+	.@ITEM_TOKEN  = 7609; // Pumpkin Mojo
+	.@NEED_N      = 1;    // Normal ใช้ 1
+	.@NEED_S      = 10;   // Special ใช้ 10
+	.@PITY_MAX    = 200;  // การันตีทุก 200 ครั้ง
+
+	// เอฟเฟกต์เปิดเมนู (อ่อนๆ สร้างบรรยากาศ)
+	specialeffect EF_SPHERE;
+
+	mes "[Mysterious Flame]";
+	mes "เปลวไฟพิศวงเชื้อเชิญให้คุณเข้ามาใกล้....";
+	next;
+
+L_MAIN_MENU:
+	// ถ้าใกล้พิตี้ (เหลือ <= 5 ครั้ง) โชว์เอฟเฟกต์เตือนเบาๆ
+	if (.@PITY_MAX - #HAL_PITY <= 5 && #HAL_PITY > 0) specialeffect EF_LEVELUP;
+
+	switch(select(
+		"โยนเหรียญลงไป 1 เหรียญ",
+		"โยนเหรียญลงไป 10 เหรียญรวดเดียว",
+		"ดูสถานะจำนวนที่ใช้งาน/การันตี",
+		"ยกเลิก"
+	)) {
+		// ---------------- Normal ----------------
+		case 1:
+			goto L_ROLL_NORMAL;
+
+		// ---------------- Special ----------------
+		case 2:
+			goto L_ROLL_SPECIAL;
+
+		// ---------------- Status ----------------
+		case 3:
+			.@left = .@PITY_MAX - #HAL_PITY;
+			mes "[Mysterious Flame]";
+			mes "จำนวนครั้งที่ใช้งาน:";
+			mes "ใช้งานไปแล้ว: ^00AAFF"+#HAL_PITY+"^000000 ครั้ง";
+			if (.@left > 0) {
+				mes "เหลืออีก: ^99CC00"+.@left+"^000000 ครั้งจะการันตี ^FF9900Tier 1^000000";
+				// ใกล้การันตี แสดง FX เล็กน้อย
+				if (.@left <= 5) specialeffect EF_LEVELUP;
+			} else {
+				mes "^99CC00พร้อมการันตีในครั้งถัดไป!^000000";
+				specialeffect EF_LEVELUP;
+			}
+			next;
+			goto L_MAIN_MENU;
+
+		// ---------------- Exit ----------------
+		default:
+			mes "[Mysterious Flame]";
+			mes "ไว้กลับมาใหม่ได้นะจ๊ะ~";
+			// เอฟเฟกต์ลาเบาๆ
+			specialeffect EF_TELEPORTATION;
+			close;
+	}
+	end;
+
+////////////////////////////////////////////////////////
+// โหมดปกติ (กดสุ่มต่อได้เลย)
+////////////////////////////////////////////////////////
+L_ROLL_NORMAL:
+	if (countitem(.@ITEM_TOKEN) < .@NEED_N) {
+		mes "[Mysterious Flame]";
+		mes "ดูเหมือนเจ้ายังมี ^FF5555Pumpkin Mojo^000000 ไม่พอ ("+.@NEED_N+" ชิ้น).";
+		close;
+	}
+	
+			// ตรวจสอบว่าน้ำหนักไม่เกินก่อนรับของ
+	if (!checkweight(28594, 1)) {
+		mes "[Mysterious Flame]";
+		mes "เจ้าตัวหนักเกินไป ข้าให้ของเจ้าไม่ได้หรอก...";
+		mes "เอาของไปเก็บก่อนเถอะ แล้วค่อยกลับมาใหม่นะ~";
+		close;
+	}
+	// หักของก่อน
+	delitem .@ITEM_TOKEN, .@NEED_N;
+
+	// เอฟเฟกต์เริ่มแลก + progress bar สั้นๆ
+	specialeffect EF_TELEPORTATION;
+	progressbar "Treat or Greed...", 1;
+
+	// นับพิตี้ (+1 ครั้ง)
+	#HAL_PITY++;
+
+	// การันตีถ้าครบ
+	if (#HAL_PITY >= .@PITY_MAX) {
+		#HAL_PITY = 0;
+		.@t1_sz = getarraysize(.T1_ids);
+		.@pick  = rand(.@t1_sz);
+		.@rid   = .T1_ids[.@pick];
+		.@rq    = .T1_qty[.@pick];
+		getitem .@rid, .@rq;
+
+		// เอฟเฟกต์พิตี้แตก
+		specialeffect2 EF_MVP;
+		specialeffect2 EF_LEVELUP;
+
+		mes "[Mysterious Flame]";
+		mes "^99CC00จำนวนการใช้ครบ "+.@PITY_MAX+" ครั้ง!^000000";
+		mes "ได้รับรางวัลใหญ่: ^0055FF"+getitemname(.@rid)+"^000000 x"+.@rq+"!";
+		announce strcharinfo(0)+" ได้รับของรางวัลใหญ่ : "+getitemname(.@rid)+"!", bc_all;
+
+		// เสนอรีโรลต่อทันที
+		next;
+		switch(select("สุ่มต่อแบบเดิม","กลับเมนูหลัก","ยกเลิก")) {
+			case 1:
+				goto L_ROLL_NORMAL;
+			case 2:
+				goto L_MAIN_MENU;
+			default:
+				close;
+		}
+	}
+
+	// สุ่มเรต Normal (permyriad: 10000 = 100.00%)
+	// Normal: T1=0.8%(80), T2=4.2%(420), T3=7.0%(700), T4=28.0%(2800), T5=60.0%(6000)
+	.@r = rand(10000);
+	.@t1 = 80; .@t2 = 420; .@t3 = 700; .@t4 = 2800; .@t5 = 6000;
+
+	if (.@r < .@t1)      .@tier = 1;
+	else if ((.@r -= .@t1) < .@t2) .@tier = 2;
+	else if ((.@r -= .@t2) < .@t3) .@tier = 3;
+	else if ((.@r -= .@t3) < .@t4) .@tier = 4;
+	else                            .@tier = 5;
+
+	// แจกของตาม Tier (สุ่มเท่ากันทุกชิ้น) + เอฟเฟกต์ตามระดับ
+	if (.@tier == 1) { .@sz = getarraysize(.T1_ids); .@idx = rand(.@sz); .@rid = .T1_ids[.@idx]; .@rq = .T1_qty[.@idx]; specialeffect2 EF_MVP; }
+	else if (.@tier == 2) { .@sz = getarraysize(.T2_ids); .@idx = rand(.@sz); .@rid = .T2_ids[.@idx]; .@rq = .T2_qty[.@idx]; specialeffect EF_LEVELUP; }
+	else if (.@tier == 3) { .@sz = getarraysize(.T3_ids); .@idx = rand(.@sz); .@rid = .T3_ids[.@idx]; .@rq = .T3_qty[.@idx]; specialeffect EF_HEAL2; }
+	else if (.@tier == 4) { .@sz = getarraysize(.T4_ids); .@idx = rand(.@sz); .@rid = .T4_ids[.@idx]; .@rq = .T4_qty[.@idx]; specialeffect EF_SPHERE; }
+	else { .@sz = getarraysize(.T5_ids); .@idx = rand(.@sz); .@rid = .T5_ids[.@idx]; .@rq = .T5_qty[.@idx]; specialeffect EF_TELEPORTATION; }
+
+	getitem .@rid, .@rq;
+
+	// ถ้าได้ Tier 1 ให้รีเซ็ตพิตี้ + ประกาศ
+	if (.@tier == 1) {
+		#HAL_PITY = 0;
+		announce strcharinfo(0)+" ได้รับของรางวัลใหญ่จาก Halloween: "+getitemname(.@rid)+"!", bc_all;
+	}
+
+	mes "[Mysterious Flame]";
+	mes "ยินดีด้วย! เจ้่าได้รับ: ^0055FF"+getitemname(.@rid)+"^000000 x"+.@rq+"!";
+	// เสนอรีโรลต่อทันที
+	next;
+	switch(select("สุ่มต่อแบบเดิม","กลับเมนูหลัก","ยกเลิก")) {
+		case 1:
+			goto L_ROLL_NORMAL;
+		case 2:
+			goto L_MAIN_MENU;
+		default:
+			close;
+	}
+
+////////////////////////////////////////////////////////
+// โหมดพิเศษ (กดสุ่มต่อได้เลย)
+////////////////////////////////////////////////////////
+L_ROLL_SPECIAL:
+	if (countitem(.@ITEM_TOKEN) < .@NEED_S) {
+		mes "[Mysterious Flame]";
+		mes "เหมือนเหรียญที่พกมาจะไม่พอ......";
+		close;
+	}
+	
+		// ตรวจสอบว่าน้ำหนักไม่เกินก่อนรับของ
+	if (!checkweight(28594, 1)) {
+		mes "[Mysterious Flame]";
+		mes "เจ้าตัวหนักเกินไป ข้าให้ของเจ้าไม่ได้หรอก...";
+		mes "เอาของไปเก็บก่อนเถอะ แล้วค่อยกลับมาใหม่นะ~";
+		close;
+	}
+	// หักของก่อน
+	delitem .@ITEM_TOKEN, .@NEED_S;
+
+	// เอฟเฟกต์เริ่มแลก + progress bar
+	specialeffect EF_TELEPORTATION;
+	progressbar "Treat or Greed...", 1;
+
+	// นับพิตี้ (+1 ครั้ง)
+	#HAL_PITY++;
+
+	// การันตีถ้าครบ
+	if (#HAL_PITY >= .@PITY_MAX) {
+		#HAL_PITY = 0;
+		.@t1_sz = getarraysize(.T1_ids);
+		.@pick  = rand(.@t1_sz);
+		.@rid   = .T1_ids[.@pick];
+		.@rq    = .T1_qty[.@pick];
+		getitem .@rid, .@rq;
+
+		// เอฟเฟกต์พิตี้แตก
+		specialeffect2 EF_MVP;
+		specialeffect2 EF_LEVELUP;
+
+		mes "[Mysterious Flame]";
+		mes "^99CC00จำนวนการใช้ครบ "+.@PITY_MAX+" ครั้ง!^000000";
+		mes "ได้รับรางวัลใหญ่: ^0055FF"+getitemname(.@rid)+"^000000 x"+.@rq+"!";
+		announce strcharinfo(0)+" ได้รับของรางวัลใหญ่ (Pity "+.@PITY_MAX+"): "+getitemname(.@rid)+"!", bc_all;
+
+		// เสนอรีโรลต่อทันที (โหมดพิเศษ)
+		next;
+		switch(select("สุ่มต่อแบบเดิม","กลับเมนูหลัก","ยกเลิก")) {
+			case 1:
+				goto L_ROLL_SPECIAL;
+			case 2:
+				goto L_MAIN_MENU;
+			default:
+				close;
+		}
+	}
+
+	// ===== Special Roll with Boost =====
+	// Base permyriad (ก่อนบูสต์): T1=2.0%(200), T2=6.0%(600), T3=9.0%(900), T4=25.0%(2500), T5=58.0%(5800)
+	.@a1 = 310; .@a2 = 600; .@a3 = 900; .@a4 = 2500; .@a5 = 5690;
+
+	// เลือกบูสต์เปอร์เซ็นต์
+	// rand(1000): +100%(0-4), +50%(5-39), +20%(40-119), +10%(120-269), +5%(270-469), +3%(470-719), +1%(720-999)
+	.@rv = rand(1000);
+	if (.@rv < 5) .@bonus = 100;
+	else if (.@rv < 5+35) .@bonus = 50;
+	else if (.@rv < 5+35+80) .@bonus = 20;
+	else if (.@rv < 5+35+80+150) .@bonus = 10;
+	else if (.@rv < 5+35+80+150+200) .@bonus = 5;
+	else if (.@rv < 5+35+80+150+200+250) .@bonus = 3;
+	else .@bonus = 1;
+
+	// เอฟเฟกต์ตามระดับบูสต์ (ยิ่งสูงเอฟเฟกต์ยิ่งเด่น)
+	if (.@bonus >= 100) { specialeffect2 EF_MVP; specialeffect2 EF_LEVELUP; }
+	else if (.@bonus >= 50) { specialeffect2 EF_LEVELUP; }
+	else if (.@bonus >= 20) { specialeffect EF_LEVELUP; }
+	else if (.@bonus >= 10) { specialeffect EF_HEAL2; }
+	else if (.@bonus >= 5)  { specialeffect EF_SPHERE; }
+	else if (.@bonus >= 3)  { specialeffect EF_SPHERE; }
+	else { specialeffect EF_TELEPORTATION; }
+
+	// คำนวณ T1 ใหม่และ delta (หักจากล่างขึ้นบน)
+	.@orig1 = .@a1;
+	.@a1 = .@a1 + (.@a1 * .@bonus) / 100; // เพิ่มตาม %
+	.@delta = .@a1 - .@orig1;
+
+	// หักจาก T5 -> T4 -> T3 -> T2
+	if (.@delta > 0) {
+		.@use = (.@delta <= .@a5) ? .@delta : .@a5;
+		.@a5 -= .@use; .@delta -= .@use;
+	}
+	if (.@delta > 0) {
+		.@use = (.@delta <= .@a4) ? .@delta : .@a4;
+		.@a4 -= .@use; .@delta -= .@use;
+	}
+	if (.@delta > 0) {
+		.@use = (.@delta <= .@a3) ? .@delta : .@a3;
+		.@a3 -= .@use; .@delta -= .@use;
+	}
+	if (.@delta > 0) {
+		.@use = (.@delta <= .@a2) ? .@delta : .@a2;
+		.@a2 -= .@use; .@delta -= .@use;
+	}
+	// (ไม่แตะ T1 ขาลง)
+
+	// สุ่มตามอัตราที่ปรับแล้ว (ยังรวม 10000)
+	.@r = rand(10000);
+	if (.@r < .@a1)      .@tier = 1;
+	else if ((.@r -= .@a1) < .@a2) .@tier = 2;
+	else if ((.@r -= .@a2) < .@a3) .@tier = 3;
+	else if ((.@r -= .@a3) < .@a4) .@tier = 4;
+	else                            .@tier = 5;
+
+	// แจกของตาม Tier (สุ่มเท่ากัน) + เอฟเฟกต์ตามระดับ
+	if (.@tier == 1) { .@sz = getarraysize(.T1_ids); .@idx = rand(.@sz); .@rid = .T1_ids[.@idx]; .@rq = .T1_qty[.@idx]; specialeffect2 EF_MVP; specialeffect2 EF_LEVELUP; }
+	else if (.@tier == 2) { .@sz = getarraysize(.T2_ids); .@idx = rand(.@sz); .@rid = .T2_ids[.@idx]; .@rq = .T2_qty[.@idx]; specialeffect EF_LEVELUP; }
+	else if (.@tier == 3) { .@sz = getarraysize(.T3_ids); .@idx = rand(.@sz); .@rid = .T3_ids[.@idx]; .@rq = .T3_qty[.@idx]; specialeffect EF_HEAL2; }
+	else if (.@tier == 4) { .@sz = getarraysize(.T4_ids); .@idx = rand(.@sz); .@rid = .T4_ids[.@idx]; .@rq = .T4_qty[.@idx]; specialeffect EF_SPHERE; }
+	else { .@sz = getarraysize(.T5_ids); .@idx = rand(.@sz); .@rid = .T5_ids[.@idx]; .@rq = .T5_qty[.@idx]; specialeffect EF_TELEPORTATION; }
+
+	getitem .@rid, .@rq;
+
+	// ถ้าได้ Tier 1 ให้รีเซ็ตพิตี้ + ประกาศ
+	if (.@tier == 1) {
+		#HAL_PITY = 0;
+		announce strcharinfo(0)+" ได้รับของรางวัลใหญ่จาก Halloween: "+getitemname(.@rid)+"!", bc_all;
+	}
+
+	mes "[Mysterious Flame]";
+	mes "ยินดีด้วย! เจ้่าได้รับ: ^0055FF"+getitemname(.@rid)+"^000000 x"+.@rq+"!";
+	// เสนอรีโรลต่อทันที (โหมดพิเศษ)
+	next;
+	switch(select("สุ่มต่อแบบเดิม","กลับเมนูหลัก","ยกเลิก")) {
+		case 1:
+			goto L_ROLL_SPECIAL;
+		case 2:
+			goto L_MAIN_MENU;
+		default:
+			close;
+	}
+
+OnInit:
+	// -------------------------------
+	// ตั้งค่าไอเท็มรางวัลของแต่ละ Tier
+	// -------------------------------
+
+	// Tier 1 (2 ชิ้น)
+	setarray .T1_ids[0], 28594, 32258; // Temporal Ring, Ring of Jupiter
+	setarray .T1_qty[0], 1, 1;
+
+	// Tier 2 (4 ชิ้น)
+	setarray .T2_ids[0], 20842, 20843, 20844, 19243;
+	setarray .T2_qty[0], 1, 1, 1, 1;
+
+	// Tier 3 (5 ชิ้น) - Emerald/Catherina/Goal Tender
+	setarray .T3_ids[0], 5356, 2001105, 28573, 19163, 18787;
+	setarray .T3_qty[0], 1, 1, 1, 1, 1;
+
+	// Tier 4 (7 ชิ้น)
+	setarray .T4_ids[0], 2002013, 6635, 6635, 6635, 2001104, 7959, 7959;
+	setarray .T4_qty[0], 1,     5,    3,    1,     1,      10,   5;
+
+	// Tier 5 (16 ชิ้น)
+	setarray .T5_ids[0],
+		22819,        // True Almighty
+		22701,        // Pegasus Cotton Candy
+		2001101,2001101,2001101, // Yee Catnip 5/3/1
+		11592,11593,11594,11595, // Tran Candies R/B/Y/G
+		11605,        // Cookie Bat
+		11617,        // Silvervine Chocolate Ball
+		11587,11586,11585,11584,11583; // Chocolate line
+	setarray .T5_qty[0],
+		3,
+		10,
+		5,3,1,
+		1,1,1,1,
+		5,
+		5,
+		3,3,3,3,3;
+
+	end;
+}
+
+// =====================================================
+//  Pumpkin Harvester (rAthena / No functions)
+//  - แลก Organic (6804) x10 -> Pumpkin Mojo (7609) x1
+//  - แลก INORGANIC (6805) x20 -> Pumpkin Mojo (7609) x1
+//  - วาร์ปกิจกรรม: "สุ่มหนึ่งแมพ" หรือ "เลือกแมพเอง"
+// =====================================================
+
+icecastle,188,213,4	script	Pumpkin Harvester#2025	1509,{
+
+	specialeffect EF_SPHERE;
+
+	mes "[Pumpkin Harvester]";
+	mes "เจ้ามีฟักทองสวยๆมาแลกเปลี่ยนกับข้าไหม?";
+	mes "ยิ่งออแกนิก ข้ายิ่งอยากได้!!";
+	next;
+	mes "[Pumpkin Harvester]";
+	mes "^i[6804] 10 ea แลกกับ ^i[7609] 1 ea";
+	mes "^i[6805] 20 ea แลกกับ ^i[7609] 1 ea ก็ได้";
+	next;
+
+L_MAIN:
+	specialeffect EF_SPHERE;
+	switch(select(
+		"แลก ^00AAFFOrganic Pumpkin 10 ea^000000 -> ^FF9900Pumpkin Mojo 1 ea^000000",
+		"แลก ^AA00FFInorganic Pumpkin 20 ea^000000 -> ^FF9900Pumpkin Mojo 1 ea^000000",
+		"วาร์ปไปล่ามอนกิจกรรม",
+		"ยกเลิก"
+	)) {
+
+	// ===== ORG -> Mojo =====
+	case 1:
+		.@have = countitem(.OrganicID);
+		.@need = .OrgNeed;
+		.@max  = .@have / .@need;
+
+		mes "[Pumpkin Harvester]";
+		mes "เจ้ามี ^00AAFF"+getitemname(.OrganicID)+"^000000 : ^00AAFF"+.@have+"^000000 ชิ้น";
+		mes "อัตราแลก: ^FF9900"+.@need+" -> 1^000000 (สูงสุด ^99CC00"+.@max+"^000000 ครั้ง)";
+		next;
+
+		if (.@max <= 0) { mes "ของยังไม่พอจ้า~"; close; }
+
+		switch(select("ใส่จำนวนเอง","แลกทั้งหมด ("+.@max+" ครั้ง)","ยกเลิก")) {
+			case 1:
+				mes "ต้องการแลกกี่ครั้ง? (1–"+.@max+")"; input .@times;
+				if (.@times < 1) close;
+				if (.@times > .@max) .@times = .@max;
+				goto L_DO_ORG;
+			case 2: .@times = .@max; goto L_DO_ORG;
+			default: close;
+		}
+		end;
+
+L_DO_ORG:
+		if (countitem(.OrganicID) < .@times*.@need) { mes "ของไม่พอ ลองใหม่อีกครั้งนะ."; close; }
+		delitem .OrganicID, .@times*.@need;
+		specialeffect EF_TELEPORTATION; progressbar "Extracting Essence...", 1;
+		getitem .MojoID, .@times; specialeffect EF_LEVELUP;
+		mes "สำเร็จ! ได้ ^FF9900"+getitemname(.MojoID)+"^000000 x"+.@times+"!";
+		end; 
+
+	// ===== INORG -> Mojo =====
+	case 2:
+		.@have = countitem(.InorgID);
+		.@need = .InorgNeed;
+		.@max  = .@have / .@need;
+
+		mes "[Pumpkin Harvester]";
+		mes "เจ้ามี ^AA00FF"+getitemname(.InorgID)+"^000000 : ^AA00FF"+.@have+"^000000 ชิ้น";
+		mes "อัตราแลก: ^FF9900"+.@need+" -> 1^000000 (สูงสุด ^99CC00"+.@max+"^000000 ครั้ง)";
+		next;
+
+		if (.@max <= 0) { mes "ของยังไม่พอจ้า~"; close; }
+
+		switch(select("ใส่จำนวนเอง","แลกทั้งหมด ("+.@max+" ครั้ง)","ยกเลิก")) {
+			case 1:
+				mes "ต้องการแลกกี่ครั้ง? (1–"+.@max+")"; input .@times;
+				if (.@times < 1) close;
+				if (.@times > .@max) .@times = .@max;
+				goto L_DO_INORG;
+			case 2: .@times = .@max; goto L_DO_INORG;
+			default: close;
+		}
+		end;
+
+L_DO_INORG:
+		if (countitem(.InorgID) < .@times*.@need) { mes "ของไม่พอ ลองใหม่อีกครั้งนะ."; close; }
+		delitem .InorgID, .@times*.@need;
+		specialeffect EF_TELEPORTATION; progressbar "Condensing Matter...", 1;
+		getitem .MojoID, .@times; specialeffect EF_LEVELUP;
+		mes "เรียบร้อย! ได้ ^FF9900"+getitemname(.MojoID)+"^000000 x"+.@times+"!";
+		end;
+
+	// ===== Warp Menu =====
+	case 3:
+		
+				.@n = getarraysize(.EventMap$);
+				if (.@n <= 0) { mes "ยังไม่ได้ตั้งค่าแมพกิจกรรม!"; close; }
+				.@i = rand(.@n);
+				specialeffect EF_TELEPORTATION; progressbar "Opening Random Rift...", 1;
+				warp .EventMap$[.@i], .EventX[.@i], .EventY[.@i];
+				end;
+			
+
+	default:
+		mes "[Pumpkin Harvester]";
+		mes "ไว้กลับมาใหม่นะ~";
+		specialeffect EF_TELEPORTATION;
+		close;
+	}
+	end;
+
+OnInit:
+	// ======= ตั้งค่าแลกของ =======
+	.OrganicID = 6804;   // Organic Pumpkin
+	.OrgNeed   = 10;     // ใช้ 10 -> Mojo x1
+	.InorgID   = 6805;   // Inorganic Pumpkin
+	.InorgNeed = 20;     // ใช้ 20 -> Mojo x1
+	.MojoID    = 7609;   // Pumpkin Mojo
+
+	// ======= ตั้งค่าแมพกิจกรรม (หลายที่) =======
+	setarray .EventMap$[0], "prt_fild08", "gef_fild00", "prt_fild05", "nifheim", "ygg_roots", "xmas_fild01";
+	setarray .EventX[0],      198,        209,          284,          196,          185,          128;
+	setarray .EventY[0],      223,        260,          218,          176,          236,          164;
+	end;
+}
+
+prt_fild08,0,0	monster	Wild Pumpkin#1	3202,50,0
+prt_fild08,0,0	monster	Wild Pumpkin#1	3203,20,0
+gef_fild00,0,0	monster	Wild Pumpkin#2	3202,50,0
+gef_fild00,0,0	monster	Wild Pumpkin#2	3203,20,0
+prt_fild05,0,0	monster	Wild Pumpkin#3	3202,50,0
+prt_fild05,0,0	monster	Wild Pumpkin#3	3203,20,0
+nifheim,0,0	monster	Wild Pumpkin#4	3202,100,0
+nifheim,0,0	monster	Wild Pumpkin#4	3203,40,0
+ygg_roots,0,0	monster	Wild Pumpkin#5	3202,70,0
+ygg_roots,0,0	monster	Wild Pumpkin#5	3203,40,0
+xmas_fild01,0,0	monster	Wild Pumpkin#6	3202,60,0
+xmas_fild01,0,0	monster	Wild Pumpkin#6	3203,30,0
