@@ -3548,6 +3548,36 @@ Body:
     Name: Novice Skill Upgrade
     Type: etc
     Weight: 100
+  - Id: 2235065
+    AegisName: LK_UP_SKILL_6
+    Name: Legendary Knight Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235066
+    AegisName: HP_UP_SKILL_6
+    Name: Legendary Priest Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235067
+    AegisName: HW_UP_SKILL_6
+    Name: Legendary Wizard Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235068
+    AegisName: WS_UP_SKILL_6
+    Name: Legendary Blacksmith Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235069
+    AegisName: SNI_UP_SKILL_6
+    Name: Legendary Hunter Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235070
+    AegisName: ASC_UP_SKILL_6
+    Name: Legendary Ass Skill Upgrade
+    Type: etc
+    Weight: 100
 #   [Enchant Result]
   - Id: 2236001
     AegisName: SM_Up_Skill_Ston_1
@@ -4234,6 +4264,71 @@ Body:
           bonus2 bSkillAtk,"WZ_WATERBALL",200;
           bonus2 bSkillAtk,"WZ_JUPITEL",200;
           bonus2 bSkillAtk,"WZ_EARTHSPIKE",1000;
+      }
+  - Id: 2236065
+    AegisName: LK_UP_SKILL_6_
+    Name: Legendary Knight Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Knight ) {
+          bonus bSkillUpgrade6;
+          bonus2 bSkillCooldown,"KN_BOWLINGBASH",-10000;
+          bonus2 bSkillAtk,"KN_BOWLINGBASH",40;
+      }
+  - Id: 2236066
+    AegisName: HP_UP_SKILL_6_
+    Name: Legendary Priest Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Priest ) {
+          bonus bDelayrate,-100;
+          bonus bVariableCastrate,-100;
+          bonus bNoGemStone;
+          bonus2 bSkillAtk,"AL_HOLYLIGHT",10000;
+          bonus2 bSkillCooldown,"AL_HOLYLIGHT",1000;
+      }
+  - Id: 2236067
+    AegisName: HW_UP_SKILL_6_
+    Name: Legendary Wizard Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Wizard ) {
+          bonus bSkillUpgrade6;
+          bonus bCritical,35;
+      }
+  - Id: 2236068
+    AegisName: WS_UP_SKILL_6_
+    Name: Legendary Blacksmith Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Blacksmith ) {
+          bonus bNoMadoFuel;
+          skill "ASC_EDP",2;
+      }
+  - Id: 2236069
+    AegisName: SNI_UP_SKILL_6_
+    Name: Legendary Hunter Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Hunter ) {
+          bonus2 bSkillCooldown,"SN_SHARPSHOOTING",-10000;
+          bonus2 bSkillDelay,"SN_SHARPSHOOTING",-100;
+          bonus4 bAutoSpellOnSkill,"SN_SHARPSHOOTING","RA_ARROWSTORM",5,250;
+          bonus4 bAutoSpellOnSkell,"RA_ARROWSTORM","SN_SHARPSHOOTING",5,250;
+      }
+  - Id: 2236070
+    AegisName: ASC_UP_SKILL_6_
+    Name: Legendary Ass Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Assassin ) {
+          bonus bSkillUpgrade6;
       }
 #   [Card Item]
   - Id: 2230001

@@ -4242,6 +4242,22 @@ int64 skill_attack (int32 attack_type, struct block_list* src, struct block_list
 				if (sd && sd->special_state.skillup2 && rnd() % 100 < 15)
 					skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag|2);
 				break;
+			case ASC_BREAKER: 
+			{
+				int32 startrate = 0;
+				if (sd && sd->special_state.skillup6)
+					startrate = 45;
+				while(startrate >= 0) {
+					if(rnd() % 100 < startrate) {
+						//skill_attack(BF_WEAPON,src,src,bl,ASC_BREAKER, pc_checkskill(sd, skill_id), tick, SD_LEVEL);
+						skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, attack_type, flag|2);
+						startrate -= 10;
+					}
+					else
+						break;
+				}
+				break;
+			}
 			case SU_BITE:
 			case SU_SCRATCH:
 			case SU_SV_STEMSPEAR:
@@ -6568,6 +6584,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		} else {
 			skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+			if(sd && sd->special_state.skillup6)
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		}
 		break;
 #else

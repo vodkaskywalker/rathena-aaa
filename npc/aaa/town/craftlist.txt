@@ -22,8 +22,16 @@ menu
 
 Skill_UPGRADE:
 	mes "Skill shop Welcome";
+	menu
+		"Skill HI 1",SHOPSKILL,
+		"Skill HI 2",SHOPSKILL,
+		"cancle",-;
 	close2;
-	callshop "Skill_Stone_hi";
+	
+SHOPSKILL:
+	mes "Skill SHOP Welcome";
+	close2;
+	callshop "Skill_Stone_hi_"+@menu;
 	end;
 	
 Raid_List:

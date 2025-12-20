@@ -2074,7 +2074,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
 		}
-
 		if (flag & BF_WEAPON && (sce = sc->getSCE(SC_ADD_ATK_DAMAGE)))
 			damage += damage * sce->val1 / 100;
 		if (flag & BF_MAGIC && (sce = sc->getSCE(SC_ADD_MATK_DAMAGE)))
@@ -2108,6 +2107,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 	if (sd && pc_ismadogear(sd)) {
 		pc_overheat(*sd, (battle_get_weapon_element(d, src, bl, skill_id, skill_lv, EQI_HAND_R, false) == ELE_FIRE ? 3 : 1));
+	}
+
+	if (sc->getSCE(SC_MAGICPOWER) && sd && sd->special_state.skillup6) {
+		damage += damage;
 	}
 
 	// Target status (again), required for RELIEVE
