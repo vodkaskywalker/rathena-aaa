@@ -82867,7 +82867,7 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Angel
-    Element: Holy
+    Element: Neutral
     ElementLevel: 3
     WalkSpeed: 300
     AttackDelay: 1288
@@ -82895,7 +82895,7 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Angel
-    Element: Holy
+    Element: Neutral
     ElementLevel: 3
     WalkSpeed: 300
     AttackDelay: 1288
@@ -82923,7 +82923,7 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Angel
-    Element: Holy
+    Element: Neutral
     ElementLevel: 3
     WalkSpeed: 160
     AttackDelay: 920
@@ -82951,7 +82951,7 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
-    Element: Holy
+    Element: Neutral
     ElementLevel: 3
     WalkSpeed: 120
     AttackDelay: 1000
@@ -82979,7 +82979,7 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Angel
-    Element: Holy
+    Element: Neutral
     ElementLevel: 3
     WalkSpeed: 180
     AttackDelay: 576
@@ -83007,7 +83007,7 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Angel
-    Element: Holy
+    Element: Neutral
     ElementLevel: 3
     WalkSpeed: 160
     AttackDelay: 432
@@ -83035,7 +83035,7 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Angel
-    Element: Holy
+    Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
     AttackDelay: 672
@@ -83063,7 +83063,7 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Angel
-    Element: Holy
+    Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
     AttackDelay: 672
@@ -83091,7 +83091,7 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Angel
-    Element: Holy
+    Element: Neutral
     ElementLevel: 3
     WalkSpeed: 120
     AttackDelay: 1576
@@ -83119,7 +83119,7 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Angel
-    Element: Ghost
+    Element: Neutral
     ElementLevel: 1
     WalkSpeed: 100
     AttackDelay: 576

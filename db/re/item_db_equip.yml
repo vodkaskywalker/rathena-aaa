@@ -111055,14 +111055,6 @@ Body:
     Type: Armor
     Locations:
       Costume_Garment: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     ArmorLevel: 1
     View: 181
   - Id: 20623
@@ -111071,14 +111063,6 @@ Body:
     Type: Armor
     Locations:
       Costume_Garment: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     ArmorLevel: 1
     View: 182
   - Id: 20624
@@ -111087,14 +111071,6 @@ Body:
     Type: Armor
     Locations:
       Costume_Garment: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     ArmorLevel: 1
     View: 183
   - Id: 20625
@@ -111105,14 +111081,6 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 197
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       hateffect HAT_EF_C_ROS2023_CAPE_1,true;
     UnEquipScript: |
@@ -111125,14 +111093,6 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 198
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       hateffect HAT_EF_C_ROS2023_CAPE_2,true;
     UnEquipScript: |

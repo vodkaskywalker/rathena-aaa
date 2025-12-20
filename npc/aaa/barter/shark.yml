@@ -46,7 +46,63 @@ Header:
   Version: 2
 
 Body:
-  - Name: Skill_Stone_hi
+  - Name: Skill_Stone_hi_2
+    Items:
+      - Index: 0
+        Item: LK_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: KN_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: KN_UP_Skill_2
+            Amount: 1
+      - Index: 1
+        Item: HP_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: PR_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: PR_UP_Skill_2
+            Amount: 1
+      - Index: 2
+        Item: HW_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: WZ_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: WZ_UP_Skill_2
+            Amount: 1
+      - Index: 3
+        Item: WS_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: BS_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: BS_UP_Skill_2
+            Amount: 1
+      - Index: 4
+        Item: SNI_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: HT_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: HT_UP_Skill_2
+            Amount: 1
+      - Index: 5
+        Item: ASC_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: AS_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: AS_UP_Skill_2
+            Amount: 1
+  - Name: Skill_Stone_hi_1
     Items:
       - Index: 0
         Item: LK_UP_SKILL_5
