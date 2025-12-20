@@ -1,5 +1,5 @@
 // Max Cap Level
-config_maxlv: 150
+config_maxlv: 185
 
 //Max Cap Aspd
 aspd_unlock_cap: 197
