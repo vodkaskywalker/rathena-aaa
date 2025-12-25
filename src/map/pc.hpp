@@ -768,7 +768,7 @@ public:
 	std::vector<s_autospell> autospell, autospell2, autospell3;
 	std::vector<s_addeffect> addeff, addeff_atked;
 	std::vector<s_addeffectonskill> addeff_onskill;
-	std::vector<s_item_bonus> skillaoe, skillatk, skillusesprate, skillusesp, skillheal, skillheal2, skillblown, skillcastrate, skillfixcastrate, subskill, skillcooldown, skillfixcast,
+	std::vector<s_item_bonus> skillaoe, skillhealap, skillatk, skillusesprate, skillusesp, skillheal, skillheal2, skillblown, skillcastrate, skillfixcastrate, subskill, skillcooldown, skillfixcast,
 		skillvarcast, skilldelay, itemhealrate, add_def, add_mdef, add_mdmg, reseff, itemgrouphealrate, itemsphealrate, itemgroupsphealrate;
 	std::vector<s_add_drop> add_drop;
 	std::vector<s_addele2> subele2;

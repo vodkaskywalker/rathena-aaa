@@ -5073,6 +5073,15 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 
 		pc_bonus_itembonus(sd->skillaoe, type2, val, false);
 		break;
+	case SP_SKILL_HEAL_AP: // bonus2 bSkillHealAP,sk,n;
+		if (sd->state.lr_flag == LR_FLAG_ARROW)
+			break;
+		if (sd->skillhealap.size() == MAX_PC_BONUS) {
+			ShowWarning("pc_bonus2: SP_SKILL_USE_SP: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			break;
+		}
+		pc_bonus_itembonus(sd->skillhealap, type2, val, false);
+		break;
 	case SP_SKILL_HEAL: // bonus2 bSkillHeal,sk,n;
 		if (sd->state.lr_flag == LR_FLAG_ARROW)
 			break;

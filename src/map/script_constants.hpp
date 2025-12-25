@@ -849,6 +849,7 @@
 	
 	// [Custom Bonus]
 	
+	export_constant2("bSkillHealAP",SP_SKILL_HEAL_AP);
 	export_constant2("bNoFatalDamage", SP_NO_FATAL);
 	export_constant2("bBrainMuscle", SP_BRAINMUSCLE);
 	export_constant2("bfrenzyrevert", SP_FRENZYREVERT);

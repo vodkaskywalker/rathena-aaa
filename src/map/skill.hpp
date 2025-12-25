@@ -2854,6 +2854,7 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list);	//
 int32 skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 int32 skill_banding_count(map_session_data *sd);
+int32 skill_heal_ap(map_session_data *id,uint16 skill_id);
 
 int32 skill_is_combo(uint16 skill_id);
 void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int32 inf);

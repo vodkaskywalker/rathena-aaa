@@ -90,7 +90,7 @@ bonus2 bSkillRateDef,<type>,<val>; เพิ่มพลังป้องกันของสกิล ตามประเภท
 	SKILLRATE_TYPE_MISC		= อื่นๆ Misc
 	SKILLRATE_TYPE_ALL		= All
 	
-
+bonus2 bSkillHealAP,sk,n;				When use skill sk give n ap
 bonus bAspdcap,n;						n is max cap aspd
 bonus bDropUp,n;						Add drop n/10000% drop rate
 bonus bIgnoreDef,n;						Decrease N Def From enermy

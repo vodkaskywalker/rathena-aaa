@@ -14561,6 +14561,26 @@ TIMER_FUNC(skill_castend_id){
 	return 0;
 }
 
+
+static int32 skill_heal_ap(map_session_data *sd, uint16 skill_id)
+{
+	int32 add_ap = 0;
+	for (const auto &it : sd->skillhealap) {
+		if (it.id == skill_id) {
+			add_ap += it.val;
+			break;
+		}
+	}
+	
+	//ShowDebug("Skill %d AP HEAL IS %d% \n",skill_id,add_ap);
+	if(add_ap > 0)
+		return add_ap;
+	else
+		return 0;
+	
+	
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -19810,7 +19830,15 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				break;
 		}
 	}
-
+	
+	// Bonus AP From bonus
+	if (&sd) {
+		int32 bonus_ap = 0;
+		bonus_ap += skill_heal_ap(&sd, skill_id);
+		if (bonus_ap > 0)
+			status_heal(&sd, 0, 0, bonus_ap, 0);
+	}
+	
 	return true;
 }
 
