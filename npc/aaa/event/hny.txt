@@ -1,0 +1,111 @@
+icecastle,185,217,4	script	New Year#icecastle	403,{
+	if(#newyearacc) {
+		mes "รับของไปแล้วน้า";
+		end;
+	}
+	mes "นี่คือกิจกรรมปีใหม่";
+	mes "ว่าง่ายๆคือแจกตัวละครใหม่ 1 ตัวนั่นเอง";
+	mes "เชิญเอาตัวที่มี Level น้อยกว่า 160 มากดได้เลยนะ :D";
+	mes "แต่ๆ เฉพาะโนวิทเท่านั้นเน้อ";
+	next;
+	if(select("รับเลย:ยังก่อน") == 2) end;
+	if(Class != 0) {
+		mes "บอกว่ารับเฉพาะโนวิทงาย";
+		end;
+	}
+	mes "โปรดเลือกอาชีพที่อยากจะเปลี่ยน";
+	setarray .@classallow,4008,4009,4010,4011,4012,4013,4015,4016,4017,4018,4019,4020,4190,4239,4240,4211,4215;
+	.@jobmenu$ = "";
+	for(.@i=0; .@i < getarraysize(.@classallow); .@i++)
+		.@jobmenu$ += jobname(.@classallow[.@i]) + ":";
+	.@selectjob = .@classallow[select(.@jobmenu$)-1];
+	mes "ท่านจะเปลี่ยนเป็น "+jobname(.@selectjob);
+	mes "ท่านจะได้เลเวล 150 + all Skill พร้อมทั้งหินอาชีพติดคอสตูมฉลามสุดน่ารัก :D";
+	mes "ท่านยืนยันหรือไม่ ^FF0000สิ่งนี้สามารถทำได้เพียงไอดีละครั้ง กรุณาตรวจสอบโดยละเอียด^000000";
+	next;
+	if(select("เอาเลย:คิดแปบ") == 2 ) end;
+	set #newyearacc,1;
+	set newyearchar,1;
+	jobchange .@selectjob;
+	BaseLevel = 160;
+	JobLevel = 99;
+	atcommand "@skillall";
+	mes "ขอให้เล่นเกมอย่างสนุกน้า";
+	switch(Class) {
+		case 4008:
+			.@weapid = 1170;
+			.@stoneid = 2236048;
+			break;
+		case 4009:
+			.@weapid = 1557;
+			.@stoneid = 2236049;
+			break;
+		case 4010:
+			.@weapid = 1473;
+			.@stoneid = 2236050;
+			break;
+		case 4011:
+			.@weapid = 1376;
+			.@stoneid = 2236051;
+			break;
+		case 4012:
+			.@weapid = 1741;
+			.@stoneid = 2236052;
+			break;
+		case 4013:
+			.@weapid = 1271;
+			.@stoneid = 2236053;
+			break;
+		case 4015:
+			.@weapid = 1420;
+			.@stoneid = 2236054;
+			break;
+		case 4016:
+			.@weapid = 1814;
+			.@stoneid = 2236055;
+			break;
+		case 4017:
+			.@weapid = 1557;
+			.@stoneid = 2236056;
+			break;
+		case 4018:
+			.@weapid = 1223;
+			.@stoneid = 2236057;
+			break;
+		case 4019:
+			.@weapid = 13404;
+			.@stoneid = 2236058;
+			break;
+		case 4020:
+		case 4021:
+			.@weapid = 1741;
+			.@stoneid = 2236059;
+			break;
+		case 4190:
+			.@weapid = 16039;
+			.@stoneid = 2236064;
+			break;
+		case 4211:
+		case 4212:
+			.@weapid = 13313;
+			.@stoneid = 2236060;
+			break;
+		case 4215:
+			.@weapid = 13128;
+			.@stoneid = 2236061;
+			break;
+		case 4239:
+			.@weapid = 28605;
+			.@stoneid = 2236062;
+			break;
+		case 4240:
+			.@weapid = 1600;
+			.@stoneid = 2236063;
+			break;
+	}
+	getitem4 .@weapid,1,1,13,0,0,0,0,0,4,.@OptID,.@OptVal,.@OptParam;
+	getitem2 480126,1,1,0,0,.@stoneid,0,0,0;
+	end;
+	//atcommand
+	
+}

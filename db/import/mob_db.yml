@@ -81,6 +81,13 @@ Header:
   Version: 5
 
 Body:
+# event
+  - Id: 1247
+    Drops:
+      - Item: Blacksmith_Blessing
+        Rate: 10
+      - Item: zeny_bag_1M
+        Rate: 10
 # [Old GLash Heim Mod]
   - Id: 2475
     DamageTaken: 10

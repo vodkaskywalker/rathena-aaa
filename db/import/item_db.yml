@@ -1017,6 +1017,9 @@ Body:
     Weight: 1
     Script: |
       zeny += 100000;
+  - Id: 6635
+    Flags:
+      DropEffect: GREEN_PILLAR
   - Id: 2002013
     AegisName: Zeny_Bag_1M
     Name: Zeny Bag 1 M
@@ -1730,6 +1733,7 @@ Body:
     Script: |
       bonus bUseSPrate,-5;
       bonus bDelayrate,-5;
+      bonus2 bSkillHealAP,"NV_FIRSTAID",10;
   - Id: 2233503
     AegisName: Guardian_Armor_Level_1-3
     Name: Guardian Armor (Tier 1)
