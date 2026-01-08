@@ -46,6 +46,11 @@ Header:
   Version: 4
 
 Body:
+  - Status: Magicpower_UPPER
+    DurationLookup: HW_MAGICPOWER
+    Flags:
+      NoSave: true
+      RemoveOnHermode: true
   - Status: Warm
     Icon: EFST_SG_SUN_WARM
     DurationLookup: SG_SUN_WARM

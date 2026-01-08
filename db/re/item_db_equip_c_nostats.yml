@@ -100232,13 +100232,14 @@ Body:
     ArmorLevel: 1
     View: 472
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 19532
     AegisName: C_Red_Bunny_Band
     Name: Red Bunny Band
@@ -100249,13 +100250,14 @@ Body:
     EquipLevelMin: 1
     View: 640
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 19533
     AegisName: C_Spore_Hat
     Name: Costume Spore Hat
@@ -105418,13 +105420,14 @@ Body:
     EquipLevelMin: 1
     View: 1228
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 20064
     AegisName: Blue_Brain_Hat
     Name: Costume Blue Brain Hat
@@ -105436,13 +105439,14 @@ Body:
     EquipLevelMin: 1
     View: 1229
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 20065
     AegisName: C_Hairband_Of_Grandpeco
     Name: Costume Grand Peco Hairband
@@ -105471,12 +105475,14 @@ Body:
     EquipLevelMin: 1
     View: 719
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 20068
     AegisName: C_Blrabbit_Hband
     Name: Costume Black Rabbit Headband
@@ -105487,12 +105493,14 @@ Body:
     EquipLevelMin: 1
     View: 718
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 20069
     AegisName: C_Gryphon_Hairband
     Name: Costume Gryphon Hairband
@@ -106143,6 +106151,15 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     EquipLevelMin: 1
+    Trade:
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
     View: 1117
   - Id: 20136
     AegisName: C12th_ElvenEars
@@ -106152,6 +106169,15 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     EquipLevelMin: 1
+    Trade:
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
     View: 875
   - Id: 20137
     AegisName: C_Bomb_Wick
@@ -106161,6 +106187,15 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     EquipLevelMin: 1
+    Trade:
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
     View: 66
   - Id: 20138
     AegisName: C_Sea_Otter_Cap
@@ -110491,13 +110526,13 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
   - Id: 20596
     AegisName: C_BlackBear_Back_TW
     Name: "Costume: Black Bear Backpack"
@@ -152091,14 +152126,14 @@ Body:
     EquipLevelMin: 1
     View: 1541
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 31106
     AegisName: Eye_Patch_Blue
     Name: Costume Eyepatch of Peace
@@ -153553,13 +153588,13 @@ Body:
     EquipLevelMin: 1
     View: 661
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
     Script: |
       bonus2 bExpAddRace,RC_All,10;
   - Id: 31263
@@ -164906,14 +164941,13 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    EquipLevelMin: 200
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
   - Id: 400125
     AegisName: The_Kings_Hat
     Name: Hat of Ancient Kings
@@ -185438,13 +185472,14 @@ Body:
     ArmorLevel: 1
     View: 2144
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 436007
     AegisName: C_Ep19_Iwin
     Name: Costume Irwin Cold Hat
@@ -185455,13 +185490,14 @@ Body:
     ArmorLevel: 1
     View: 2143
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 436008
     AegisName: C_HwaHoJumJung
     Name: Costume Big Tiger Hat
@@ -185481,12 +185517,14 @@ Body:
     ArmorLevel: 1
     View: 2315
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 440000
     AegisName: C_SharkHead
     Name: Costume Shark Hat
@@ -185530,13 +185568,14 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 440004
     AegisName: C_Close_Helmet
     Name: Costume Close Helmet    # !todo check english name
@@ -185568,13 +185607,14 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 440007
     AegisName: C_Squirrel_Ear_Hat_Kr
     Name: Costume Beginner Squirrel Ear Hat
@@ -185586,13 +185626,14 @@ Body:
     ArmorLevel: 1
     View: 1486
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 440008
     AegisName: C_Master
     Name: Costume Master
@@ -185643,12 +185684,14 @@ Body:
     ArmorLevel: 1
     View: 2434
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 440013
     AegisName: C_2024ROS_Hat_1st
     Name: Costume ROS Korea 1st Place Hat
@@ -185678,13 +185721,14 @@ Body:
     ArmorLevel: 1
     View: 2552
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 440015
     AegisName: C_2024ROS_Hat_3rd
     Name: Costume ROS Korea 3rd Place Hat
@@ -185696,13 +185740,14 @@ Body:
     ArmorLevel: 1
     View: 2553
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 440016
     AegisName: C_2024ROS_Hat_4th
     Name: Costume ROS Korea Participant Hat
@@ -185714,13 +185759,14 @@ Body:
     ArmorLevel: 1
     View: 2554
     Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+      NoSell: false
   - Id: 440017
     AegisName: aegis_440017
     Name: "Costume: Jormungandr Church Cape"

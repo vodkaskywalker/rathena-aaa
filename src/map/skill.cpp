@@ -8646,6 +8646,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case NPC_LOCKON_LASER:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+			if(sd && skill_id == HW_MAGICPOWER && sd->special_state.skillup6 ) {
+				clif_skill_nodamage(src,*bl,skill_id,skill_lv,
+					sc_start(src,bl,SC_MAGICPOWER_UPPER,100,1,skill_get_time(skill_id,skill_lv)));
+			}
 		break;
 
 	case NPC_GRADUAL_GRAVITY:

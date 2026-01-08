@@ -1008,7 +1008,12 @@
 	export_constant2("Eff_Hallucination",SC_HALLUCINATION);
 
 	export_constant2("SC_ALL",SC_NONE);
-
+	// Custom Status SCB_AGI
+	
+	export_constant(SC_MAGICPOWER_UPPER);
+	
+	// End CUSTOM STATUS
+	
 	export_constant(SC_NONE);
 	export_constant(SC_STONE);
 	export_constant(SC_FREEZE);

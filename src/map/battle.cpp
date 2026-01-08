@@ -2038,6 +2038,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	status_change* sc = status_get_sc(src);
 
 	if (sc != nullptr && !sc->empty()) {
+		if (sc->getSCE(SC_MAGICPOWER_UPPER) ) {
+			damage += damage;
+		}
 		if (sc->getSCE(SC_BREAKINGLIMIT)) {
 			switch (skill_id) {
 				case HN_SHIELD_CHAIN_RUSH:
@@ -2107,10 +2110,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 	if (sd && pc_ismadogear(sd)) {
 		pc_overheat(*sd, (battle_get_weapon_element(d, src, bl, skill_id, skill_lv, EQI_HAND_R, false) == ELE_FIRE ? 3 : 1));
-	}
-
-	if (sc->getSCE(SC_MAGICPOWER) && sd && sd->special_state.skillup6) {
-		damage += damage;
 	}
 
 	// Target status (again), required for RELIEVE
@@ -4785,7 +4784,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			if (sd && sd->weapontype1 == W_2HSWORD)
 				wd->div_ = 2;
 			if (sd && sd->special_state.skillup5)
-				wd->div_ += 2;
+				wd->div_ += 3;
 			break;
 		case SC_FATALMENACE:
 			if (sd && sd->weapontype1 == W_DAGGER)
