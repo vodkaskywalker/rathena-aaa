@@ -559,6 +559,8 @@
 	export_constant(CELL_CHKNOBUYINGSTORE);
 
 	/* parameters */
+	export_parameter("bDEF1",SP_DEF1);
+	export_parameter("bDEF2",SP_DEF2);
 	export_parameter("StatusPoint",SP_STATUSPOINT);
 	export_parameter("BaseLevel",SP_BASELEVEL);
 	export_parameter("SkillPoint",SP_SKILLPOINT);
@@ -1011,6 +1013,7 @@
 	// Custom Status SCB_AGI
 	
 	export_constant(SC_MAGICPOWER_UPPER);
+	export_constant(SC_CONCENTRATION_UPPER);
 	
 	// End CUSTOM STATUS
 	

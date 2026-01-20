@@ -3375,6 +3375,8 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 		case MO_TRIPLEATTACK:
 			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0) {
 				duration = 1;
+				if(sd && sd->special_state.skillup6)
+					duration = 0;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
@@ -5593,7 +5595,10 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		break;
 
 	case MO_TRIPLEATTACK:
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
+		if(sd && sd->special_state.skillup6)
+			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,0,flag);
+		else
+			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 
 	case LK_HEADCRUSH:
@@ -8644,11 +8649,16 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case SH_TEMPORARY_COMMUNION:
 	case SKE_ENCHANTING_SKY:
 	case NPC_LOCKON_LASER:
+	case AC_CONCENTRATION:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 			if(sd && skill_id == HW_MAGICPOWER && sd->special_state.skillup6 ) {
 				clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 					sc_start(src,bl,SC_MAGICPOWER_UPPER,100,1,skill_get_time(skill_id,skill_lv)));
+			}
+			if (sd && skill_id == AC_CONCENTRATION && sd->special_state.skillup4) {
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv,
+					sc_start(src, bl, SC_CONCENTRATION_UPPER, 100, 1, skill_get_time(skill_id, skill_lv)));
 			}
 		break;
 
@@ -16670,6 +16680,10 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case NW_GRENADES_DROPPING:
 		limit = skill_get_time2(skill_id,skill_lv);
 		break;
+	case AM_DEMONSTRATION:
+		if(sd && sd->special_state.skillup6)
+			interval = 150;
+		break;
 	case PR_MAGNUS:
 		if(sd && sd->special_state.skillup3)
 			interval = 200;
@@ -20954,6 +20968,7 @@ int32 skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		time = -time + status_get_amotion(bl);	// If set to <0, add to attack motion.
 
 	status_change* sc = status_get_sc(bl);
+	map_session_data* sd = (map_session_data*)bl;
 
 	// Delay reductions
 	switch (skill_id) {	//Monk combo skills have their delay reduced by agi/dex.
@@ -20969,6 +20984,8 @@ int32 skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 			if (time == 0)
 				time = 1000;
 			time -= (4 * status_get_agi(bl) + 2 * status_get_dex(bl));
+			if(sd && sd->special_state.skillup6)
+				time = 0;
 			break;
 #ifndef RENEWAL
 		case HP_BASILICA:

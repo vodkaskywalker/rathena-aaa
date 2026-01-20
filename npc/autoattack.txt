@@ -3,6 +3,29 @@
 //	Author		Shakto
 //
 
+function	script	show_mop	{
+	//mes "List is";
+	getmapxy(.@mapusername$, .@mapx, .@mapy);
+	getmapunits(BL_MOB,.@mapusername$,.@listmob$);
+	getmapunits(BL_MOB,.@mapusername$,.@listmob);
+	freeloop(1);
+	for (.@i = 0; .@i < getarraysize(.@listmob$); .@i++) {
+		if (inarray(.@ulist$, .@listmob$[.@i]) == -1) {
+			.@ulist$[getarraysize(.@ulist$)] = .@listmob$[.@i];
+			.@mobidlist[getarraysize(.@mobidlist)] = getgidmobid(.@listmob[.@i]);
+		}
+	}
+	.@menu$ = "";
+	for(.@a=0; .@a < getarraysize(.@mobidlist); .@a++) {
+		//mes (.@a + 1) + " [ID-" + .@mobidlist[.@a] +"] "+ .@ulist$[.@a];
+		.@menu$ += " [ID-" + .@mobidlist[.@a] +"] "+ .@ulist$[.@a] + ":";
+	}
+	freeloop(0);
+	.@selectid = .@mobidlist[select(.@menu$)-1];
+	return .@selectid;
+	end;
+}
+
 function	script	F_AutoAT	{
 
 	/*
@@ -219,9 +242,11 @@ monsters_menu:
 		case 1:
 			clear();
 			mes .@menu$;
-			mes "ระบุไอดีมอนสเตอร์ (สูงสุด "+getbattleflag("autoattack_max_moblist")+")";
+			//mes "ระบุไอดีมอนสเตอร์ (สูงสุด "+getbattleflag("autoattack_max_moblist")+")";
+			mes "เลือกมอนสเตอร์ (สูงสุด "+getbattleflag("autoattack_max_moblist")+")";
 			mes autoattackstrinfo(GET_INFO_MOB,-1);
-			input .@mob_id;
+			//input .@mob_id;
+			.@mob_id = show_mop;
 			if(.@mob_id <= 0 )
 				goto(monsters_menu);
 

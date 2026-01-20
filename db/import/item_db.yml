@@ -1014,7 +1014,7 @@ Body:
       NoSell: true
     NoUse:
       Sitting: true
-    Weight: 1
+    Weight: 10
     Script: |
       zeny += 100000;
   - Id: 6635
@@ -1032,7 +1032,7 @@ Body:
       NoSell: true
     NoUse:
       Sitting: true
-    Weight: 1
+    Weight: 100
     Script: |
       zeny += 1000000;
   - Id: 2002014
@@ -1047,7 +1047,7 @@ Body:
       NoSell: true
     NoUse:
       Sitting: true
-    Weight: 1
+    Weight: 1000
     Script: |
       zeny += 10000000;
   - Id: 2002015
@@ -1061,7 +1061,7 @@ Body:
       NoDrop: true
     NoUse:
       Sitting: true
-    Weight: 10
+    Weight: 100
     Script: |
       callfunc "F_MapleCube",1;
   - Id: 2002016
@@ -1075,7 +1075,7 @@ Body:
       NoDrop: true
     NoUse:
       Sitting: true
-    Weight: 10
+    Weight: 100
     Script: |
       callfunc "F_MapleCube",2;
   - Id: 2002017
@@ -1089,7 +1089,7 @@ Body:
       NoDrop: true
     NoUse:
       Sitting: true
-    Weight: 10
+    Weight: 100
     Script: |
       callfunc "F_MapleCube",3;
   - Id: 2002018
@@ -1103,7 +1103,7 @@ Body:
       NoDrop: true
     NoUse:
       Sitting: true
-    Weight: 10
+    Weight: 100
     Script: |
       callfunc "F_MapleCube",4;
   - Id: 2002019
@@ -3582,6 +3582,36 @@ Body:
     Name: Legendary Ass Skill Upgrade
     Type: etc
     Weight: 100
+  - Id: 2235071
+    AegisName: CRU_UP_SKILL_6
+    Name: Legendary Crusader Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235072
+    AegisName: MO_UP_SKILL_6
+    Name: Legendary Monk Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235073
+    AegisName: SA_UP_SKILL_6
+    Name: Legendary Sage Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235074
+    AegisName: RG_UP_SKILL_6
+    Name: Legendary Rogue Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235075
+    AegisName: AL_UP_SKILL_6
+    Name: Legendary Alchemist Skill Upgrade
+    Type: etc
+    Weight: 100
+  - Id: 2235076
+    AegisName: BD_UP_SKILL_6
+    Name: Legendary Musician Skill Upgrade
+    Type: etc
+    Weight: 100
 #   [Enchant Result]
   - Id: 2236001
     AegisName: SM_Up_Skill_Ston_1
@@ -4333,6 +4363,60 @@ Body:
     Script: |
       if( BaseJob == Job_Assassin ) {
           bonus bSkillUpgrade6;
+      }
+  - Id: 2236071
+    AegisName: CRU_UP_SKILL_6_
+    Name: Legendary Crusader Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Crusader ) {
+          bonus bBaseAtk,readparam(bDEF1);
+      }
+  - Id: 2236072
+    AegisName: MO_UP_SKILL_6_
+    Name: Legendary MONK Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Monk ) {
+          bonus bSkillUpgrade6;
+      }
+  - Id: 2236073
+    AegisName: SA_UP_SKILL_6_
+    Name: Legendary Sage Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Sage ) {
+          bonus bSkillUpgrade6;
+      }
+  - Id: 2236074
+    AegisName: RG_UP_SKILL_6_
+    Name: Legendary Rogue Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Sage ) {
+          bonus3 bAutospell,"RG_BACKSTAP",10,450;
+      }
+  - Id: 2236075
+    AegisName: AL_UP_SKILL_6_
+    Name: Legendary Alchemist Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Alchemist ) {
+          bonus bSkillUpgrade6;
+      }
+  - Id: 2236076
+    AegisName: BD_UP_SKILL_6_
+    Name: Legendary Musician Skill Upgrade
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if( BaseJob == Job_Bard ) {
+          bonus bSkillUpgrade4;
       }
 #   [Card Item]
   - Id: 2230001

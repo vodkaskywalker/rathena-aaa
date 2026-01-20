@@ -1,0 +1,161 @@
+commit 194893d1c48974cc5780e8de67fbe19c4b40bd99
+Author: Striker <sebartion77@gmail.com>
+Date:   Thu Dec 25 18:45:07 2025 +0700
+
+    new bonus heal AP when use skill
+
+diff --git a/doc/item_bonus.txt b/doc/item_bonus.txt
+index 588da7d77..c8b7a7623 100644
+--- a/doc/item_bonus.txt
++++ b/doc/item_bonus.txt
+@@ -90,7 +90,7 @@ bonus2 bSkillRateDef,<type>,<val>; 
+ 	SKILLRATE_TYPE_MISC		= อื่นๆ Misc
+ 	SKILLRATE_TYPE_ALL		= All
+ 	
+-
++bonus2 bSkillHealAP,sk,n;				When use skill sk give n ap
+ bonus bAspdcap,n;						n is max cap aspd
+ bonus bDropUp,n;						Add drop n/10000% drop rate
+ bonus bIgnoreDef,n;						Decrease N Def From enermy
+diff --git a/src/map/map.hpp b/src/map/map.hpp
+index d2a243fb3..0a18f7622 100644
+--- a/src/map/map.hpp
++++ b/src/map/map.hpp
+@@ -595,7 +595,7 @@ enum _sp {
+ 	,SP_SKILL_AOE, SP_UPSKILL1,SP_UPSKILL2,SP_UPSKILL3,SP_UPSKILL4,SP_UPSKILL5,SP_UPSKILL6,SP_UPSKILL7,SP_UPSKILL8
+ 	,SP_NO_FATAL, SP_ASPD_CAP, SP_DROP_UP
+ 	,SP_IGNORE_DEF_POINTS,SP_IGNORE_MDEF_POINTS, SP_NORMAL_RATIO
+-	,SP_SKILLRATE, SP_SKILLRATE_DEF, SP_COOLDOWNRATE, SP_HP_DRAIN_PER, SP_SP_DRAIN_PER
++	,SP_SKILLRATE, SP_SKILLRATE_DEF, SP_COOLDOWNRATE, SP_HP_DRAIN_PER, SP_SP_DRAIN_PER , SP_SKILL_HEAL_AP
+ };
+ 
+ enum _look {
+diff --git a/src/map/pc.cpp b/src/map/pc.cpp
+index cd2b47033..79a510753 100644
+--- a/src/map/pc.cpp
++++ b/src/map/pc.cpp
+@@ -5073,6 +5073,15 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
+ 
+ 		pc_bonus_itembonus(sd->skillaoe, type2, val, false);
+ 		break;
++	case SP_SKILL_HEAL_AP: // bonus2 bSkillHealAP,sk,n;
++		if (sd->state.lr_flag == LR_FLAG_ARROW)
++			break;
++		if (sd->skillhealap.size() == MAX_PC_BONUS) {
++			ShowWarning("pc_bonus2: SP_SKILL_USE_SP: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
++			break;
++		}
++		pc_bonus_itembonus(sd->skillhealap, type2, val, false);
++		break;
+ 	case SP_SKILL_HEAL: // bonus2 bSkillHeal,sk,n;
+ 		if (sd->state.lr_flag == LR_FLAG_ARROW)
+ 			break;
+diff --git a/src/map/pc.hpp b/src/map/pc.hpp
+index 2abf89615..028c20191 100644
+--- a/src/map/pc.hpp
++++ b/src/map/pc.hpp
+@@ -768,7 +768,7 @@ public:
+ 	std::vector<s_autospell> autospell, autospell2, autospell3;
+ 	std::vector<s_addeffect> addeff, addeff_atked;
+ 	std::vector<s_addeffectonskill> addeff_onskill;
+-	std::vector<s_item_bonus> skillaoe, skillatk, skillusesprate, skillusesp, skillheal, skillheal2, skillblown, skillcastrate, skillfixcastrate, subskill, skillcooldown, skillfixcast,
++	std::vector<s_item_bonus> skillaoe, skillhealap, skillatk, skillusesprate, skillusesp, skillheal, skillheal2, skillblown, skillcastrate, skillfixcastrate, subskill, skillcooldown, skillfixcast,
+ 		skillvarcast, skilldelay, itemhealrate, add_def, add_mdef, add_mdmg, reseff, itemgrouphealrate, itemsphealrate, itemgroupsphealrate;
+ 	std::vector<s_add_drop> add_drop;
+ 	std::vector<s_addele2> subele2;
+diff --git a/src/map/script.cpp b/src/map/script.cpp
+index 5519f0d5d..07c8f9b6b 100644
+--- a/src/map/script.cpp
++++ b/src/map/script.cpp
+@@ -10170,6 +10170,7 @@ BUILDIN_FUNC(bonus)
+ 		case SP_AUTOSPELL_ONSKILL:
+ 		case SP_SKILL_ATK:
+ 		case SP_SKILL_AOE:
++		case SP_SKILL_HEAL_AP:
+ 		case SP_SKILL_HEAL:
+ 		case SP_SKILL_HEAL2:
+ 		case SP_ADD_SKILL_BLOW:
+diff --git a/src/map/script_constants.hpp b/src/map/script_constants.hpp
+index 469409c88..f9ea794f0 100644
+--- a/src/map/script_constants.hpp
++++ b/src/map/script_constants.hpp
+@@ -849,6 +849,7 @@
+ 	
+ 	// [Custom Bonus]
+ 	
++	export_constant2("bSkillHealAP",SP_SKILL_HEAL_AP);
+ 	export_constant2("bNoFatalDamage", SP_NO_FATAL);
+ 	export_constant2("bBrainMuscle", SP_BRAINMUSCLE);
+ 	export_constant2("bfrenzyrevert", SP_FRENZYREVERT);
+diff --git a/src/map/skill.cpp b/src/map/skill.cpp
+index b05486223..28e87eaaf 100644
+--- a/src/map/skill.cpp
++++ b/src/map/skill.cpp
+@@ -14561,6 +14561,26 @@ TIMER_FUNC(skill_castend_id){
+ 	return 0;
+ }
+ 
++
++static int32 skill_heal_ap(map_session_data *sd, uint16 skill_id)
++{
++	int32 add_ap = 0;
++	for (const auto &it : sd->skillhealap) {
++		if (it.id == skill_id) {
++			add_ap += it.val;
++			break;
++		}
++	}
++	
++	//ShowDebug("Skill %d AP HEAL IS %d% \n",skill_id,add_ap);
++	if(add_ap > 0)
++		return add_ap;
++	else
++		return 0;
++	
++	
++}
++
+ /*==========================================
+  *
+  *------------------------------------------*/
+@@ -19810,7 +19830,15 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
+ 				break;
+ 		}
+ 	}
+-
++	
++	// Bonus AP From bonus
++	if (&sd) {
++		int32 bonus_ap = 0;
++		bonus_ap += skill_heal_ap(&sd, skill_id);
++		if (bonus_ap > 0)
++			status_heal(&sd, 0, 0, bonus_ap, 0);
++	}
++	
+ 	return true;
+ }
+ 
+diff --git a/src/map/skill.hpp b/src/map/skill.hpp
+index a390c0959..a6ab659e4 100644
+--- a/src/map/skill.hpp
++++ b/src/map/skill.hpp
+@@ -2854,6 +2854,7 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list);	//
+ int32 skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
+ 
+ int32 skill_banding_count(map_session_data *sd);
++int32 skill_heal_ap(map_session_data *id,uint16 skill_id);
+ 
+ int32 skill_is_combo(uint16 skill_id);
+ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int32 inf);
+diff --git a/src/map/status.cpp b/src/map/status.cpp
+index 78c2422c6..d1e9ef329 100644
+--- a/src/map/status.cpp
++++ b/src/map/status.cpp
+@@ -3971,6 +3971,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
+ 	sd->hp_vanish.clear();
+ 	sd->itemsphealrate.clear();
+ 	sd->itemgroupsphealrate.clear();
++	sd->skillhealap.clear();
+ 
+ 	// Zero up structures...
+ 	memset(&sd->hp_loss, 0, sizeof(sd->hp_loss)

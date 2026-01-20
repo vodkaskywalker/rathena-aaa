@@ -9002,6 +9002,21 @@ BUILDIN_FUNC(readparam)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(getgidmobid)
+{
+	int32 gid = script_getnum(st, 2);
+
+	struct block_list* bl = map_id2bl(gid);
+	if (bl == nullptr || bl->type != BL_MOB) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	script_pushint(st, md->mob_id);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Return charid identification
  * return by @num :
@@ -29492,12 +29507,13 @@ struct script_function buildin_func[] = {
 
 // (^~_~^) Gepard Shield End
 
-
+	
 	BUILDIN_DEF(petrefine, ""),
 	BUILDIN_DEF(petgrade, ""),	
 	BUILDIN_DEF(countpetegg, "i??"),
 	BUILDIN_DEF(getpetegg, "i??"),
-
+	
+	BUILDIN_DEF(getgidmobid, "i"),
 	// NPC interaction
 	BUILDIN_DEF(mes,"s*"),
 	BUILDIN_DEF(next,""),

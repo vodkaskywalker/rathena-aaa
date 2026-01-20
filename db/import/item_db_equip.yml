@@ -1883,6 +1883,83 @@ Body:
           bonus bPerfectHitAddRate,1*(.@r - 10);
         }
       }
+  - Id: 2190008
+    AegisName: Trial_Catalyst_Earring
+    Name: Trial Catalyst Earring
+    Type: Armor
+    Buy: 75000
+    Weight: 100
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoStorage: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,.@r/2;
+      bonus bLongAtkRate,.@r;
+      bonus bShortAtkRate,.@r;
+      bonus2 bMagicAtkEle,Ele_All,.@r;
+      bonus bPerfectHitAddRate,.@r/2;
+  - Id: 2190009
+    AegisName: Trial_Catalyst_Earring+
+    Name: Trial Catalyst Earring Plus
+    Type: Armor
+    Buy: 75000
+    Weight: 100
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Slots: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoStorage: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,.@r;
+      bonus bLongAtkRate,.@r*2;
+      bonus bShortAtkRate,.@r*2;
+      bonus2 bMagicAtkEle,Ele_All,.@r*2;
+      bonus bPerfectHitAddRate,.@r;
+  - Id: 2190010
+    AegisName: Trial_Catalyst_Earring_PM
+    Name: Trial Catalyst Earring Pro Max
+    Type: Armor
+    Buy: 75000
+    Weight: 100
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Slots: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoStorage: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,.@r/2;
+      bonus bLongAtkRate,.@r*4;
+      bonus bShortAtkRate,.@r*4;
+      bonus2 bMagicAtkEle,Ele_All,.@r*4;
+      bonus bPerfectHitAddRate,.@r/2;
 #cosweapon
   - Id: 2191001
     AegisName: S_Weapon_Swordman

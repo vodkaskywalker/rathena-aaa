@@ -1,12 +1,13 @@
 //cmd_in02,77,89,5	script	Troyadee	637,{
 icecastle,185,167,5	script	Troyadee	637,{
+	disable_items;
 	mes "[Troyadee]";
 	mes "ข้า!! คือ Troyadee แม้แต่ลุงโฮยังเรียกพรี่!!";
 	mes "เจ้าอยากให้ข้าเสริมพลังอะไรหละ!!";
 	next;
 	set .@has_knife, countitem(61801);
 	set .@has_pdm, countitem(2190007);
-
+	setarray .@importid,61801,2190007,2190008,2190009;
 	// ไม่มีของทั้งสองชิ้น
 	if (!.@has_knife && !.@has_pdm) {
 		mes "คุณไม่มีไอเท็มที่รองรับการตีบวกอยู่ในตัวเลย.";
@@ -15,13 +16,18 @@ icecastle,185,167,5	script	Troyadee	637,{
 
 	// สร้างเมนูตัวเลือกแบบไดนามิก
 	set .@menu$, "";
+	for(.@i=0;.@i<getarraysize(.@importid);.@i++)
+		if(countitem(.@importid[.@i]))
+			.@menu$ += "^0099FF"+getitemname(.@importid[.@i])+" ("+.@importid[.@i]+")^000000:";
+	/*
 	if (.@has_knife) set .@menu$, .@menu$ + "^FF0000Master Of Luck Accessery (61801)^000000";
 	if (.@has_knife && .@has_pdm) set .@menu$, .@menu$ + ":";
 	if (.@has_pdm) set .@menu$, .@menu$ + "^0099FFPieceful Anomaly Crystal (2190007)^000000";
-
+	*/
 	// เลือกไอเท็ม
 	mes "=||=เลือกอุปกรณ์ที่ต้องการตีบวก=||=";
 	next;
+	/*
 	switch(select(.@menu$)) {
 		// ต้องจับเคสตามลำดับที่เมนูสร้างไว้
 		case 1:
@@ -39,7 +45,9 @@ icecastle,185,167,5	script	Troyadee	637,{
 			set .@slot, EQI_ACC_L;
 			break;
 	}
-
+	*/
+	.@item_id = .@importid[select(.@menu$)-1];
+	set .@slot, EQI_ACC_L;
 	if (!countitem(.@item_id)) {
 		mes "คุณไม่มี "+getitemname(.@item_id)+" ในตัว.";
 		close;

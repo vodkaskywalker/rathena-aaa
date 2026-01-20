@@ -712,12 +712,12 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 					if( this->nodeExists( requiredItemNode, "Refine" ) ){
 						std::shared_ptr<item_data> data = item_db.find( requirement->nameid );
-
+						/*
 						if( data->flag.no_refine ){
 							this->invalidWarning( requiredItemNode["Refine"], "barter_parseBodyNode: Item %s is not refineable.\n", data->name.c_str() );
 							return 0;
 						}
-
+						*/
 						int16 refine;
 
 						if( !this->asInt16( requiredItemNode, "Refine", refine ) ){
