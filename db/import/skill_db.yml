@@ -6727,7 +6727,6 @@ Body:
     TargetType: Ground
     DamageFlags:
       NoDamage: true
-      IgnoreAtkCard: true
     Flags:
       IgnoreAutoGuard: true
       IgnoreCicada: true

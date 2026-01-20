@@ -102,6 +102,60 @@ Body:
           - Index: 1
             Item: AS_UP_Skill_2
             Amount: 1
+      - Index: 6
+        Item: CRU_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: CR_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: CR_UP_Skill_2
+            Amount: 1
+      - Index: 7
+        Item: MO_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: MO_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: MO_UP_Skill_2
+            Amount: 1
+      - Index: 8
+        Item: SA_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: SG_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: SG_UP_Skill_2
+            Amount: 1
+      - Index: 9
+        Item: RG_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: RG_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: RG_UP_Skill_2
+            Amount: 1
+      - Index: 10
+        Item: AL_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: AM_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: AM_UP_Skill_2
+            Amount: 1
+      - Index: 11
+        Item: BD_UP_SKILL_6
+        RequiredItems:
+          - Index: 0
+            Item: BD_UP_Skill_1
+            Amount: 1
+          - Index: 1
+            Item: BD_UP_Skill_2
+            Amount: 1
   - Name: Skill_Stone_hi_1
     Items:
       - Index: 0
@@ -598,6 +652,11 @@ Body:
           - Index: 0
             Item: Extreme_Kraken_leg
             Amount: 3
+  - Name: Zeny_Bag_Shop
+    Items:
+      - Index: 0
+        Item: Zeny_Bag_1M
+        Zeny: 1100000
   - Name: Cube_seller
     Items:
       - Index: 0
@@ -608,10 +667,53 @@ Body:
         Zeny: 250000
       - Index: 2
         Item: Catora_Box
-        Zeny: 9600000
+        RequiredItems:
+          - Index: 0
+            Item: Zeny_Bag_1M
+            Amount: 8
       - Index: 3
         Item: Sharkora_Box
-        Zeny: 22000000
+        RequiredItems:
+          - Index: 0
+            Item: Zeny_Bag_1M
+            Amount: 20
+  - Name: Trial_Accessory
+    Items:
+      - Index: 0
+        Item: Trial_Catalyst_Earring
+        RequiredItems:
+          - Index: 0
+            Item: Trial_Fregment
+            Amount: 10
+          - Index: 1
+            Item: Zeny_Bag_1M
+            Amount: 25
+      - Index: 1
+        Item: Trial_Catalyst_Earring+
+        RequiredItems:
+          - Index: 0
+            Item: Trial_Catalyst_Earring
+            Amount: 1
+            Refine: 16
+          - Index: 1
+            Item: Trial_Fregment
+            Amount: 15
+          - Index: 2
+            Item: Zeny_Bag_1M
+            Amount: 50
+      - Index: 2
+        Item: Trial_Catalyst_Earring_PM
+        RequiredItems:
+          - Index: 0
+            Item: Trial_Catalyst_Earring+
+            Amount: 1
+            Refine: 16
+          - Index: 1
+            Item: Trial_Fregment
+            Amount: 20
+          - Index: 2
+            Item: Zeny_Bag_1M
+            Amount: 75
   - Name: Defective_S_Weapon_C1
     Items:
       - Index: 0

@@ -1483,6 +1483,7 @@ enum sc_type : int16 {
 	SC_STARCARD,
 	SC_SUNCARD,
 	SC_MAGICPOWER_UPPER = 1729,
+	SC_CONCENTRATION_UPPER,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

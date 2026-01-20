@@ -5181,6 +5181,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case MO_TRIPLEATTACK:
 			skillratio += 20 * skill_lv;
+			if(sd && sd->special_state.skillup6)
+				skillratio += 10000 / sstatus->amotion;
 			break;
 		case MO_CHAINCOMBO:
 #ifdef RENEWAL
@@ -8065,6 +8067,10 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				if(sd && sd->special_state.skillup5)
 					wd.div_ = 7;
 				break;
+			case AM_DEMONSTRATION:
+				if(sd && sd->special_state.skillup6)
+					wd.div_ = 3;
+				break;
 		}
 	} else {
 		bool is_long = false;
@@ -8319,6 +8325,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 					sumlong_atk += sd->bonus.long_attack_atk_rate;
 				if (sd && sc && sc->getSCE(SC_UNLIMIT))
 					sumlong_atk += sc->getSCE(SC_UNLIMIT)->val2;
+				if (sd && sc && sc->getSCE(SC_CONCENTRATION_UPPER))
+					sumlong_atk += 100;
 				ATK_ADDRATE(wd.damage, wd.damage2, sumlong_atk);
 			}
 		}
@@ -11283,7 +11291,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 #else
 		int32 triple_rate = 30 - skillv; //Base Rate
 #endif
-
+		if (sd && sd->special_state.skillup6)
+			triple_rate = 100;
 		if (sc && sc->getSCE(SC_SKILLRATE_UP) && sc->getSCE(SC_SKILLRATE_UP)->val1 == MO_TRIPLEATTACK) {
 			triple_rate+= triple_rate*(sc->getSCE(SC_SKILLRATE_UP)->val2)/100;
 			status_change_end(src, SC_SKILLRATE_UP);
@@ -11506,7 +11515,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			}
 		}
 	}
-	if (sc && sc->getSCE(SC_AUTOSPELL) && rnd()%100 < sc->getSCE(SC_AUTOSPELL)->val4) {
+	if (sc && sc->getSCE(SC_AUTOSPELL) && rnd()%100 < (sc->getSCE(SC_AUTOSPELL)->val4 + (sd && sd->special_state.skillup1 ? 100 : 0))) {
 		int32 sp = 0;
 		uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
 		uint16 skill_lv = sc->getSCE(SC_AUTOSPELL)->val3;

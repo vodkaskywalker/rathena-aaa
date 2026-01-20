@@ -13,6 +13,7 @@ icecastle,67,222,5	script	µ—«§√“ø “√æ—¥ª√–‚¬™πÏ#icecastle	4_EP20_LASGAND,{
 		end;
 	}
 menu
+	"Zeny Bag",Zeny_store,
 	"Cube",Cube_store,
 	"Skill Upgrade",Skill_UPGRADE,
 	"Weapon List",Weapon_List,
@@ -37,8 +38,23 @@ SHOPSKILL:
 Raid_List:
 	menu
 		"Extreme Kraken",ex_kraken,
+		"Extreme Trial",ex_trial,
 		"cancle",-;
 	end;
+ex_kraken:
+	mes "Kraken Accessory Welcome";
+	close2;
+	callshop "Extreme_Kraken";
+	end;
+	end;
+
+ex_trial:
+	mes "Trial Accessory Welcome";
+	close2;
+	callshop "Trial_Accessory";
+	end;
+	end;
+
 WShadow_List:
 	menu
 		"Defective Class 1",ws_c1,
@@ -58,17 +74,15 @@ ws_c1:
 	callshop "Defective_S_Weapon_C1";
 	end;
 	
-ex_kraken:
-	mes "Kraken Accessory Welcome";
-	close2;
-	callshop "Extreme_Kraken";
-	close2;
-	end;
-
 Cube_store:
 	mes "Cube Shop Welcome";
 	close2;
 	callshop "Cube_seller";
+	end;
+Zeny_store:
+	mes "Zeny Shop Welcome";
+	close2;
+	callshop "Zeny_Bag_Shop";
 	end;
 Union_store:
 	mes "Union Weapon Welcome";

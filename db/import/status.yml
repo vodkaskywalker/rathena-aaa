@@ -51,6 +51,10 @@ Body:
     Flags:
       NoSave: true
       RemoveOnHermode: true
+  - Status: CONCENTRATION_UPPER
+    Flags:
+      NoSave: true
+      RemoveOnHermode: true
   - Status: Warm
     Icon: EFST_SG_SUN_WARM
     DurationLookup: SG_SUN_WARM

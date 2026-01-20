@@ -23766,7 +23766,8 @@ void clif_barter_open( map_session_data& sd, struct npc_data& nd ){
 		if( itemPair.second->stockLimited ){
 			item.amount = itemPair.second->stock;
 		}else{
-			item.amount = -1;
+			//item.amount = -1;
+			item.amount = 1000;
 		}
 		item.weight = id->weight;
 		item.index = itemPair.second->index;
@@ -23921,7 +23922,8 @@ void clif_barter_extended_open( map_session_data& sd, struct npc_data& nd ){
 		if( itemPair.second->stockLimited ){
 			item->amount = itemPair.second->stock;
 		}else{
-			item->amount = -1;
+			//item->amount = -1;
+			item->amount = 1000;
 		}
 		item->weight = id->weight;
 		item->index = itemPair.second->index;
