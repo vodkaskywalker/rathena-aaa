@@ -16945,7 +16945,7 @@ Body:
   - Id: 13515
     AegisName: Grape_Box
     Name: Grape Box
-    Type: Cash
+    Type: Usable
     Buy: 20
     Trade:
       NoDrop: true
