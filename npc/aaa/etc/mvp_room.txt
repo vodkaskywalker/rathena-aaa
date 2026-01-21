@@ -328,6 +328,17 @@ OnInit:
 		20273, // Illu Tao gunka
 		20277, // Illu Wootan
 		21395, // Illu Maya
+		20621, // red pepper
+		3428, // Infinite phe
+		3425, // Infinite chimera
+		3424, // Infinite lunatic
+		3426, // Infinite eddga
+		3429, // Infinite orc hero
+		3427, // Infinite osiris
+		3430, // Infinite tao
+		3421, // Infinite toad
+		3422, // Infinite wolf
+		3423, // Infinite vocal
 		3074; // Timms Holder
 		
 	setarray .mvpid[0],
